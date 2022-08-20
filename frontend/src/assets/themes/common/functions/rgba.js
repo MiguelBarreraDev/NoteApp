@@ -1,6 +1,6 @@
 import hexToRgb from './hexToRgb'
 
-export default rgba = (value, alpha) => {
+const rgba = (value, alpha) => {
   const initialChar = value.charAt(0)
   let rgb = null
 
@@ -9,3 +9,5 @@ export default rgba = (value, alpha) => {
 
   return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`
 }
+
+export default rgba

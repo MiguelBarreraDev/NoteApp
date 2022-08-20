@@ -3,7 +3,10 @@ import Typography from '@mui/material/Typography'
 import { PrivateRoutes } from "@/config"
 
 const titleStyle = {
-  background: 'linear-gradient(to right, #2ebf91, #8360c3)',
+  background: theme => {
+    const { primary, secondary  } = theme.palette
+    return `linear-gradient(to right, ${secondary.main}, ${primary.main})`
+  },
   webkitBackgroundClip: 'text',
   backgroundClip: 'text',
   color: 'transparent',

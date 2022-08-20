@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid'
 
 const FormGridContainerStyle = {
   position: 'relative',
-  maxWidth: '350px !important',
+  maxWidth: '350px',
   margin: 'auto',
   display: 'flex',
   flexDirection: 'column',
@@ -35,18 +35,8 @@ export const FormGridItem = props => (
 const AuthenticateFormContainerStyle = {
   overflow: 'hidden',
   pt: 8,
-  height: 'calc(100vh - 56px)',
-  maxHeight: 'calc(100vh - 56px)',
-  '&:before': {
-    content: '""',
-    position: 'absolute',
-    top: '0',
-    left: '0',
-    width: '100%',
-    height: '100%',
-    backdropFilter: 'blur(5px)',
-    zIndex: 10
-  }
+  height: theme => `calc(100vh - ${theme.components.Header.height})`,
+  maxHeight: theme => `calc(100vh - ${theme.components.Header.height})`,
 }
 export const AuthenticateFormContainer = (props) => (
   <Box {...props} sx={AuthenticateFormContainerStyle} />
@@ -55,12 +45,12 @@ export const AuthenticateFormContainer = (props) => (
 const SubmitButtonStyle = {
   mt: 4,
   width: '100%',
-  backgroundColor: '#8360c3',
+  backgroundColor: 'primary.main',
   '&.MuiButtonBase-root.MuiButton-root:hover': {
-    backgroundColor: '#8360c3'
+    backgroundColor: 'primary.light'
   },
   '&.MuiButtonBase-root.MuiButton-root.Mui-disabled': {
-    backgroundColor: '#8360c3',
+    backgroundColor: 'primary.dark',
   }
 }
 export const SubmitButton = (props) => (
@@ -70,20 +60,24 @@ export const SubmitButton = (props) => (
 const CustomTextFieldStyle = {
   width: '100%',
   '& .MuiOutlinedInput-notchedOutline': {
-    borderColor: '#FFFa'
+    borderColor: theme => (
+      theme.functions.rgba('#FFFFFF', .7)
+    ),
   },
   '& .MuiFormLabel-root.MuiInputLabel-root': {
-    color: '#FFF5'
-  },
-  '& .MuiInputBase-input.MuiOutlinedInput-input': {
-    color: '#FFFFFF'
+    color: theme => (
+      theme.functions.rgba('#FFFFFF', .5)
+    )
   },
   '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
-    borderColor: '#8360c3'
+    borderColor: 'primary.main'
   },
   '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-    borderColor: '#8360c3'
-  }
+    borderColor: 'primary.main',
+  },
+  '& .MuiFormLabel-root.MuiInputLabel-root.Mui-focused': {
+    color: 'primary.main'
+  },
 }
 export const CustomTextField = (props) => (
   <TextField {...props} sx={CustomTextFieldStyle}/>

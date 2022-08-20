@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles'
+import rgba from '../common/functions/rgba'
 
 export default createTheme({
   palette: {
@@ -19,5 +20,13 @@ export default createTheme({
     text: {
       primary: '#FFFFFF'
     }
+  },
+  components: {
+    Header: {
+      height: '56px'
+    }
+  },
+  functions: {
+    rgba: rgba
   }
 })

@@ -45,7 +45,10 @@ export default function Login () {
           />
         </FormGridItem>
         <FormGridItem>
-          <SubmitButton variant='contained' disabled>
+          <SubmitButton
+            variant='contained'
+            disabled={!(username && password)}
+          >
             Login
           </SubmitButton>
         </FormGridItem>
