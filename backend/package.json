@@ -10,6 +10,10 @@
   "author": "Miguel Barrera",
   "license": "MIT",
   "dependencies": {
+    "@sinclair/typebox": "^0.24.28",
+    "ajv": "^8.11.0",
+    "ajv-errors": "^3.0.0",
+    "ajv-formats": "^2.1.1",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "mongoose": "^6.5.2"
@@ -23,6 +27,7 @@
     "#controllers/*": "./src/controllers/*",
     "#routes/*": "./src/routes/*",
     "#schemas/*": "./src/schemas/*",
-    "#dto/*": "./src/dto/*"
+    "#dto/*": "./src/dto/*",
+    "#middlewares/*": "./src/middlewares/*"
   }
 }
