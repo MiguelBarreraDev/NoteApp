@@ -5,14 +5,16 @@ import Grid from '@mui/material/Grid'
 
 const FormGridContainerStyle = {
   position: 'relative',
-  maxWidth: '350px',
+  maxWidth: {xs: '350px', sm: 'auto'},
   margin: 'auto',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
   py: 4,
-  zIndex: 100
+  zIndex: 100,
+  backgroundColor: '#FFF',
+  borderRadius: 2
 }
 export const FormGridContainer = props => (
   <Grid
@@ -26,7 +28,7 @@ export const FormGridContainer = props => (
 const FormGridItemStyle = {
   my: 1,
   width: '90%',
-  textAlign: 'center'
+  textAlign: 'center',
 }
 export const FormGridItem = props => (
   <Grid item {...props} sx={FormGridItemStyle}/>
@@ -47,27 +49,25 @@ const SubmitButtonStyle = {
   width: '100%',
   backgroundColor: 'primary.main',
   '&.MuiButtonBase-root.MuiButton-root:hover': {
-    backgroundColor: 'primary.light'
+    backgroundColor: 'primary.dark'
   },
   '&.MuiButtonBase-root.MuiButton-root.Mui-disabled': {
-    backgroundColor: 'primary.dark',
-  }
+    backgroundColor: theme => theme.functions.rgba(theme.palette.primary.main, .8),
+    color: 'Text.contrast'
+  },
 }
 export const SubmitButton = (props) => (
   <Button type='submit' {...props} sx={SubmitButtonStyle}/>
 )
 
 const CustomTextFieldStyle = {
+  backgroundColor: theme => theme.functions.rgba(theme.palette.Text.light, .04),
   width: '100%',
   '& .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme => (
-      theme.functions.rgba('#FFFFFF', .7)
-    ),
+    borderColor: 'Text.main'
   },
   '& .MuiFormLabel-root.MuiInputLabel-root': {
-    color: theme => (
-      theme.functions.rgba('#FFFFFF', .5)
-    )
+    color: theme => theme.functions.rgba(theme.palette.Text.primary, .5)
   },
   '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
     borderColor: 'primary.main'
