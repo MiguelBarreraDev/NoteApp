@@ -8,7 +8,7 @@ import { lightTheme } from './assets/themes/lightTheme'
 import { darkTheme } from './assets/themes/darkTheme'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <ThemeProvider theme={darkTheme}>
+  <ThemeProvider theme={lightTheme}>
     <BrowserRouter>
       <App />
     </BrowserRouter>
