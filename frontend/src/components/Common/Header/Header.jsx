@@ -19,13 +19,13 @@ export default function Header () {
 const AppBarStyle = {
   height: theme => theme.components.Header.height,
   justifyContent: 'center',
-  background: 'transparent',
-  boxShadow: 'none'
+  backgroundColor: '#FFFFFF',
+  boxShadow: 'none',
 }
 
 const ContainerStyle = {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  flexWrap: 'nowrap'
+  flexWrap: 'nowrap',
 }

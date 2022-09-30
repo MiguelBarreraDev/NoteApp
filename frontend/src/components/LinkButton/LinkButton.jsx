@@ -1,12 +1,14 @@
 import Button from '@mui/material/Button'
-import { NANavLink } from '../NANavLink'
+import { useNavigate } from 'react-router-dom'
 
-export default function LinkButton ({ data }) {
+export default function LinkButton (props) {
+  const navigate = useNavigate()
+  const { to, ...otherProps } = props
+
   return (
-    <Button>
-      <NANavLink to={data.route}>
-        {data.name}
-      </NANavLink>
-    </Button>
+    <Button
+      onClick={() => navigate(to)}
+      {...otherProps}
+    />
   )
 }

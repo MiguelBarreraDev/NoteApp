@@ -1,68 +1,37 @@
 import Box from '@mui/material/Box'
-import { NANavLink } from '@/components/NANavLink'
-import Button from '@mui/material/Button'
-import IconButton from '@mui/material/IconButton'
 import { PublicRoutes } from '@/config'
-import LoginIcon from '@mui/icons-material/Login'
+import { LinkButton } from '@/components/LinkButton'
 
 export default function CallActions () {
   return (
     <Box sx={ButtonsContainerStyle}>
-      <Button
+      <LinkButton
+        sx={ButtonStyle}
         variant='outlined'
-        sx={signupButtonStyle}
+        to={PublicRoutes.SIGNUP.route}
       >
-        <NANavLink to={PublicRoutes.SIGNUP.route}>
-          {PublicRoutes.SIGNUP.name}
-        </NANavLink>
-      </Button>
-      <Button
+        {PublicRoutes.SIGNUP.name}
+      </LinkButton>
+      <LinkButton
+        sx={ButtonStyle}
         variant='contained'
-        sx={loginButtonStyle}
+        to={PublicRoutes.LOGIN.route}
       >
-        <NANavLink to={PublicRoutes.LOGIN.route}>
-          {PublicRoutes.LOGIN.name}
-        </NANavLink>
-      </Button>
-      <IconButton sx={IconButtonStyle}>
-        <NANavLink
-          to={PublicRoutes.LOGIN.route}
-          renderIcon
-        >
-          <LoginIcon />
-        </NANavLink>
-      </IconButton>
+        {PublicRoutes.LOGIN.name}
+      </LinkButton>
     </Box>
   )
 }
 
 const ButtonsContainerStyle = {
   display: 'flex',
-  alignItems: 'center'
+  alignItems: 'center',
+  gap: {xs: 1, sm: 2},
 }
 
-const loginButtonStyle = {
-  p: 0,
-  border: '1px solid #8360c3',
-  backgroundColor: '#8360c3',
-  '&.MuiButtonBase-root.MuiButton-root:hover': {
-    backgroundColor: '#8360c3'
-  },
-  display: { xs: 'none', sm: 'block' }
-}
-
-const IconButtonStyle = {
-  display: { sx: 'block', sm: 'none' },
-  '& svg': {
-    color: '#8360c3'
-  }
-}
-
-const signupButtonStyle = {
-  p: 0,
-  mx: 1,
-  ml: { xs: 0, sx: 'auto' },
-  background: 'transparent',
+const ButtonStyle = {
+  whiteSpace: 'nowrap',
+  width: 'clamp(113px, 30vw, 150px)',
   border: '1px solid #8360c3',
   '&.MuiButtonBase-root.MuiButton-root:hover': {
     border: '1px solid #8360c3'

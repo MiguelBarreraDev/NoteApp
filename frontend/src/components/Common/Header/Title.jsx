@@ -1,11 +1,11 @@
-import { NANavLink } from "@/components/NANavLink"
 import Typography from '@mui/material/Typography'
 import { PrivateRoutes } from "@/config"
+import LinkTo from '@/components/LinkTo/LinkTo'
 
 const titleStyle = {
   background: theme => {
     const { primary, secondary  } = theme.palette
-    return `linear-gradient(to right, ${secondary.main}, ${primary.main})`
+    return `linear-gradient(to right, ${primary.main}, ${secondary.main})`
   },
   webkitBackgroundClip: 'text',
   backgroundClip: 'text',
@@ -15,7 +15,7 @@ const titleStyle = {
 
 export default function Title () {
   return (
-    <NANavLink to={PrivateRoutes.PRIVATE.route} origin='start'>
+    <LinkTo to={PrivateRoutes.PRIVATE.route} origin='start'>
       <Typography
         variant='h5'
         noWrap
@@ -23,6 +23,6 @@ export default function Title () {
       >
         NoteApp
       </Typography>
-    </NANavLink>
+    </LinkTo>
   )
 }
