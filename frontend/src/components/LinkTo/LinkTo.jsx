@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom'
 
 const LinkStyles = {
   textDecoration: 'none',
@@ -7,6 +7,6 @@ const LinkStyles = {
 }
 
 export default function LinkTo (props) {
-  const { styles={}, ...otherProps } = props
-  return <Link style={{...LinkStyles, ...styles}} { ...otherProps }/>
+  const { styles = {}, ...otherProps } = props
+  return <Link style={{ ...LinkStyles, ...styles }} { ...otherProps }/>
 }

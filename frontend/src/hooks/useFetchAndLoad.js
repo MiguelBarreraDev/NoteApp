@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from 'react'
 
 const useFetchAndLoad = () => {
   const [loading, setLoading] = useState(false)
-  let controller = null;
+  let controller = null
 
   const callEndpoint = async (asyncCall) => {
     if (asyncCall.controller) controller = asyncCall.controller
@@ -11,7 +11,7 @@ const useFetchAndLoad = () => {
     try {
       result = await asyncCall.call
     } catch (error) {
-      throw error
+      console.log(error)
     }
     setLoading(false)
     return result

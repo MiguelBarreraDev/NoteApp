@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import {loginService} from '@/services'
+import { loginService } from '@/services'
 import Typography from '@mui/material/Typography'
 import {
   AuthenticateFormContainer,
@@ -8,8 +8,8 @@ import {
   SubmitButton,
   CustomTextField
 } from '@/styledComponents'
-import {useFetchAndLoad} from '@/hooks'
-import {createUser} from '@/redux/states'
+import { useFetchAndLoad } from '@/hooks'
+import { createUser } from '@/redux/states'
 import { useDispatch } from 'react-redux'
 
 export default function SignUp () {
@@ -38,7 +38,7 @@ export default function SignUp () {
         <Typography
           align='center'
           variant='h5'
-          sx={{width: '100%', color: 'Text.main', fontWeight: 'bold' }}
+          sx={{ width: '100%', color: 'Text.main', fontWeight: 'bold' }}
         >
           Welcome
         </Typography>

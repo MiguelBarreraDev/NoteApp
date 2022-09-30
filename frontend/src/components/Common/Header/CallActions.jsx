@@ -26,7 +26,7 @@ export default function CallActions () {
 const ButtonsContainerStyle = {
   display: 'flex',
   alignItems: 'center',
-  gap: {xs: 1, sm: 2},
+  gap: { xs: 1, sm: 2 }
 }
 
 const ButtonStyle = {

@@ -27,6 +27,6 @@ export default createTheme({
     }
   },
   functions: {
-    rgba: rgba
+    rgba
   }
 })

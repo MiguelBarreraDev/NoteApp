@@ -7,10 +7,10 @@ export default createTheme({
       default: '#ECEFF4'
     },
     primary: {
-      main: '#3E54D3',
+      main: '#3E54D3'
     },
     secondary: {
-      main: '#15CDCA',
+      main: '#15CDCA'
     },
     Text: {
       primary: '#202020',
@@ -21,10 +21,10 @@ export default createTheme({
   },
   components: {
     Header: {
-      height: '56px',
+      height: '56px'
     }
   },
   functions: {
-    rgba: rgba
+    rgba
   }
 })

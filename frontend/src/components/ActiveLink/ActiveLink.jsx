@@ -8,7 +8,7 @@ const NavLinkStyle = {
   color: '#FFFFFF',
   textTransform: 'capitalize',
   whiteSpace: 'nowrap',
-  padding: '5px 15px',
+  padding: '5px 15px'
 }
 
 export default function ActiveLink ({ children, origin, renderIcon, ...props }) {

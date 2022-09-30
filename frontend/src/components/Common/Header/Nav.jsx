@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box'
-import { PublicRoutes  } from '@/config'
+import { PublicRoutes } from '@/config'
 import { toList } from '@/utitlities'
-import {ActiveLink} from '@/components/ActiveLink'
+import { ActiveLink } from '@/components/ActiveLink'
 
 export default function Nav () {
   const getLinks = (dictionary, listToIgnore = []) => (

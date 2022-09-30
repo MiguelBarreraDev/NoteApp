@@ -24,7 +24,6 @@ function App () {
           <Route element={<AuthGuard />}>
             <Route path={`${PrivateRoutes.PRIVATE.route}/*`} element={<Private />} />
           </Route>
-          <Route path='/*' element={<>Not Found</>} />
         </RoutesWithNotFound>
       </Provider>
     </>

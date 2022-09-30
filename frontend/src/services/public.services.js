@@ -19,7 +19,7 @@ const loginService = ({ username, password }) => {
     username,
     password
   }
-  
+
   return {
     call: axios.post(getURL('users/login'), data, { signal: controller.signal }),
     controller

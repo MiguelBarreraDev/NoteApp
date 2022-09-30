@@ -20,12 +20,12 @@ const AppBarStyle = {
   height: theme => theme.components.Header.height,
   justifyContent: 'center',
   backgroundColor: '#FFFFFF',
-  boxShadow: 'none',
+  boxShadow: 'none'
 }
 
 const ContainerStyle = {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  flexWrap: 'nowrap',
+  flexWrap: 'nowrap'
 }
