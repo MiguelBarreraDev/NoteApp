@@ -4,11 +4,15 @@ import { toList } from '@/utitlities'
 import { ActiveLink } from '@/components/ActiveLink'
 
 export default function Nav () {
-  const getLinks = (dictionary, listToIgnore = []) => (
-    toList(dictionary)
+  const getLinks = (dictionary, listToIgnore = []) => {
+    return null && toList(dictionary)
       .filter(routeObject => !listToIgnore.includes(routeObject.key))
-      .map(routeObject => <ActiveLink key={routeObject.key} data={routeObject} />)
-  )
+      .map(routeObject => (
+        <ActiveLink key={routeObject.key} to={routeObject.route}>
+          {routeObject.name}
+        </ActiveLink>
+      ))
+  }
 
   return (
     <Box>

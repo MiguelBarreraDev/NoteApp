@@ -1,5 +1,4 @@
 import Typography from '@mui/material/Typography'
-import { PrivateRoutes } from '@/config'
 import LinkTo from '@/components/LinkTo/LinkTo'
 
 const titleStyle = {
@@ -10,14 +9,15 @@ const titleStyle = {
   webkitBackgroundClip: 'text',
   backgroundClip: 'text',
   color: 'transparent',
+  fontSize: '1.6em',
   fontWeight: 'bold'
 }
 
 export default function Title () {
   return (
-    <LinkTo to={PrivateRoutes.PRIVATE.route} origin='start'>
+    <LinkTo to='/' origin='start'>
       <Typography
-        variant='h5'
+        variant='h1'
         noWrap
         sx={titleStyle}
       >

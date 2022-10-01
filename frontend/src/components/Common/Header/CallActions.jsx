@@ -31,7 +31,7 @@ const ButtonsContainerStyle = {
 
 const ButtonStyle = {
   whiteSpace: 'nowrap',
-  width: 'clamp(113px, 30vw, 150px)',
+  width: { xs: 'clamp(80px, 30vw, 100px)', sm: 'clamp(130px, 20vw, 150px)' },
   border: '1px solid #8360c3',
   '&.MuiButtonBase-root.MuiButton-root:hover': {
     border: '1px solid #8360c3'
