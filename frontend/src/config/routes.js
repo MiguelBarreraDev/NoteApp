@@ -1,4 +1,9 @@
 export const PublicRoutes = {
+  HOME: {
+    name: 'Home',
+    key: 'home',
+    route: '/'
+  },
   LOGIN: {
     name: 'Login',
     key: 'login',
