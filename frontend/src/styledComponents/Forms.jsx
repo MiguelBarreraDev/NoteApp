@@ -47,46 +47,58 @@ export const FormGridItem = ({ sx, ...props }) => (
   <Grid item {...props} sx={{ ...FormGridItemStyle, ...sx }} />
 )
 
-const SubmitButtonStyle = {
+const SubmitButtonStyle = (props) => ({
+  position: 'relative',
+  zIndex: 2000,
   maxWidth: '350px',
   margin: '0 auto',
   mt: 4,
   width: '100%',
   fontSize: '1.3em',
   textTransform: 'none',
-  backgroundColor: 'primary.main',
+  backgroundColor: `${props.color}.main`,
   fontWeight: 'bold',
   '&.MuiButtonBase-root.MuiButton-root:hover': {
-    backgroundColor: 'primary.dark'
+    backgroundColor: `${props.color}.dark`
   },
   '&.MuiButtonBase-root.MuiButton-root.Mui-disabled': {
-    backgroundColor: theme => theme.functions.rgba(theme.palette.primary.main, 0.8),
-    color: '#fff7'
+    backgroundColor: theme => theme.functions.rgba(theme.palette[props.color].main, 0.7),
+    '&:before': {
+      content: '""',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      zIndex: '-1',
+      backgroundColor: '#aaa5'
+    },
+    color: theme => theme.functions.rgba(theme.palette.Text.contrast, 0.5)
   }
-}
-export const SubmitButton = (props) => (
-  <Button type='submit' {...props} sx={SubmitButtonStyle}/>
+})
+export const SubmitButton = ({ color = 'primary', ...props }) => (
+  <Button type='submit' {...props} sx={SubmitButtonStyle({ color })}/>
 )
 
-const CustomTextFieldStyle = {
+const CustomTextFieldStyle = (props) => ({
   backgroundColor: theme => theme.functions.rgba(theme.palette.Text.light, 0.04),
   width: '100%',
   '& .MuiOutlinedInput-notchedOutline': {
-    borderColor: 'Text.main'
+    borderColor: theme => theme.functions.rgba(theme.palette.Text.main, 0.2)
   },
   '& .MuiFormLabel-root.MuiInputLabel-root': {
-    color: theme => theme.functions.rgba(theme.palette.Text.primary, 0.5)
+    color: theme => theme.functions.rgba(theme.palette.Text.main, 0.5)
   },
   '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
-    borderColor: 'primary.main'
+    borderColor: `${props.color}.main`
   },
   '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-    borderColor: 'primary.main'
+    borderColor: `${props.color}.main`
   },
   '& .MuiFormLabel-root.MuiInputLabel-root.Mui-focused': {
-    color: 'primary.main'
+    color: `${props.color}.main`
   }
-}
-export const CustomTextField = (props) => (
-  <TextField {...props} sx={CustomTextFieldStyle}/>
+})
+export const CustomTextField = ({ color = 'primary', ...props }) => (
+  <TextField {...props} sx={CustomTextFieldStyle({ color })}/>
 )
