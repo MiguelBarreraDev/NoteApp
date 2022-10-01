@@ -22,6 +22,13 @@ export default createTheme({
     }
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          overflowX: 'hidden'
+        }
+      }
+    },
     Header: {
       height: '56px'
     }
