@@ -11,15 +11,8 @@ const NavLinkStyle = {
   padding: '5px 15px'
 }
 
-export default function ActiveLink ({ children, origin, renderIcon, ...props }) {
-  const aditionalStyles = {}
-
-  if (origin === 'start') aditionalStyles.paddingLeft = '0'
-  if (renderIcon === true) aditionalStyles.padding = '0'
-
+export default function ActiveLink ({ ...props }) {
   return (
-    <NavLink {...props} style={{ ...NavLinkStyle, ...aditionalStyles }}>
-      {children}
-    </NavLink>
+    <NavLink {...props} style={NavLinkStyle} />
   )
 }
