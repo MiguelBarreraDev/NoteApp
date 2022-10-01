@@ -34,7 +34,7 @@ export default function SignUp () {
 
   return (
     <AuthenticateFormContainer>
-      <FormGridContainer sx={{ maxWidth: '500px' }}onSubmit={handleSubmit}>
+      <FormGridContainer sx={{ maxWidth: '500px' }} onSubmit={handleSubmit}>
         <Typography
           align='center'
           variant='h5'
@@ -45,6 +45,7 @@ export default function SignUp () {
         <FormGridItem sm={5.8}>
           <CustomTextField
             required
+            color='secondary'
             label='Name'
             type='text'
             value={name}
@@ -54,6 +55,7 @@ export default function SignUp () {
         <FormGridItem sm={5.8}>
           <CustomTextField
             required
+            color='secondary'
             label='Lastname'
             type='text'
             value={lastname}
@@ -63,6 +65,7 @@ export default function SignUp () {
         <FormGridItem>
           <CustomTextField
             required
+            color='secondary'
             label='Username'
             type='text'
             value={username}
@@ -72,6 +75,7 @@ export default function SignUp () {
         <FormGridItem>
           <CustomTextField
             required
+            color='secondary'
             label='E-mail'
             type='email'
             value={email}
@@ -81,6 +85,7 @@ export default function SignUp () {
         <FormGridItem>
           <CustomTextField
             required
+            color='secondary'
             label='Password'
             type='password'
             value={password}
@@ -88,6 +93,7 @@ export default function SignUp () {
           />
         </FormGridItem>
         <SubmitButton
+          color='secondary'
           variant='contained'
           disabled={!(username && password)}
         >
