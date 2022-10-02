@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles'
+import { typography } from '../common'
 import rgba from '../common/functions/rgba'
 
 export default createTheme({
@@ -33,6 +34,7 @@ export default createTheme({
       height: '56px'
     }
   },
+  typography,
   functions: {
     rgba
   }

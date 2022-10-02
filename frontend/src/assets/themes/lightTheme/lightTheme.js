@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles'
+import { typography } from '../common'
 import rgba from '../common/functions/rgba'
 
 export default createTheme({
@@ -31,26 +32,7 @@ export default createTheme({
       height: '56px'
     }
   },
-  typography: {
-    h1: {
-      fontFamily: '"Montserrat", "Roboto", "Helvetica", "Arial", sans-serif'
-    },
-    h2: {
-      fontFamily: '"Montserrat", "Roboto", "Helvetica", "Arial", sans-serif'
-    },
-    h3: {
-      fontFamily: '"Montserrat", "Roboto", "Helvetica", "Arial", sans-serif'
-    },
-    h4: {
-      fontFamily: '"Montserrat", "Roboto", "Helvetica", "Arial", sans-serif'
-    },
-    h5: {
-      fontFamily: '"Montserrat", "Roboto", "Helvetica", "Arial", sans-serif'
-    },
-    h6: {
-      fontFamily: '"Montserrat", "Roboto", "Helvetica", "Arial", sans-serif'
-    }
-  },
+  typography,
   functions: {
     rgba
   }
