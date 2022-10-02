@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { loginService } from '@/services'
+import { useNavigate } from 'react-router-dom'
 import Typography from '@mui/material/Typography'
 import {
   AuthenticateFormContainer,
@@ -17,13 +18,17 @@ export default function Login () {
   const { callEndpoint } = useFetchAndLoad()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     let result = null
     try {
       result = await callEndpoint(loginService({ username, password }))
-      dispatch(createUser(result.data))
+      if (result.status === 200) {
+        dispatch(createUser(result.data.jwt))
+        navigate('/auth/dashboard')
+      }
     } catch (error) {
       console.log(error)
     }
