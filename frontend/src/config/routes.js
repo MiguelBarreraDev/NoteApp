@@ -27,9 +27,9 @@ export const PrivateRoutes = {
     key: 'profile',
     route: '/profile'
   },
-  NOTES: {
-    name: 'Notes',
-    key: 'notes',
-    route: '/notes'
+  DASHBOARD: {
+    name: 'Dashboard',
+    key: 'dashboard',
+    route: '/dashboard'
   }
 }
