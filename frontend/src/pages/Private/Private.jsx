@@ -1,8 +1,10 @@
 import { PrivateRoutes } from '@/config/routes'
 import { RoutesWithNotFound } from '@/utitlities'
+import { lazy } from 'react'
 import { Route, Navigate } from 'react-router-dom'
-import { Dashboard } from './Dashboard'
-import { Profile } from './Profile'
+
+const Dashboard = lazy(() => import('@/pages/Private/Dashboard/Dashboard'))
+const Profile = lazy(() => import('@/pages/Private/Profile/Profile'))
 
 export default function Private () {
   return (
