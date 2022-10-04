@@ -1,11 +1,11 @@
 import { PublicRoutes } from '@/config'
-import { useState } from 'react'
+import { useLogin } from '@/hooks'
 import { Outlet, Navigate } from 'react-router-dom'
 
 export default function AuthGuard () {
-  const [user, setUser] = useState(true)
+  const { isLogged } = useLogin()
 
-  return user
+  return isLogged
     ? <Outlet />
     : <Navigate to={PublicRoutes.LOGIN.route} />
 }
