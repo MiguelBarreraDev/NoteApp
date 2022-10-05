@@ -1,7 +1,6 @@
-import { useState } from 'react'
-import { loginService } from '@/services'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import Typography from '@mui/material/Typography'
+import { useAuth } from '@/hooks'
 import {
   AuthenticateFormContainer,
   FormGridItem,
@@ -9,29 +8,19 @@ import {
   SubmitButton,
   CustomTextField
 } from '@/styledComponents'
-import { useFetchAndLoad } from '@/hooks'
-import { createUser } from '@/redux/states'
-import { useDispatch } from 'react-redux'
 
 export default function Login () {
-  const dispatch = useDispatch()
-  const { callEndpoint } = useFetchAndLoad()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const navigate = useNavigate()
+  const { login, isLogged, logout } = useAuth()
 
-  const handleSubmit = async (e) => {
+  useEffect(() => {
+    isLogged && logout({ redirect: false })
+  }, [])
+
+  const handleSubmit = (e) => {
     e.preventDefault()
-    let result = null
-    try {
-      result = await callEndpoint(loginService({ username, password }))
-      if (result.status === 200) {
-        dispatch(createUser(result.data.jwt))
-        navigate('/auth/dashboard')
-      }
-    } catch (error) {
-      console.log(error)
-    }
+    login({ username, password })
   }
 
   return (
