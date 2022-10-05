@@ -1,12 +1,12 @@
-import { PublicRoutes } from '@/config'
-import {ls} from '@/utitlities'
+import { ls } from '@/utitlities'
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 
+// Make controlled asynchronous calls
 const useFetchAndLoad = () => {
   const [loading, setLoading] = useState(false)
   let controller = null
 
+  // Make asyncronous call
   const callEndpoint = async (asyncCall) => {
     setLoading(true)
     let result = {}
@@ -16,14 +16,14 @@ const useFetchAndLoad = () => {
     try {
       result = await asyncCall.call
     } catch (error) {
-      if (error.response.status === 401) {
-        ls.removeItem('jwt')
-      }
+      if (error.response.status === 401) ls.removeItem('jwt')
     }
+
     setLoading(false)
     return result
   }
 
+  // Cancel the asyncronous call
   const cancelEndpoint = () => {
     setLoading(false)
     controller && controller.abort()
