@@ -4,8 +4,10 @@ import Title from './Title'
 import Nav from './Nav'
 import CallActions from './CallActions'
 import { useLocation } from 'react-router-dom'
+import { useAuth } from '@/hooks'
 
 export default function Header () {
+  const { isLogged } = useAuth()
   const { pathname } = useLocation()
 
   return (
@@ -13,7 +15,7 @@ export default function Header () {
       <Container sx={ContainerStyle} maxWidth='xl'>
         <Title />
         <Nav />
-        <CallActions />
+        {!isLogged && <CallActions />}
       </Container>
     </AppBar>
   )
