@@ -1,9 +1,9 @@
 import { PublicRoutes } from '@/config'
-import { useLogin } from '@/hooks'
+import { useAuth } from '@/hooks'
 import { Outlet, Navigate } from 'react-router-dom'
 
 export default function AuthGuard () {
-  const { isLogged } = useLogin()
+  const { isLogged } = useAuth()
 
   return isLogged
     ? <Outlet />
