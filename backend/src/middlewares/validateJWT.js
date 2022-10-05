@@ -14,7 +14,6 @@ const validateJWT = async (req, res, next) => {
     )
 
     req.id = payload.id
-
     next()
   } catch (error) {
     return res.status(401).json({ message })
