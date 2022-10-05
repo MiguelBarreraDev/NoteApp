@@ -1,1 +1,1 @@
-export { default as loginService } from './public.services'
+export * from './public.services'
