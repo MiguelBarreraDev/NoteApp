@@ -13,7 +13,7 @@ const getURL = (path) => `${VITE_BACKEND_URL}/${path}`
 /**
  * ...
  */
-const loginService = ({ username, password }) => {
+export const loginService = ({ username, password }) => {
   const controller = loadAbort()
   const data = {
     username,
@@ -29,11 +29,11 @@ const loginService = ({ username, password }) => {
 /**
  * ...
  */
-export const signupService = ({ name, surname, username, email, password }) => {
+export const signupService = ({ name, lastname, username, email, password }) => {
   const controller = loadAbort()
   const data = {
     name,
-    surname,
+    surname: lastname,
     username,
     email,
     password
@@ -45,4 +45,19 @@ export const signupService = ({ name, surname, username, email, password }) => {
   }
 }
 
-export default loginService
+/**
+ * ...
+ */
+export const profileService = ({ jwt }) => {
+  const controller = loadAbort()
+
+  return {
+    call: axios.get(getURL('users/profile'), {
+      headers: {
+        Authorization: jwt
+      },
+      signal: controller.signal
+    }),
+    controller
+  }
+}
