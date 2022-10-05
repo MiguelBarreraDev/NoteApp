@@ -9,13 +9,15 @@ import {
 } from "#middlewares/validateUserDataDTO.js"
 import validateJWT from "#middlewares/validateJWT.js";
 import userSignupController from "#controllers/user-signup.controller.js";
+import userLoginController from "#controllers/user-login.controller.js";
+import userPrfofileController from "#controllers/user-profile.controller.js";
 
 const userRouter = Router()
 
 userRouter
   .post('/signup', validateSignupDTO, userSignupController)
-  .post('/login', validateLoginDTO)
-  .get('/profile', validateJWT)
+  .post('/login', validateLoginDTO, userLoginController)
+  .get('/profile', validateJWT, userPrfofileController)
   .patch('/update-data', validateJWT, validateUpdateDataDTO)
   .patch('/update-email', validateJWT, validateUpdateEmailDTO)
   .patch('/update-password', validateJWT, validateUpdatePasswordDTO)
