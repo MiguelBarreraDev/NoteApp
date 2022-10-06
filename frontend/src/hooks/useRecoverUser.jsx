@@ -1,7 +1,7 @@
 import { PublicRoutes } from '@/config'
 import { updateUser } from '@/redux/states'
 import { profileService } from '@/services'
-import { log, ls } from '@/utitlities'
+import { ls } from '@/utitlities'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
