@@ -1,3 +1,4 @@
+import { useAuth } from '@/hooks'
 import { NavLink } from 'react-router-dom'
 
 const NavLinkStyle = {
@@ -5,14 +6,21 @@ const NavLinkStyle = {
   justifyContent: 'center',
   alignItems: 'center',
   textDecoration: 'none',
-  color: '#FFFFFF',
+  color: '#000000',
   textTransform: 'capitalize',
   whiteSpace: 'nowrap',
   padding: '5px 15px'
 }
 
 export default function ActiveLink ({ ...props }) {
+  const { isLogged } = useAuth()
+  const { to, ...otherProps } = props
+
   return (
-    <NavLink {...props} style={NavLinkStyle} />
+    <NavLink
+      to={isLogged ? `auth/${to}` : to}
+      {...otherProps}
+      style={NavLinkStyle}
+    />
   )
 }
