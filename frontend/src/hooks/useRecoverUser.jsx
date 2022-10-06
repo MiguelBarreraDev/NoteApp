@@ -1,7 +1,7 @@
 import { PublicRoutes } from '@/config'
 import { updateUser } from '@/redux/states'
 import { profileService } from '@/services'
-import { ls } from '@/utitlities'
+import { log, ls } from '@/utitlities'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -11,7 +11,7 @@ export default function useRecoverUser () {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { callEndpoint } = useFetchAndLoad()
-  const [loading, setLoading] = useState()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const jwt = ls.getItem('jwt')
@@ -33,5 +33,6 @@ export default function useRecoverUser () {
     }
     recoveryUser()
   }, [])
+
   return { loading }
 }
