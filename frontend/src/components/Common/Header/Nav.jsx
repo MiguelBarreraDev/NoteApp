@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box'
 import { PrivateRoutes, PublicRoutes } from '@/config'
-import { toList } from '@/utitlities'
+import { toList } from '@/utilities'
 import { ActiveLink } from '@/components/ActiveLink'
 import { useAuth } from '@/hooks'
 

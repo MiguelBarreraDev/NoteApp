@@ -1,4 +1,4 @@
-import { ls } from '@/utitlities'
+import { ls } from '@/utilities'
 import { useState, useEffect } from 'react'
 
 // Make controlled asynchronous calls

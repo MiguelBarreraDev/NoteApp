@@ -1,4 +1,4 @@
-import convertBase from '@/utitlities/convertBase'
+import convertBase from '@/utilities/convertBase'
 
 const hexToRgb = (hex = String) => {
   const r = convertBase(hex.slice(1, 3), 16, 10)

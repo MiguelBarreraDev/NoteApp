@@ -1,4 +1,4 @@
-import { loadAbort } from '@/utitlities'
+import { loadAbort } from '@/utilities'
 import axios from 'axios'
 
 const { VITE_BACKEND_URL } = import.meta.env
