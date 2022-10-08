@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react'
 import { signupService } from '@/services'
 import Typography from '@mui/material/Typography'
+import CircularProgress from '@mui/material/CircularProgress'
+import InputAdornment from '@mui/material/InputAdornment'
+import IconButton from '@mui/material/IconButton'
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import {
   AuthenticateFormContainer,
   FormGridItem,
@@ -16,7 +21,7 @@ import { PrivateRoutes } from '@/config'
 import { ls } from '@/utitlities'
 
 export default function SignUp () {
-  const { logout, isLogged } = useAuth()
+  const { logout, isLogged, loading } = useAuth()
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { callEndpoint } = useFetchAndLoad()
@@ -25,6 +30,7 @@ export default function SignUp () {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
 
   useEffect(() => {
     isLogged && logout({ redirect: false })
@@ -100,17 +106,31 @@ export default function SignUp () {
             required
             color='secondary'
             label='Password'
-            type='password'
+            type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={e => setPassword(e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position='end' sx={{ margin: 0 }}>
+                  <IconButton
+                    onClick={() => setShowPassword(cs => !cs)}
+                    edge='end'
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
           />
         </FormGridItem>
         <SubmitButton
           color='secondary'
           variant='contained'
-          disabled={!(username && password)}
+          disabled={!(name && lastname && username && email && password) || loading}
         >
-          Sign up
+          {loading
+            ? <CircularProgress color='secondary'/>
+            : 'Sign up'}
         </SubmitButton>
       </FormGridContainer>
     </AuthenticateFormContainer>

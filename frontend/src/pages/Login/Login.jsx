@@ -8,11 +8,17 @@ import {
   SubmitButton,
   CustomTextField
 } from '@/styledComponents'
+import InputAdornment from '@mui/material/InputAdornment'
+import CircularProgress from '@mui/material/CircularProgress'
+import IconButton from '@mui/material/IconButton'
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
 export default function Login () {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const { login, isLogged, logout } = useAuth()
+  const { login, isLogged, logout, loading } = useAuth()
+  const [showPassword, setShowPassword] = useState(false)
 
   useEffect(() => {
     isLogged && logout({ redirect: false })
@@ -44,17 +50,31 @@ export default function Login () {
           <CustomTextField
             required
             label='Password'
-            type='password'
+            type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={e => setPassword(e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position='end' sx={{ margin: 0 }}>
+                  <IconButton
+                    onClick={() => setShowPassword(cs => !cs)}
+                    edge='end'
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
           />
         </FormGridItem>
         <FormGridItem>
           <SubmitButton
             variant='contained'
-            disabled={!(username && password)}
+            disabled={!(username && password) || loading}
           >
-            Login
+            {loading
+              ? <CircularProgress color='primary' />
+              : 'Login'}
           </SubmitButton>
         </FormGridItem>
       </FormGridContainer>
