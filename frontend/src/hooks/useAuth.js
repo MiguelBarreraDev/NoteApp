@@ -1,7 +1,7 @@
 import { PrivateRoutes, PublicRoutes } from '@/config'
 import { createUser, resetUser } from '@/redux/states'
 import { loginService } from '@/services'
-import { ls } from '@/utitlities'
+import { ls } from '@/utilities'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import useFetchAndLoad from './useFetchAndLoad'
@@ -15,7 +15,9 @@ export default function useAuth () {
   const login = async ({ username, password }) => {
     const { data } = await callEndpoint(loginService({ username, password }))
 
-    if (data?.jwt) ls.setItem('jwt', data.jwt)
+    if (!data) return
+
+    ls.setItem('jwt', data.jwt)
     dispatch(createUser({ username: data.username, jwt: data.jwt }))
     navigate(PrivateRoutes.PRIVATE.route)
   }
