@@ -1,7 +1,12 @@
+import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Grid'
+import InputAdornment from '@mui/material/InputAdornment'
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import IconButton from '@mui/material/IconButton'
 
 const AuthenticateFormContainerStyle = {
   overflow: 'hidden',
@@ -35,6 +40,7 @@ export const FormGridContainer = ({ sx, ...props }) => (
     component='form'
     {...props}
     sx={{ ...FormGridContainerStyle, ...sx }}
+    autoComplete='off'
   />
 )
 
@@ -99,6 +105,27 @@ const CustomTextFieldStyle = (props) => ({
     color: `${props.color}.main`
   }
 })
-export const CustomTextField = ({ color = 'primary', ...props }) => (
-  <TextField {...props} sx={CustomTextFieldStyle({ color })}/>
-)
+export const CustomTextField = ({ color = 'primary', ...props }) => {
+  const [showPassword, setShowPassword] = useState(false)
+  const { type, ...otherProps } = props
+
+  return <TextField
+    {...otherProps}
+    type={type === 'password' && showPassword ? 'text' : type}
+    sx={CustomTextFieldStyle({ color })}
+    InputProps={type === 'password'
+      ? {
+          endAdornment: (
+            <InputAdornment position='end' sx={{ margin: 0 }}>
+              <IconButton
+                onClick={() => setShowPassword(cs => !cs)}
+                edge='end'
+              >
+                {showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          )
+        }
+      : {} }
+  />
+}
