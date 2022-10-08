@@ -1,11 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { signupService } from '@/services'
 import Typography from '@mui/material/Typography'
 import CircularProgress from '@mui/material/CircularProgress'
-import InputAdornment from '@mui/material/InputAdornment'
-import IconButton from '@mui/material/IconButton'
-import Visibility from '@mui/icons-material/Visibility'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import {
   AuthenticateFormContainer,
   FormGridItem,
@@ -18,37 +14,43 @@ import { createUser } from '@/redux/states'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { PrivateRoutes } from '@/config'
-import { ls } from '@/utitlities'
+import { ls, toList } from '@/utilities'
 
 export default function SignUp () {
   const { logout, isLogged, loading } = useAuth()
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { callEndpoint } = useFetchAndLoad()
-  const [name, setName] = useState('')
-  const [lastname, setLastname] = useState('')
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
+  const [inputValues, setInputValues] = useState({
+    name: '',
+    lastname: '',
+    username: '',
+    email: '',
+    password: ''
+  })
 
   useEffect(() => {
     isLogged && logout({ redirect: false })
   }, [])
 
+  const changeInputValue = inputKey => e => {
+    setInputValues(cs => ({ ...cs, [inputKey]: e.target.value }))
+  }
+
+  const disableSubmit = useMemo(
+    () => toList(inputValues).some(value => value === '') || loading,
+    [inputValues, loading]
+  )
+
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const { data } = await callEndpoint(signupService({
-      name,
-      lastname,
-      username,
-      email,
-      password
-    }))
+    const { data } = await callEndpoint(signupService(inputValues))
 
-    ls.setItem('jwt', data.jwt)
-    dispatch(createUser({ id: data.id, username: data.username, jwt: data.jwt }))
-    navigate(PrivateRoutes.PRIVATE.route)
+    if (data) {
+      ls.setItem('jwt', data.jwt)
+      dispatch(createUser({ id: data.id, username: data.username, jwt: data.jwt }))
+      navigate(PrivateRoutes.PRIVATE.route)
+    }
   }
 
   return (
@@ -57,7 +59,7 @@ export default function SignUp () {
         <Typography
           align='center'
           variant='h5'
-          sx={{ width: '100%', color: 'Text.main', fontWeight: 'bold' }}
+          sx={{ width: '100%', color: 'Text.light', fontWeight: 'bold' }}
         >
           Welcome
         </Typography>
@@ -67,8 +69,8 @@ export default function SignUp () {
             color='secondary'
             label='Name'
             type='text'
-            value={name}
-            onChange={e => setName(e.target.value)}
+            value={inputValues?.name}
+            onChange={changeInputValue('name')}
           />
         </FormGridItem>
         <FormGridItem sm={5.8}>
@@ -77,8 +79,8 @@ export default function SignUp () {
             color='secondary'
             label='Lastname'
             type='text'
-            value={lastname}
-            onChange={e => setLastname(e.target.value)}
+            value={inputValues?.lastname}
+            onChange={changeInputValue('lastname')}
           />
         </FormGridItem>
         <FormGridItem>
@@ -87,8 +89,8 @@ export default function SignUp () {
             color='secondary'
             label='Username'
             type='text'
-            value={username}
-            onChange={e => setUsername(e.target.value)}
+            value={inputValues?.username}
+            onChange={changeInputValue('username')}
           />
         </FormGridItem>
         <FormGridItem>
@@ -97,8 +99,8 @@ export default function SignUp () {
             color='secondary'
             label='E-mail'
             type='email'
-            value={email}
-            onChange={e => setEmail(e.target.value)}
+            value={inputValues?.email}
+            onChange={changeInputValue('email')}
           />
         </FormGridItem>
         <FormGridItem>
@@ -106,27 +108,15 @@ export default function SignUp () {
             required
             color='secondary'
             label='Password'
-            type={showPassword ? 'text' : 'password'}
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position='end' sx={{ margin: 0 }}>
-                  <IconButton
-                    onClick={() => setShowPassword(cs => !cs)}
-                    edge='end'
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
+            type='password'
+            value={inputValues?.password}
+            onChange={changeInputValue('password')}
           />
         </FormGridItem>
         <SubmitButton
           color='secondary'
           variant='contained'
-          disabled={!(name && lastname && username && email && password) || loading}
+          disabled={disableSubmit}
         >
           {loading
             ? <CircularProgress color='secondary'/>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import Typography from '@mui/material/Typography'
 import { useAuth } from '@/hooks'
 import {
@@ -8,32 +8,39 @@ import {
   SubmitButton,
   CustomTextField
 } from '@/styledComponents'
-import InputAdornment from '@mui/material/InputAdornment'
 import CircularProgress from '@mui/material/CircularProgress'
-import IconButton from '@mui/material/IconButton'
-import Visibility from '@mui/icons-material/Visibility'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import { toList } from '@/utilities'
 
 export default function Login () {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
   const { login, isLogged, logout, loading } = useAuth()
-  const [showPassword, setShowPassword] = useState(false)
+  const [inputValues, setInputValues] = useState({
+    username: '',
+    password: ''
+  })
 
   useEffect(() => {
     isLogged && logout({ redirect: false })
   }, [])
 
+  const changeInputValue = inputKey => e => {
+    setInputValues(cs => ({ ...cs, [inputKey]: e.target.value }))
+  }
+
+  const disableSubmit = useMemo(
+    () => toList(inputValues).some(value => value === '') || loading,
+    [inputValues, loading]
+  )
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    login({ username, password })
+    login(inputValues)
   }
 
   return (
     <AuthenticateFormContainer>
       <FormGridContainer onSubmit={handleSubmit}>
         <FormGridItem>
-          <Typography variant='h5' sx={{ color: 'Text.main', fontWeight: 'bold' }}>
+          <Typography variant='h5' sx={{ color: 'Text.light', fontWeight: 'bold' }}>
             Welcome
           </Typography>
         </FormGridItem>
@@ -42,35 +49,23 @@ export default function Login () {
             required
             label='Username'
             type='text'
-            value={username}
-            onChange={e => setUsername(e.target.value)}
+            value={inputValues?.username}
+            onChange={changeInputValue('username')}
           />
         </FormGridItem>
         <FormGridItem>
           <CustomTextField
             required
             label='Password'
-            type={showPassword ? 'text' : 'password'}
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position='end' sx={{ margin: 0 }}>
-                  <IconButton
-                    onClick={() => setShowPassword(cs => !cs)}
-                    edge='end'
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
+            type='password'
+            value={inputValues?.password}
+            onChange={changeInputValue('password')}
           />
         </FormGridItem>
         <FormGridItem>
           <SubmitButton
             variant='contained'
-            disabled={!(username && password) || loading}
+            disabled={disableSubmit}
           >
             {loading
               ? <CircularProgress color='primary' />
