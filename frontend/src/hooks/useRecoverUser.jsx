@@ -1,14 +1,13 @@
-import { PublicRoutes } from '@/config'
 import { updateUser } from '@/redux/states'
 import { profileService } from '@/services'
-import { ls } from '@/utitlities'
+import { ls } from '@/utilities'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import useAuth from './useAuth'
 import useFetchAndLoad from './useFetchAndLoad'
 
 export default function useRecoverUser () {
-  const navigate = useNavigate()
+  const { isLogged, logout } = useAuth()
   const dispatch = useDispatch()
   const { callEndpoint } = useFetchAndLoad()
   const [loading, setLoading] = useState(true)
@@ -29,8 +28,9 @@ export default function useRecoverUser () {
 
     if (!jwt) {
       setLoading(false)
-      return navigate(PublicRoutes.LOGIN.route)
+      return logout({ redirect: isLogged })
     }
+
     recoveryUser()
   }, [])
 
