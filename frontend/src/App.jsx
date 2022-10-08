@@ -13,6 +13,8 @@ const Private = lazy(() => import('@/pages/Private/Private'))
 function App () {
   const { loading } = useRecoverUser()
 
+  // We form routes from the information of a route encapsulated
+  // in an object passed as a parameter
   const setPublicRoute = ({ route, key, Component }) => (
     <Route key={key} path={route} element={<Component />} />
   )
