@@ -1,7 +1,7 @@
 import './App.css'
 import { Route } from 'react-router-dom'
 import { PrivateRoutes, PublicRoutes } from './config/routes'
-import { RoutesWithNotFound, toList } from './utitlities'
+import { RoutesWithNotFound, toList } from './utilities'
 import { AuthGuard } from './guards'
 import CssBaseline from '@mui/material/CssBaseline'
 import { Header } from './components/Common/Header'
