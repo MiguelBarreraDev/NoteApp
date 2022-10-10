@@ -6,3 +6,10 @@
 	font-family: Montserrat;
 	src: url(./assets/fonts/Montserrat/Montserrat-VariableFont_wght.ttf);
 }
+
+/*--- Trick to remove styles from an input when the browser autocompletes it ---*/
+/* input:-webkit-autofill, */
+/* input:-webkit-autofill:focus { */
+/* 	transition: background-color 600000s 0s, color 600000s 0s; */
+/* } */
+/*--- ---*/
