@@ -24,7 +24,8 @@ export default createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          overflowX: 'hidden'
+          overflowX: 'hidden',
+          minWidth: '360px'
         }
       }
     },
