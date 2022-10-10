@@ -8,13 +8,13 @@ export const PublicRoutes = {
     Component: lazy(() => import('@/pages/Home/Home'))
   },
   LOGIN: {
-    name: 'Login',
+    name: 'Log in',
     key: 'login',
     route: '/login',
     Component: lazy(() => import('@/pages/Login/Login'))
   },
   SIGNUP: {
-    name: 'Sign Up',
+    name: 'Sign up',
     key: 'signup',
     route: '/sign-up',
     Component: lazy(() => import('@/pages/SignUp/SignUp'))
