@@ -1,6 +1,16 @@
 import { ls } from '@/utilities'
 import { useState, useEffect } from 'react'
 
+const handleError = ({ error }) => {
+  if (error.response.status === 401) {
+    ls.removeItem('jwt')
+    return { error: 'Unauthorized user ', code: 401 }
+  }
+  if (error.response.status === 0) {
+    return { error: 'An internal problem arose', code: 0 }
+  }
+}
+
 // Make controlled asynchronous calls
 const useFetchAndLoad = () => {
   const [loading, setLoading] = useState(false)
@@ -16,13 +26,7 @@ const useFetchAndLoad = () => {
     try {
       result = await asyncCall.call
     } catch (error) {
-      if (error.response.status === 401) {
-        ls.removeItem('jwt')
-        Object.assign(result, { error: 'Unauthorized user ', code: 401 })
-      }
-      if (error.response.status === 0) {
-        Object.assign(result, { error: 'An internal problem arose', code: 0 })
-      }
+      result = handleError({ error })
     }
 
     setLoading(false)
