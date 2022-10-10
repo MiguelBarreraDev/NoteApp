@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from 'react'
+import { useCallback, useState, useEffect } from 'react'
 import Typography from '@mui/material/Typography'
 import { useAuth } from '@/hooks'
 import {
@@ -9,9 +9,10 @@ import {
   CustomTextField
 } from '@/styledComponents'
 import CircularProgress from '@mui/material/CircularProgress'
-import { toList } from '@/utilities'
+import { ShowError } from '@/components/ShowError'
 
 export default function Login () {
+  const [errorMessage, setErrorMessage] = useState('')
   const { login, isLogged, logout, loading } = useAuth()
   const [inputValues, setInputValues] = useState({
     username: '',
@@ -22,18 +23,16 @@ export default function Login () {
     isLogged && logout({ redirect: false })
   }, [])
 
-  const changeInputValue = inputKey => e => {
-    setInputValues(cs => ({ ...cs, [inputKey]: e.target.value }))
-  }
+  const handleClose = useCallback(() => setErrorMessage(''), [])
 
-  const disableSubmit = useMemo(
-    () => toList(inputValues).some(value => value === '') || loading,
-    [inputValues, loading]
+  const changeInputValue = inputKey => e => (
+    setInputValues(cs => ({ ...cs, [inputKey]: e.target.value }))
   )
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    login(inputValues)
+    const response = await login(inputValues)
+    if (response?.error) setErrorMessage(response.error)
   }
 
   return (
@@ -65,13 +64,16 @@ export default function Login () {
         <FormGridItem>
           <SubmitButton
             variant='contained'
-            disabled={disableSubmit}
+            disabled={loading}
           >
             {loading
               ? <CircularProgress color='primary' />
-              : 'Login'}
+              : 'Log in'}
           </SubmitButton>
         </FormGridItem>
+        <ShowError open={Boolean(errorMessage)} handleClose={handleClose}>
+          { errorMessage }
+        </ShowError>
       </FormGridContainer>
     </AuthenticateFormContainer>
   )

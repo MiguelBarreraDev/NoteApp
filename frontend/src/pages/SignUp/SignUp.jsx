@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { signupService } from '@/services'
 import Typography from '@mui/material/Typography'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -14,13 +14,15 @@ import { createUser } from '@/redux/states'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { PrivateRoutes } from '@/config'
-import { ls, toList } from '@/utilities'
+import { ls } from '@/utilities'
+import { ShowError } from '@/components/ShowError'
 
 export default function SignUp () {
-  const { logout, isLogged, loading } = useAuth()
+  const [errorMessage, setErrorMessage] = useState('')
+  const { logout, isLogged } = useAuth()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { callEndpoint } = useFetchAndLoad()
+  const { callEndpoint, loading } = useFetchAndLoad()
   const [inputValues, setInputValues] = useState({
     name: '',
     lastname: '',
@@ -37,16 +39,14 @@ export default function SignUp () {
     setInputValues(cs => ({ ...cs, [inputKey]: e.target.value }))
   }
 
-  const disableSubmit = useMemo(
-    () => toList(inputValues).some(value => value === '') || loading,
-    [inputValues, loading]
-  )
+  const handleClose = useCallback(() => setErrorMessage(''), [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const { data } = await callEndpoint(signupService(inputValues))
-
-    if (data) {
+    const response = await callEndpoint(signupService(inputValues))
+    if (response?.error) return setErrorMessage(response.error)
+    if (response?.data) {
+      const { data } = response
       ls.setItem('jwt', data.jwt)
       dispatch(createUser({ id: data.id, username: data.username, jwt: data.jwt }))
       navigate(PrivateRoutes.PRIVATE.route)
@@ -113,15 +113,24 @@ export default function SignUp () {
             onChange={changeInputValue('password')}
           />
         </FormGridItem>
-        <SubmitButton
-          color='secondary'
-          variant='contained'
-          disabled={disableSubmit}
+        <FormGridItem>
+          <SubmitButton
+            color='secondary'
+            variant='contained'
+            disabled={loading}
+          >
+            {loading
+              ? <CircularProgress color='secondary'/>
+              : 'Sign up'}
+          </SubmitButton>
+        </FormGridItem>
+        <ShowError
+          sx={{ maxWidth: '500px' }}
+          open={Boolean(errorMessage)}
+          handleClose={handleClose}
         >
-          {loading
-            ? <CircularProgress color='secondary'/>
-            : 'Sign up'}
-        </SubmitButton>
+          { errorMessage }
+        </ShowError>
       </FormGridContainer>
     </AuthenticateFormContainer>
   )
