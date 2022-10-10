@@ -29,10 +29,11 @@ const FormGridContainerStyle = {
   justifyContent: 'space-between',
   py: 4,
   zIndex: 100,
-  backgroundColor: '#FFF',
+  backgroundColor: '#FFFFFF',
   px: 2,
   borderRadius: 2,
-  gap: 1
+  gap: 1,
+  boxShadow: '0 4px 10px #CCCCCC'
 }
 export const FormGridContainer = ({ sx, ...props }) => (
   <Grid
@@ -63,6 +64,7 @@ const SubmitButtonStyle = (props) => ({
   fontSize: '1.3em',
   textTransform: 'none',
   backgroundColor: `${props.color}.main`,
+  maxHeight: '48px',
   fontWeight: 'bold',
   '&.MuiButtonBase-root.MuiButton-root:hover': {
     backgroundColor: `${props.color}.dark`
@@ -75,7 +77,6 @@ const SubmitButtonStyle = (props) => ({
       top: 0,
       left: 0,
       width: '100%',
-      height: '100%',
       zIndex: '-1',
       backgroundColor: '#aaa5'
     },
@@ -87,8 +88,10 @@ export const SubmitButton = ({ color = 'primary', ...props }) => (
 )
 
 const CustomTextFieldStyle = (props) => ({
-  backgroundColor: theme => theme.functions.rgba(theme.palette.Text.light, 0.04),
   width: '100%',
+  '& .MuiOutlinedInput-root': {
+    backgroundColor: theme => theme.functions.rgba(theme.palette.Text.light, 0.04)
+  },
   '& .MuiOutlinedInput-notchedOutline': {
     borderColor: theme => theme.functions.rgba(theme.palette.Text.main, 0.2)
   },
@@ -113,7 +116,7 @@ export const CustomTextField = ({ color = 'primary', ...props }) => {
     {...otherProps}
     type={type === 'password' && showPassword ? 'text' : type}
     sx={CustomTextFieldStyle({ color })}
-    InputProps={type === 'password'
+    InputProps={type === 'password' && props.value !== ''
       ? {
           endAdornment: (
             <InputAdornment position='end' sx={{ margin: 0 }}>
