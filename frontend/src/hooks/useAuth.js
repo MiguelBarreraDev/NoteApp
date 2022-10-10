@@ -13,10 +13,10 @@ export default function useAuth () {
   const { callEndpoint, loading } = useFetchAndLoad()
 
   const login = async ({ username, password }) => {
-    const { data } = await callEndpoint(loginService({ username, password }))
+    const response = await callEndpoint(loginService({ username, password }))
+    if (response?.error) return response
 
-    if (!data) return
-
+    const { data } = response
     ls.setItem('jwt', data.jwt)
     dispatch(createUser({ username: data.username, jwt: data.jwt }))
     navigate(PrivateRoutes.PRIVATE.route)

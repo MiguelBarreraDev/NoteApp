@@ -16,7 +16,13 @@ const useFetchAndLoad = () => {
     try {
       result = await asyncCall.call
     } catch (error) {
-      if (error.response.status === 401) ls.removeItem('jwt')
+      if (error.response.status === 401) {
+        ls.removeItem('jwt')
+        Object.assign(result, { error: 'Unauthorized user ', code: 401 })
+      }
+      if (error.response.status === 0) {
+        Object.assign(result, { error: 'An internal problem arose', code: 0 })
+      }
     }
 
     setLoading(false)
