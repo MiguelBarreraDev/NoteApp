@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Typography from '@mui/material/Typography'
 import { useAuth } from '@/hooks'
 import {
@@ -14,7 +14,7 @@ import { ShowError } from '@/components/ShowError'
 export default function Login () {
   const [errorMessage, setErrorMessage] = useState('')
   const { login, isLogged, logout, loading } = useAuth()
-  const [inputValues, setInputValues] = useState({
+  const [formValues, setFormValues] = useState({
     username: '',
     password: ''
   })
@@ -23,21 +23,11 @@ export default function Login () {
     isLogged && logout({ redirect: false })
   }, [])
 
-  const handleClose = useCallback(() => setErrorMessage(''), [])
-
-  const changeInputValue = inputKey => e => (
-    setInputValues(cs => ({ ...cs, [inputKey]: e.target.value }))
-  )
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    const response = await login(inputValues)
-    if (response?.error) setErrorMessage(response.error)
-  }
-
   return (
     <AuthenticateFormContainer>
-      <FormGridContainer onSubmit={handleSubmit}>
+      <FormGridContainer
+        onSubmit={handleSubmit({ formValues, login, setErrorMessage })}
+      >
         <FormGridItem>
           <Typography variant='h5' sx={{ color: 'Text.light', fontWeight: 'bold' }}>
             Welcome
@@ -48,8 +38,8 @@ export default function Login () {
             required
             label='Username'
             type='text'
-            value={inputValues?.username}
-            onChange={changeInputValue('username')}
+            value={formValues?.username}
+            onChange={changeInputValue({ setFormValues, inputKey: 'username' })}
           />
         </FormGridItem>
         <FormGridItem>
@@ -57,8 +47,8 @@ export default function Login () {
             required
             label='Password'
             type='password'
-            value={inputValues?.password}
-            onChange={changeInputValue('password')}
+            value={formValues?.password}
+            onChange={changeInputValue({ setFormValues, inputKey: 'password' })}
           />
         </FormGridItem>
         <FormGridItem>
@@ -71,10 +61,26 @@ export default function Login () {
               : 'Log in'}
           </SubmitButton>
         </FormGridItem>
-        <ShowError open={Boolean(errorMessage)} handleClose={handleClose}>
-          { errorMessage }
+        <ShowError
+          open={Boolean(errorMessage)}
+          handleClose={() => closeError(setErrorMessage)}
+        >
+          {errorMessage}
         </ShowError>
       </FormGridContainer>
     </AuthenticateFormContainer>
   )
 }
+
+const handleSubmit = ({ formValues, login, setErrorMessage }) => async (e) => {
+  e.preventDefault()
+  const { username, password } = formValues
+  const loginResponse = await login({ username, password })
+  if (loginResponse?.error) setErrorMessage(loginResponse.error)
+}
+
+const changeInputValue = ({ setFormValues, inputKey }) => e => (
+  setFormValues(cs => ({ ...cs, [inputKey]: e.target.value }))
+)
+
+const closeError = (setErrorMessage) => setErrorMessage('')
