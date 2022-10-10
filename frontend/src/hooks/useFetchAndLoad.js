@@ -2,7 +2,7 @@ import { ls } from '@/utilities'
 import { useState, useEffect } from 'react'
 
 const handleError = ({ error }) => {
-  if (error.response.status === 401) {
+  if ([400, 401].includes(error.response.status)) {
     ls.removeItem('jwt')
     return { error: 'Unauthorized user ', code: 401 }
   }
@@ -19,18 +19,19 @@ const useFetchAndLoad = () => {
   // Make asyncronous call
   const callEndpoint = async (asyncCall) => {
     setLoading(true)
-    let result = {}
 
     if (asyncCall.controller) controller = asyncCall.controller
 
     try {
-      result = await asyncCall.call
-    } catch (error) {
-      result = handleError({ error })
-    }
+      // execute asyncronous call
+      const { data } = await asyncCall.call
 
-    setLoading(false)
-    return result
+      return data
+    } catch (error) {
+      return handleError({ error })
+    } finally {
+      setLoading(false)
+    }
   }
 
   // Cancel the asyncronous call
