@@ -14,16 +14,23 @@ export default function useAuth () {
 
   const login = async ({ username, password }) => {
     const response = await callEndpoint(loginService({ username, password }))
+
+    // Hanlde error
     if (response?.error) return response
 
-    const { data } = response
-    ls.setItem('jwt', data.jwt)
-    dispatch(createUser({ username: data.username, jwt: data.jwt }))
+    // Set auth token
+    ls.setItem('jwt', response.jwt)
+
+    // Create new user in memory
+    dispatch(createUser({ username: response.username, jwt: response.jwt }))
     navigate(PrivateRoutes.PRIVATE.route)
   }
 
   const logout = ({ redirect = true } = {}) => {
+    // Unset auth token
     ls.removeItem('jwt')
+
+    // Remove current session of the user
     dispatch(resetUser())
     redirect && navigate(PublicRoutes.LOGIN.route)
   }
