@@ -8,9 +8,9 @@ import {
   validateUpdatePasswordDTO
 } from "#middlewares/validateUserDataDTO.js"
 import validateJWT from "#middlewares/validateJWT.js";
-import userSignupController from "#controllers/user-signup.controller.js";
-import userLoginController from "#controllers/user-login.controller.js";
-import userPrfofileController from "#controllers/user-profile.controller.js";
+import userSignupController from "#controllers/users/user-signup.controller.js";
+import userLoginController from "#controllers/users/user-login.controller.js";
+import userPrfofileController from "#controllers/users/user-profile.controller.js";
 
 const userRouter = Router()
 
@@ -21,6 +21,6 @@ userRouter
   .patch('/update-data', validateJWT, validateUpdateDataDTO)
   .patch('/update-email', validateJWT, validateUpdateEmailDTO)
   .patch('/update-password', validateJWT, validateUpdatePasswordDTO)
-  .delete('/unsignup', validateJWT, validateUnsignupDTO)
+  .delete('/', validateJWT, validateUnsignupDTO)
 
 export default userRouter
