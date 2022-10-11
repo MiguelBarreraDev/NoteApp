@@ -25,7 +25,7 @@ export default function SignUp () {
   const { callEndpoint, loading } = useFetchAndLoad()
   const [inputValues, setInputValues] = useState({
     name: '',
-    lastname: '',
+    surname: '',
     username: '',
     email: '',
     password: ''
