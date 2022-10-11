@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const emptyUserState = {
   id: '',
+  name: '',
+  lastname: '',
   username: '',
   jwt: null
 }
