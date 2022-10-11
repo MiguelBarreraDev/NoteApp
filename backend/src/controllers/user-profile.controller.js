@@ -2,9 +2,9 @@ import UserModel from "#schemas/user.schemas.js"
 
 const userPrfofileController = async (req, res) => {
   const { id: userId } = req
-  const { username } = await UserModel.findOne({ _id: userId }).exec()
+  const { name, username, surname } = await UserModel.findOne({ _id: userId }).exec()
 
-  return res.json({ username, id: userId })
+  return res.json({ id: userId, name, surname, username })
 }
 
 export default userPrfofileController
