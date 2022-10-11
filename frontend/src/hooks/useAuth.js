@@ -4,6 +4,7 @@ import { loginService } from '@/services'
 import { ls } from '@/utilities'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { userAdapter } from '@/adapters'
 import useFetchAndLoad from './useFetchAndLoad'
 
 export default function useAuth () {
@@ -22,7 +23,7 @@ export default function useAuth () {
     ls.setItem('jwt', response.jwt)
 
     // Create new user in memory
-    dispatch(createUser({ username: response.username, jwt: response.jwt }))
+    dispatch(createUser(userAdapter(response)))
     navigate(PrivateRoutes.PRIVATE.route)
   }
 
