@@ -1,6 +1,6 @@
-import UserModel from '#schemas/user.schemas.js'
+import UserModel from '#models/user.models.js'
 import { hash } from 'bcrypt'
-import { SignJWT } from 'jose'
+import { signJWT } from '#utils/jwt.utils.js'
 import { v4 as uuidv4 } from 'uuid'
 
 const userSignupController = async (req, res) => {
@@ -37,12 +37,7 @@ const userSignupController = async (req, res) => {
   await user.save()
 
   // Generate a JWT for the user who logs in to the application
-  const encoder = new TextEncoder()
-  const jwt = await new SignJWT({ id: user._id })
-    .setProtectedHeader({ alg: 'HS256', typ: 'JWT'})
-    .setIssuedAt()
-    .setExpirationTime('1d')
-    .sign(encoder.encode(process.env.JWT_PRIVATE_KEY))
+  const jwt = signJWT({ id: user._id })
 
   res.status(201).json({
     message: 'Successful registration',

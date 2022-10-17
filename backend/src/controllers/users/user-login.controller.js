@@ -3,9 +3,9 @@
  * 'login' endpoint.
  */
 
-import UserModel from '#schemas/user.schemas.js'
+import UserModel from '#models/user.models.js'
 import { compare } from 'bcrypt'
-import { SignJWT } from 'jose'
+import { signJWT } from '#utils/jwt.utils.js'
 
 const userLoginController = async (req, res) => {
   const { username, password } = req.body
@@ -21,12 +21,8 @@ const userLoginController = async (req, res) => {
     return res.status(401).json({ error: 'Wrong credentials' })
 
   // Generate a JWT for the user who logs in to the application
-  const encoder = new TextEncoder()
-  const jwt = await new SignJWT({ id: existingUser._id })
-    .setProtectedHeader({ alg: 'HS256', typ: 'JWT'})
-    .setIssuedAt()
-    .setExpirationTime('1d')
-    .sign(encoder.encode(process.env.JWT_PRIVATE_KEY))
+  const payload = { id: existingUser._id }
+  const jwt = signJWT({ payload })
 
   return res.json({
     id: existingUser._id,
