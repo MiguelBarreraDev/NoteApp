@@ -1,19 +1,15 @@
-import { jwtVerify } from 'jose'
+import { verifyJWT } from '#utils/jwt.utils.js'
 
 const validateJWT = async (req, res, next) => {
   const message = 'Unauthorized user'
-  const { authorization: token } = req.headers
+  const { authorization: jwt } = req.headers
 
-  if (!token) return res.status(401).json({ message })
+  if (!jwt) return res.status(401).json({ message })
 
   try {
-    const encoder = new TextEncoder()
-    const { payload } = await jwtVerify(
-      token,
-      encoder.encode(process.env.JWT_PRIVATE_KEY)
-    )
+    const payload = verifyJWT({ jwt })
 
-    req.id = payload.id
+    req.id = payload?.id
     next()
   } catch (error) {
     return res.status(401).json({ message })
