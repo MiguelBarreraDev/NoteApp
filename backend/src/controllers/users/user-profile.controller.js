@@ -5,12 +5,12 @@ const userService = new UserService()
 const userPrfofileController = async (req, res) => {
   const { id } = req
 
-  const existingUserById = await userService.findById(id)
-  if (!existingUserById)
-    return res.sendStatus(401).json({ error: 'Unauthorized user' })
+  const existingUser = await userService.findById(id)
+  if (!existingUser)
+    return res.status(401).json({ error: ['Unauthorized user'] })
 
   return res.json({
-    id: existingUser._id,
+    id: existingUser.id,
     name: existingUser.name,
     surname: existingUser.surname,
     username: existingUser.username,

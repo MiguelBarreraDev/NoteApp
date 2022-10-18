@@ -12,18 +12,18 @@ const userSignupController = async (req, res) => {
   if (existingUserByUsername)
     return res
       .status(409)
-      .json({ message: 'There is already a user with this username' })
+      .json({ error: ['There is already a user with this username'] })
 
   const existingUserByEmail = await UserService.findBy({ email })
   if (existingUserByEmail)
     return res
       .status(409)
-      .json({ error: 'There is already a user with this email' })
+      .json({ error: ['There is already a user with this email'] })
 
   // Create new user
   const id = uuidv4()
   const hashedPassword = await hash(password, 10) // TODO: investigate how it works
-  const user = userService.create({
+  const user = await userService.create({
     id,
     name,
     surname,
@@ -36,7 +36,7 @@ const userSignupController = async (req, res) => {
   const jwt = signJWT({ id })
 
   res.status(201).json({
-    id: user._id,
+    id: user.id,
     name: user.name,
     surname: user.surname,
     username: user.username,
