@@ -25,12 +25,13 @@ const useFetchAndLoad = () => {
     try {
       // execute asyncronous call
       const { data } = await asyncCall.call
+      setLoading(false)
 
       return data
     } catch (error) {
-      return handleError({ error })
-    } finally {
       setLoading(false)
+
+      return handleError({ error })
     }
   }
 
