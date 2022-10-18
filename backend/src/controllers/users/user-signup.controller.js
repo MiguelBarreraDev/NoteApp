@@ -1,48 +1,46 @@
-import UserModel from '#models/user.models.js'
 import { hash } from 'bcrypt'
 import { signJWT } from '#utils/jwt.utils.js'
 import { v4 as uuidv4 } from 'uuid'
+import UserService from '#services/user.services.js'
+
+const userService = new UserService()
 
 const userSignupController = async (req, res) => {
   const { name, surname, username, email, password } = req.body
 
-  const existingUserByUsername = await UserModel.findOne({ username })
+  const existingUserByUsername = await UserService.findBy({ username })
   if (existingUserByUsername)
     return res
       .status(409)
-      .json({
-        field: 'username',
-        message: 'There is already a user with this username'
-      })
+      .json({ message: 'There is already a user with this username' })
 
-  const existingUserByEmail = await UserModel.findOne({ email })
+  const existingUserByEmail = await UserService.findBy({ email })
   if (existingUserByEmail)
     return res
       .status(409)
-      .json({
-        field: 'email',
-        message: 'There is already a user with this email'
-      })
+      .json({ error: 'There is already a user with this email' })
 
-  const generatedId = await uuidv4() // TODO: investigate how it works
+  // Create new user
+  const id = uuidv4()
   const hashedPassword = await hash(password, 10) // TODO: investigate how it works
-  const user = new UserModel({
-    _id: generatedId,
+  const user = userService.create({
+    id,
     name,
     surname,
     username,
+    email,
     password: hashedPassword
   })
 
-  await user.save()
-
   // Generate a JWT for the user who logs in to the application
-  const jwt = signJWT({ id: user._id })
+  const jwt = signJWT({ id })
 
   res.status(201).json({
-    message: 'Successful registration',
     id: user._id,
+    name: user.name,
+    surname: user.surname,
     username: user.username,
+    email: user.email,
     jwt
   })
 }
