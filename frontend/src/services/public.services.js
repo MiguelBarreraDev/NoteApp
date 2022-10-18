@@ -21,7 +21,9 @@ export const loginService = ({ username, password }) => {
   }
 
   return {
-    call: axios.post(getURL('users/login'), data, { signal: controller.signal }),
+    call: axios.post(getURL('users/login'), data, {
+      signal: controller.signal
+    }),
     controller
   }
 }
@@ -29,11 +31,11 @@ export const loginService = ({ username, password }) => {
 /**
  * ...
  */
-export const signupService = ({ name, lastname, username, email, password }) => {
+export const signupService = ({ name, surname, username, email, password }) => {
   const controller = loadAbort()
   const data = {
     name,
-    surname: lastname,
+    surname,
     username,
     email,
     password
