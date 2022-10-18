@@ -8,7 +8,7 @@ const UnsignupDTOSchema = Type.Object({
 })
 
 const ajv = new Ajv({ allErrors: true }).addKeyword('kind').addKeyword('modifier')
-ajv.addFormat('password', /^.*\d.*[a-z].*[A-Z].*$/)
+ajv.addFormat('password', /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)
 
 AddErrors(ajv)
 
