@@ -1,23 +1,47 @@
 import UserModel from "#models/user.models.js"
 
 class UserService {
-  async create (userData) {
-    const { id, ...rest } = userData
-    const newUser = new UserModel({ _id: id, ...rest })
+  #toPersistence (domainUser) {
+    const { id, name, surname, username, email, password } = domainUser
+
+    return {
+      _id: id,
+      name,
+      surname,
+      username,
+      email,
+      password
+    }
+  }
+
+  #toDomain (persistenceUser) {
+    const { _id, name, surname, username, email, password } = persistenceUser
+
+    return {
+      id: _id,
+      name,
+      surname,
+      username,
+      email,
+      password
+    }
+  }
+
+  async create (domainUser) {
+    const persistenceUser = this.#toPersistence(domainUser)
+    const newUser = new UserModel(persistenceUser)
 
     await newUser.save()
-
-    return newUser
+    
+    return this.#toDomain(newUser)
   }
-  
+
   async findById (id) {
     const userFound = await UserModel.findById(id).exec()
 
     if (!userFound) return null
 
-    const { _id, name, surname, username, email, password } = userFound
-
-    return { id: _id, name, surname, username, email, password }
+    return this.#toDomain(userFound)
   }
 
   async findBy (filter) {
@@ -25,15 +49,19 @@ class UserService {
 
     if (!userFound) return null
 
-    const { _id, name, surname, username, email, password } = userFound
-
-    return { id: _id, name, surname, username, email, password }
+    return this.#toDomain(userFound)
   }
 
-  async update (userData) {
-    const { id, ...rest } = userData
+  async update (domainUser) {
+    const { _id, ...rest } = this.#toPersistence(domainUser)
 
-    await UserModel.findByIdAndUpdate(id, rest)
+    await UserModel.findByIdAndUpdate(_id, rest)
+  }
+
+  async deleteById (id) {
+    if (!id) return null
+
+    await UserModel.findByIdAndDelete(id)
   }
 }
 
