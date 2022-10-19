@@ -11,6 +11,10 @@ import validateJWT from "#middlewares/validateJWT.js";
 import userSignupController from "#controllers/users/user-signup.controller.js";
 import userLoginController from "#controllers/users/user-login.controller.js";
 import userPrfofileController from "#controllers/users/user-profile.controller.js";
+import userDataController from "#controllers/users/user-data.controller.js";
+import userEmailController from "#controllers/users/user-email.controller.js";
+import userPasswordController from "#controllers/users/user-password.controller.js";
+import userDeleteController from "#controllers/users/user-delete.controller.js";
 
 const userRouter = Router()
 
@@ -18,9 +22,9 @@ userRouter
   .post('/signup', validateSignupDTO, userSignupController)
   .post('/login', validateLoginDTO, userLoginController)
   .get('/profile', validateJWT, userPrfofileController)
-  .patch('/update-data', validateJWT, validateUpdateDataDTO)
-  .patch('/update-email', validateJWT, validateUpdateEmailDTO)
-  .patch('/update-password', validateJWT, validateUpdatePasswordDTO)
-  .delete('/', validateJWT, validateUnsignupDTO)
+  .patch('/data', validateJWT, validateUpdateDataDTO, userDataController)
+  .patch('/email', validateJWT, validateUpdateEmailDTO, userEmailController)
+  .patch('/password', validateJWT, validateUpdatePasswordDTO, userPasswordController)
+  .delete('/', validateJWT, validateUnsignupDTO, userDeleteController)
 
 export default userRouter
