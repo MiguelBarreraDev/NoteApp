@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 const handleError = ({ error }) => {
   if ([400, 401].includes(error.response.status)) {
     ls.removeItem('jwt')
-    return { error: 'Unauthorized user ', code: 401 }
+    return { error: 'Credentials Incorrects', code: 401 }
   }
   if (error.response.status === 0) {
     return { error: 'An internal problem arose', code: 0 }

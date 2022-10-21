@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom'
 import { PrivateRoutes } from '@/config'
 import { ls } from '@/utilities'
 import { ShowError } from '@/components/ShowError'
+import { userAdapter } from '@/adapters'
 
 export default function SignUp () {
   const [errorMessage, setErrorMessage] = useState('')
@@ -43,12 +44,14 @@ export default function SignUp () {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    console.log('inputValues:', inputValues)
     const response = await callEndpoint(signupService(inputValues))
+
     if (response?.error) return setErrorMessage(response.error)
     if (response?.data) {
       const { data } = response
       ls.setItem('jwt', data.jwt)
-      dispatch(createUser({ id: data.id, username: data.username, jwt: data.jwt }))
+      dispatch(createUser(userAdapter(data)))
       navigate(PrivateRoutes.PRIVATE.route)
     }
   }
@@ -79,8 +82,8 @@ export default function SignUp () {
             color='secondary'
             label='Lastname'
             type='text'
-            value={inputValues?.lastname}
-            onChange={changeInputValue('lastname')}
+            value={inputValues?.surname}
+            onChange={changeInputValue('surname')}
           />
         </FormGridItem>
         <FormGridItem>

@@ -4,8 +4,12 @@ import axios from 'axios'
 const { VITE_BACKEND_URL } = import.meta.env
 
 // TODO: How work interceptor?
-axios.interceptors.request.use((config) => {
-  return config
+const apiInstance = axios.create({
+  baseURL: VITE_BACKEND_URL
+})
+apiInstance.interceptors.request.use(request => {
+  console.log('request:', request)
+  return request
 })
 
 const getURL = (path) => `${VITE_BACKEND_URL}/${path}`
@@ -50,14 +54,11 @@ export const signupService = ({ name, surname, username, email, password }) => {
 /**
  * ...
  */
-export const profileService = ({ jwt }) => {
+export const profileService = () => {
   const controller = loadAbort()
 
   return {
-    call: axios.get(getURL('users/profile'), {
-      headers: {
-        Authorization: jwt
-      },
+    call: apiInstance.get('users/profile', {
       signal: controller.signal
     }),
     controller
