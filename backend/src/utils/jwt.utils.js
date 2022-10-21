@@ -13,5 +13,6 @@ export const signJWT = ({ payload }) => {
 }
 
 export const verifyJWT = ({ jwt }) => {
-  return jsonwebtoken.verify(jwt, JWT_PRIVATE_KEY)
+  const jwtFragment = jwt.split(' ')[1]
+  return jsonwebtoken.verify(jwtFragment, JWT_PRIVATE_KEY)
 }
