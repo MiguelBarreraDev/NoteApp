@@ -1,6 +1,6 @@
 import { PrivateRoutes, PublicRoutes } from '@/config'
 import { createUser, resetUser } from '@/redux/states'
-import { loginService } from '@/services'
+import { loginService, signupService } from '@/services'
 import { ls } from '@/utilities'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -36,9 +36,22 @@ export default function useAuth () {
     redirect && navigate(PublicRoutes.LOGIN.route)
   }
 
+  const signup = async (userData) => {
+    const response = await callEndpoint(signupService(userData))
+    if (response?.error) return response
+
+    // Set auth token
+    ls.setItem('jwt', response?.jwt)
+
+    // Create new user in memory
+    dispatch(createUser(userAdapter(response)))
+    navigate(PrivateRoutes.PRIVATE.route)
+  }
+
   return {
     login,
     logout,
+    signup,
     isLogged: Boolean(userState.jwt),
     loading,
     user: userState
