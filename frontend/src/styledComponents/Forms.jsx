@@ -42,10 +42,12 @@ export const FormGridContainer = ({ sx, ...props }) => (
     {...props}
     sx={{ ...FormGridContainerStyle, ...sx }}
     autoComplete='off'
+    noValidate
   />
 )
 
 const FormGridItemStyle = {
+  alignSelf: 'start',
   my: 0.5,
   width: '100%',
   textAlign: 'center'
