@@ -74,8 +74,7 @@ export default function Login () {
 
 const handleSubmit = ({ formValues, login, setErrorMessage }) => async (e) => {
   e.preventDefault()
-  const { username, password } = formValues
-  const loginResponse = await login({ username, password })
+  const loginResponse = await login(formValues)
   if (loginResponse?.error) setErrorMessage(loginResponse.error)
 }
 
