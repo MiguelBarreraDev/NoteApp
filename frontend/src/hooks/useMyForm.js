@@ -1,4 +1,4 @@
-import {toList} from '@/utilities'
+import { toList } from '@/utilities'
 import { useEffect, useMemo, useState } from 'react'
 
 export default function useMyform (initialValues) {
@@ -13,6 +13,12 @@ export default function useMyform (initialValues) {
   const [values, setValues] = useState(onlyContent)
   const [errors, setErrors] = useState(onlyKeys)
   const [validate, setValidate] = useState({ run: null })
+  const [check, setCheck] = useState(false)
+
+  useEffect(() => {
+    const existingErrors = toList(errors).some(error => error !== '')
+    existingErrors ? setCheck(false) : setCheck(true)
+  }, [errors])
 
   const getAttributes = name => {
     return {
@@ -38,6 +44,13 @@ export default function useMyform (initialValues) {
     setValues(cs => ({ ...cs, [name]: value }))
   }
 
+  const validateAllFields = () => {
+    const newErrors = validate.run(values)
+    const existingErrors = Object.keys(errors).some(key => errors[key] !== newErrors[key])
+
+    return { send: !existingErrors, newErrors }
+  }
+
   const handleErrors = e => {
     const { name } = e.target
     const newErrors = validate.run(values)
@@ -49,8 +62,9 @@ export default function useMyform (initialValues) {
     onSubmit: (e) => {
       e.preventDefault()
 
-      const existingErrors = toList(errors).some(error => error !== '')
-      if (existingErrors) return
+      const { send, newErrors } = validateAllFields()
+
+      if (!check || !send) return setErrors(newErrors)
 
       cb(values)
     }
