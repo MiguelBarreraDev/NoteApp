@@ -1,42 +1,68 @@
-import { useState } from 'react'
+import {toList} from '@/utilities'
+import { useEffect, useMemo, useState } from 'react'
 
 export default function useMyform (initialValues) {
-  const [inputs, setInputs] = useState(initialValues)
-  const [errors, setErrors] = useState(
-    Object.keys(initialValues).reduce((obj, key) => ({ ...obj, [key]: '' }), {})
-  )
-  console.log('inputs:', inputs)
-  console.log('errors:', errors)
-  const handleChange = (name, e) => {
-    const { value: content } = e.target
+  const onlyContent = useMemo(() => Object
+    .keys(initialValues)
+    .reduce((obj, key) => ({ ...obj, [key]: initialValues[key].content }), {}), [])
 
-    setInputs(cs => ({ ...cs, [name]: { ...cs[name], content } }))
-  }
+  const onlyKeys = useMemo(() => Object
+    .keys(initialValues)
+    .reduce((obj, key) => ({ ...obj, [key]: '' }), {}), [])
 
-  const handleError = (name, error) => {
-    setErrors(cs => ({ ...cs, [name]: error }))
-  }
+  const [values, setValues] = useState(onlyContent)
+  const [errors, setErrors] = useState(onlyKeys)
+  const [validate, setValidate] = useState({ run: null })
 
   const getAttributes = name => {
     return {
-      type: inputs[name].type ?? 'text',
+      type: initialValues[name].type ?? 'text',
       onChange: e => handleChange(name, e),
       name,
-      value: inputs[name].content,
+      value: values[name],
       error: Boolean(errors[name]),
-      helperText: errors[name] ?? ''
+      helperText: errors[name],
+      onBlur: handleErrors
     }
   }
 
-  const customErrors = newErrors => setErrors(cs => ({ ...cs, ...newErrors }))
+  const useValidate = (cb) => {
+    useEffect(() => {
+      setValidate({ run: cb })
+    }, [values])
+  }
+
+  const handleChange = (name, e) => {
+    const { value } = e.target
+
+    setValues(cs => ({ ...cs, [name]: value }))
+  }
+
+  const handleErrors = e => {
+    const { name } = e.target
+    const newErrors = validate.run(values)
+
+    setErrors(cs => ({ ...cs, [name]: newErrors[name] }))
+  }
+
+  const submit = (cb) => ({
+    onSubmit: (e) => {
+      e.preventDefault()
+
+      const existingErrors = toList(errors).some(error => error !== '')
+      if (existingErrors) return
+
+      cb(values)
+    }
+  })
 
   return {
     getAttributes,
-    formValues: Object
-      .keys(initialValues)
-      .reduce((obj, key) => ({ ...obj, [key]: inputs[key].content }), {}),
-    handleError,
-    customErrors,
-    errors
+    values,
+    handleErrors,
+    setValidate,
+    errors,
+    useValidate,
+    submit
   }
 }
