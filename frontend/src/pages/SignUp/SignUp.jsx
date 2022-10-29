@@ -9,14 +9,13 @@ import {
   CustomTextField
 } from '@/styledComponents'
 import { useAuth, useFetchAndLoad, useMyForm } from '@/hooks'
-import { toList } from '@/utilities'
 import { ShowError } from '@/components/ShowError'
 
 export default function SignUp () {
   const [errorMessage, setErrorMessage] = useState('')
   const { signup, logout, isLogged } = useAuth()
   const { loading } = useFetchAndLoad()
-  const { getAttributes, formValues, customErrors, errors } = useMyForm({
+  const { getAttributes, useValidate, submit } = useMyForm({
     name: { content: '' },
     surname: { content: '' },
     username: { content: '' },
@@ -28,52 +27,49 @@ export default function SignUp () {
     isLogged && logout({ redirect: false })
   }, [])
 
-  const handleErrors = () => {
+  useValidate((values) => {
     const newErrors = {}
 
     // Name errors
-    if (formValues.name === '') newErrors.name = 'Please complete this field'
-    else if (formValues.name < 2) newErrors.name = 'Min length 2 characters'
+    if (values.name === '') newErrors.name = 'Please complete this field'
+    else if (values.name.length < 2) newErrors.name = 'Min length 2 characters'
     else newErrors.name = ''
 
     // Surname errors
-    if (formValues.surname === '') newErrors.surname = 'Please complete this field'
-    else if (formValues.surname < 2) newErrors.surname = 'Min length 2 characters'
+    if (values.surname === '') newErrors.surname = 'Please complete this field'
+    else if (values.surname.length < 2) newErrors.surname = 'Min length 2 characters'
     else newErrors.surname = ''
 
     // Username errors
-    if (formValues.username === '') newErrors.username = 'Please complete this field'
-    else if (formValues.username < 8) newErrors.username = 'Min length 8 characters'
+    if (values.username === '') newErrors.username = 'Please complete this field'
+    else if (values.username.length < 8) newErrors.username = 'Min length 8 characters'
     else newErrors.username = ''
 
     // Email errors
-    if (formValues.email === '') newErrors.email = 'Please complete this field'
-    else if (formValues.email < 8) newErrors.email = 'Min length 8 characters'
+    if (values.email === '') newErrors.email = 'Please complete this field'
+    else if (values.email.length < 8) newErrors.email = 'Min length 8 characters'
     else newErrors.email = ''
 
     // Password errors
-    if (formValues.password === '') newErrors.password = 'Please complete this field'
-    else if (formValues.password < 8) newErrors.password = 'Min length 8 characters'
+    if (values.password === '') newErrors.password = 'Please complete this field'
+    else if (values.password.length < 8) newErrors.password = 'Min length 8 characters'
     else newErrors.password = ''
-    console.log('newErrors:', newErrors)
-    customErrors(newErrors)
-  }
+
+    return newErrors
+  })
 
   const handleClose = useCallback(() => setErrorMessage(''), [])
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-
-    const existingErrors = toList(errors).some(error => error !== '')
-    if (existingErrors) return
-
-    const response = await signup(formValues)
+  const handleSubmit = async (values) => {
+    const response = await signup(values)
     if (response?.error) setErrorMessage(response.error)
   }
 
   return (
     <AuthenticateFormContainer>
-      <FormGridContainer sx={{ maxWidth: '500px' }} onSubmit={handleSubmit}>
+      <FormGridContainer
+        sx={{ maxWidth: '500px' }}
+        {...submit(handleSubmit)}>
         <Typography
           align='center'
           variant='h5'
@@ -87,7 +83,6 @@ export default function SignUp () {
             color='secondary'
             label='Name'
             {...getAttributes('name')}
-            onBlur={handleErrors}
           />
         </FormGridItem>
         <FormGridItem sm={5.8}>
@@ -96,7 +91,6 @@ export default function SignUp () {
             color='secondary'
             label='Lastname'
             {...getAttributes('surname')}
-            onBlur={handleErrors}
           />
         </FormGridItem>
         <FormGridItem>
@@ -105,7 +99,6 @@ export default function SignUp () {
             color='secondary'
             label='Username'
             {...getAttributes('username')}
-            onBlur={handleErrors}
           />
         </FormGridItem>
         <FormGridItem>
@@ -114,7 +107,6 @@ export default function SignUp () {
             color='secondary'
             label='E-mail'
             {...getAttributes('email')}
-            onBlur={handleErrors}
           />
         </FormGridItem>
         <FormGridItem>
@@ -123,7 +115,6 @@ export default function SignUp () {
             color='secondary'
             label='Password'
             {...getAttributes('password')}
-            onBlur={handleErrors}
           />
         </FormGridItem>
         <FormGridItem>
