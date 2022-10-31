@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Typography from '@mui/material/Typography'
 import { useAuth } from '@/hooks'
 import {
@@ -9,24 +9,45 @@ import {
   CustomTextField
 } from '@/styledComponents'
 import CircularProgress from '@mui/material/CircularProgress'
-import { ShowError } from '@/components/ShowError'
+import useMyform from '@/hooks/useMyForm'
+
+const customErrors = (values) => {
+  const newErrors = {}
+
+  // Username errors
+  if (values.username === '') newErrors.username = 'Please complete this field'
+  else newErrors.username = ''
+
+  // Password errors
+  if (values.password === '') newErrors.password = 'Please complete this field'
+  else newErrors.password = ''
+
+  return newErrors
+}
 
 export default function Login () {
-  const [errorMessage, setErrorMessage] = useState('')
+  const [error, setError] = useState('')
   const { login, isLogged, logout, loading } = useAuth()
-  const [formValues, setFormValues] = useState({
-    username: '',
-    password: ''
+  const { getAttributes, submit, useValidate } = useMyform({
+    username: { content: '' },
+    password: { content: '', type: 'password' }
   })
 
   useEffect(() => {
     isLogged && logout({ redirect: false })
   }, [])
 
+  useValidate(customErrors)
+
+  const handleSubmit = async (values) => {
+    const loginResponse = await login(values)
+    if (loginResponse?.error) setError(loginResponse.error)
+  }
+
   return (
     <AuthenticateFormContainer>
       <FormGridContainer
-        onSubmit={handleSubmit({ formValues, login, setErrorMessage })}
+        {...submit(handleSubmit)}
       >
         <FormGridItem>
           <Typography variant='h5' sx={{ color: 'Text.light', fontWeight: 'bold' }}>
@@ -37,18 +58,14 @@ export default function Login () {
           <CustomTextField
             required
             label='Username'
-            type='text'
-            value={formValues?.username}
-            onChange={changeInputValue({ setFormValues, inputKey: 'username' })}
+            {...getAttributes('username')}
           />
         </FormGridItem>
         <FormGridItem>
           <CustomTextField
             required
             label='Password'
-            type='password'
-            value={formValues?.password}
-            onChange={changeInputValue({ setFormValues, inputKey: 'password' })}
+            {...getAttributes('password')}
           />
         </FormGridItem>
         <FormGridItem>
@@ -61,25 +78,12 @@ export default function Login () {
               : 'Log in'}
           </SubmitButton>
         </FormGridItem>
-        <ShowError
-          open={Boolean(errorMessage)}
-          handleClose={() => closeError(setErrorMessage)}
-        >
-          {errorMessage}
-        </ShowError>
+        {Boolean(error) && <FormGridItem>
+          <Typography color='error'>
+            Username or password incorrects
+          </Typography>
+        </FormGridItem>}
       </FormGridContainer>
     </AuthenticateFormContainer>
   )
 }
-
-const handleSubmit = ({ formValues, login, setErrorMessage }) => async (e) => {
-  e.preventDefault()
-  const loginResponse = await login(formValues)
-  if (loginResponse?.error) setErrorMessage(loginResponse.error)
-}
-
-const changeInputValue = ({ setFormValues, inputKey }) => e => (
-  setFormValues(cs => ({ ...cs, [inputKey]: e.target.value }))
-)
-
-const closeError = (setErrorMessage) => setErrorMessage('')
