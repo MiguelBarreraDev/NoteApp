@@ -45,6 +45,7 @@ export default function useMyform (initialValues) {
   }
 
   const validateAllFields = () => {
+    if (!validate.run) return { send: true }
     const newErrors = validate.run(values)
     const existingErrors = Object.keys(errors).some(key => errors[key] !== newErrors[key])
 
@@ -53,8 +54,10 @@ export default function useMyform (initialValues) {
 
   const handleErrors = e => {
     const { name } = e.target
-    const newErrors = validate.run(values)
 
+    if (!validate.run) return
+
+    const newErrors = validate.run(values)
     setErrors(cs => ({ ...cs, [name]: newErrors[name] }))
   }
 
@@ -70,13 +73,16 @@ export default function useMyform (initialValues) {
     }
   })
 
+  const updateValidate = (name, value) => {
+    setValidate(cs => ({ ...cs, [name]: value }))
+  }
+
   return {
     getAttributes,
     values,
-    handleErrors,
-    setValidate,
     errors,
     useValidate,
-    submit
+    submit,
+    updateValidate
   }
 }
