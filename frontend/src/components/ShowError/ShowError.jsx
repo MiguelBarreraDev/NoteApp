@@ -1,42 +1,26 @@
-import Alert from '@mui/material/Alert'
-import { useEffect, useRef } from 'react'
+import { updateError } from '@/redux/states'
+import MuiAlert from '@mui/material/Alert'
+import Snackbar from '@mui/material/Snackbar'
+import { forwardRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-export default function ShowError ({ sx, open = false, handleClose, children }) {
-  const ref = useRef()
+const Alert = forwardRef(function Alert (props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
 
-  useEffect(() => {
-    window.addEventListener('click', e => {
-      const { current } = ref
-      const { target } = e
-      if (current && current !== target && !current.contains(target)) {
-        handleClose('')
-      }
-    })
-  }, [ref.current])
+export default function ShowError () {
+  const errorState = useSelector(state => state.error)
+  const dispatch = useDispatch()
+
+  const handleClose = () => {
+    dispatch(updateError({ active: false }))
+  }
 
   return (
-    <>
-      { open
-        ? <Alert
-          ref={ref}
-          onClose={handleClose}
-          severity='error'
-          variant='filled'
-          sx={{
-            position: 'absolute',
-            width: '100%',
-            maxWidth: '350px',
-            margin: 'auto',
-            borderRadius: 2,
-            left: 0,
-            right: 0,
-            bottom: -80,
-            ...sx
-          }}
-        >
-          { children }
-        </Alert>
-        : null}
-    </>
+    <Snackbar open={errorState.active} autoHideDuration={6000} onClose={handleClose}>
+      <Alert variant='filled' onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+        {errorState.message}
+      </Alert>
+    </Snackbar>
   )
 }
