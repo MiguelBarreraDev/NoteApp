@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { userReducer } from './states'
+import { errorReducer, userReducer } from './states'
 
 export const store = configureStore({
   reducer: {
-    user: userReducer
+    user: userReducer,
+    error: errorReducer
   }
 })
