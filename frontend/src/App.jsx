@@ -7,6 +7,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { Header } from './components/Common/Header'
 import { lazy, Suspense } from 'react'
 import { useRecoverUser } from './hooks'
+import { ShowError } from './components/ShowError'
 
 const Private = lazy(() => import('@/pages/Private/Private'))
 
@@ -30,6 +31,7 @@ function App () {
             <Route path={`${PrivateRoutes.PRIVATE.route}/*`} element={<Private />} />
           </Route>
         </RoutesWithNotFound>
+        <ShowError />
       </Suspense>}
     </>
   )
