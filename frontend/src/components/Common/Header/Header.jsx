@@ -5,6 +5,7 @@ import Nav from './Nav'
 import CallActions from './CallActions'
 import { useLocation } from 'react-router-dom'
 import { useAuth } from '@/hooks'
+import UserAvatar from './UserAvatar'
 
 export default function Header () {
   const { isLogged } = useAuth()
@@ -15,7 +16,7 @@ export default function Header () {
       <Container sx={ContainerStyle} maxWidth='xl'>
         <Title />
         <Nav />
-        {!isLogged && <CallActions />}
+        {isLogged ? <UserAvatar /> : <CallActions />}
       </Container>
     </AppBar>
   )

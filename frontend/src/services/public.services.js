@@ -1,4 +1,4 @@
-import { loadAbort } from '@/utilities'
+import { loadAbort, ls } from '@/utilities'
 import axios from 'axios'
 
 const { VITE_BACKEND_URL } = import.meta.env
@@ -8,7 +8,7 @@ const apiInstance = axios.create({
   baseURL: VITE_BACKEND_URL
 })
 apiInstance.interceptors.request.use(request => {
-  console.log('request:', request)
+  request.headers.Authorization = `Bearer ${ls.getItem('jwt')}`
   return request
 })
 
