@@ -10,9 +10,9 @@ import { store } from './redux'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <ThemeProvider theme={lightTheme}>
     <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </ThemeProvider>
 )
