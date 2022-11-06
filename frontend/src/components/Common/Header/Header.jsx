@@ -1,11 +1,11 @@
 import AppBar from '@mui/material/AppBar'
-import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
 import Title from './Title'
 import Nav from './Nav'
 import CallActions from './CallActions'
 import { useLocation } from 'react-router-dom'
 import { useAuth } from '@/hooks'
-import UserAvatar from './UserAvatar'
+import AccountMenu from './AccountMenu'
 
 export default function Header () {
   const { isLogged } = useAuth()
@@ -13,11 +13,11 @@ export default function Header () {
 
   return (
     <AppBar position='sticky' sx={AppBarStyle({ pathname })}>
-      <Container sx={ContainerStyle} maxWidth='xl'>
+      <Box sx={ContainerStyle}>
         <Title />
         <Nav />
-        {isLogged ? <UserAvatar /> : <CallActions />}
-      </Container>
+        {isLogged ? <AccountMenu /> : <CallActions />}
+      </Box>
     </AppBar>
   )
 }
@@ -30,8 +30,10 @@ const AppBarStyle = (props) => ({
 })
 
 const ContainerStyle = {
+  width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  flexWrap: 'nowrap'
+  flexWrap: 'nowrap',
+  px: 2
 }
