@@ -1,11 +1,6 @@
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import { useAuth } from '@/hooks'
 
 export default function Dashboard () {
-  const { logout, user } = useAuth()
-
   return (
     <Box
       sx={{
@@ -18,15 +13,7 @@ export default function Dashboard () {
         gap: 2
       }}
     >
-      <Typography variant='h1' color='Text.light'>
-        Notes
-      </Typography>
-      <Typography variant='h4' color='Text.light'>
-        {`"${user.username}"`}
-      </Typography>
-      <Button variant='outlined' onClick={() => logout()}>
-        LOGOUT
-      </Button>
+      DASHBOARD
     </Box>
   )
 }
