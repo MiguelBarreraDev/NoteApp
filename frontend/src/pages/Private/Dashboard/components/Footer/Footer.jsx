@@ -10,7 +10,7 @@ export default function Footer () {
         py: 1
       }}
     >
-      <Typography variant='button'>
+      <Typography variant='button' sx={{ cursor: 'pointer', ':hover': { color: 'primary.main' } }}>
         + Add new note
       </Typography>
     </Box>

@@ -1,10 +1,11 @@
 import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 import { List } from '../List'
 import { Item } from '../Item'
 import { Header } from '../Header'
 import { Footer } from '../Footer'
 
-export default function Category () {
+export default function Category ({ name, notes }) {
   return (
     <Box
       sx={{
@@ -14,14 +15,20 @@ export default function Category () {
         height: 'fit-content',
         my: 2,
         px: 1,
-        boxShadow: '0px 1px 4px #000a'
+        boxShadow: '0px 1px 4px #000a',
+        minWidth: 300,
+        maxWidth: 300,
+        overflowX: 'hidden'
       }}
     >
-      <Header />
+      <Header title={name}/>
       <List>
-        <Item>1 Item</Item>
-        <Item>2 Item</Item>
-        <Item>3 Item</Item>
+        {notes.map(note => (
+          <Item key={note?.title}>
+            <Typography sx={{ fontSize: '1em', color: '#404040', fontWeight: 'bold' }}>{note.title}</Typography>
+            <Typography>{note.body}</Typography>
+          </Item>
+        ))}
       </List>
       <Footer/>
     </Box>

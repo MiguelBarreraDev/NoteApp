@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box'
 import { Category } from './components'
+import { notes } from './config'
 
 export default function Dashboard () {
   return (
@@ -13,7 +14,13 @@ export default function Dashboard () {
         pl: 2
       }}
     >
-      <Category />
+      {notes.map(categoryNote => (
+        <Category
+          key={categoryNote?.category}
+          name={categoryNote?.category}
+          notes={categoryNote?.items}
+        />
+      ))}
     </Box>
   )
 }

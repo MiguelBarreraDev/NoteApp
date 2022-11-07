@@ -9,7 +9,6 @@ const List = forwardRef((props, ref) => (
       borderRadius: 0,
       overflowY: 'auto',
       maxHeight: theme => `calc(100vh - ${theme.components.Header.height} - 113px)`,
-      minWidth: 280,
       bgcolor: 'transparent',
       pb: 1
     }}
