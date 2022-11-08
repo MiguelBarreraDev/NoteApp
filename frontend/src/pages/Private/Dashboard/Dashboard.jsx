@@ -10,7 +10,7 @@ export default function Dashboard () {
       {notes.map(categoryNote => (
         <Category
           key={categoryNote.category}
-          name={categoryNote.category}
+          name={categoryNote.name}
           notes={categoryNote.items}
         />
       ))}
