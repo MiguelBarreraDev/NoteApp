@@ -8,7 +8,6 @@ const List = forwardRef((props, ref) => (
     sx={{
       borderRadius: 0,
       overflowY: 'auto',
-      maxHeight: theme => `calc(100vh - ${theme.components.Header.height} - 113px)`,
       bgcolor: 'transparent',
       pb: 1
     }}

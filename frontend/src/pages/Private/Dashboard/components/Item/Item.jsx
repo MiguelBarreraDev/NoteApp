@@ -6,10 +6,12 @@ const Item = forwardRef((props, ref) => (
     ref={ref}
     sx={{
       borderRadius: 1,
-      minHeight: 100,
-      maxHeight: 100,
+      minHeight: 120,
+      maxHeight: 120,
       overflow: 'hidden',
-      px: 1
+      px: 1,
+      display: 'flex',
+      flexDirection: 'column'
     }}
     elevation={2}
   >
