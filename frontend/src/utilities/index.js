@@ -1,5 +1,6 @@
 export { default as RoutesWithNotFound } from './RoutesWithNotFound'
-export { default as toList } from './toList'
+export * from './object.utitlities'
 export { default as convertBase } from './convertBase'
 export { default as loadAbort } from './loadAbort'
-export * from './globalObject'
+export * from './window'
+export * from './axiosInstances'
