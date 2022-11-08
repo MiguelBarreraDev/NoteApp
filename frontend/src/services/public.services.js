@@ -1,18 +1,4 @@
-import { loadAbort, ls } from '@/utilities'
-import axios from 'axios'
-
-const { VITE_BACKEND_URL } = import.meta.env
-
-// TODO: How work interceptor?
-const apiInstance = axios.create({
-  baseURL: VITE_BACKEND_URL
-})
-apiInstance.interceptors.request.use(request => {
-  request.headers.Authorization = `Bearer ${ls.getItem('jwt')}`
-  return request
-})
-
-const getURL = (path) => `${VITE_BACKEND_URL}/${path}`
+import { axiosPrivate, axiosPublic, loadAbort } from '@/utilities'
 
 /**
  * ...
@@ -25,7 +11,7 @@ export const loginService = ({ username, password }) => {
   }
 
   return {
-    call: axios.post(getURL('users/login'), data, {
+    call: axiosPublic('users/login', data, {
       signal: controller.signal
     }),
     controller
@@ -46,7 +32,7 @@ export const signupService = ({ name, surname, username, email, password }) => {
   }
 
   return {
-    call: axios.post(getURL('users/signup'), data, { signal: controller.signal }),
+    call: axiosPublic('users/signup', data, { signal: controller.signal }),
     controller
   }
 }
@@ -58,7 +44,7 @@ export const profileService = () => {
   const controller = loadAbort()
 
   return {
-    call: apiInstance.get('users/profile', {
+    call: axiosPrivate.get('users/profile', {
       signal: controller.signal
     }),
     controller
