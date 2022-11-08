@@ -5,7 +5,7 @@ const notesContext = createContext()
 
 // Initial state for notes
 const initialState = {
-  todo: {
+  'TODO': {
     name: 'TODO',
     items: [
       {
@@ -22,7 +22,7 @@ const initialState = {
       }
     ]
   },
-  'in process': {
+  'In Process': {
     name: 'In Process',
     items: [
       {
@@ -63,7 +63,7 @@ const initialState = {
       }
     ]
   },
-  stoped: {
+  Stoped: {
     name: 'Stoped',
     items: [
       {
@@ -98,7 +98,7 @@ const reducer = (state, action) => {
     case 'add category':
       return {
         ...state,
-        [payload.name.toLowerCase()]: {
+        [payload.name]: {
           name: payload.name,
           items: []
         }
@@ -106,10 +106,10 @@ const reducer = (state, action) => {
     case 'add note':
       return {
         ...state,
-        [payload.categoryName.toLowerCase()]: {
-          ...state[payload.categoryName.toLowerCase()],
+        [payload.categoryName]: {
+          ...state[payload.categoryName],
           items: [
-            ...state[payload.categoryName.toLowerCase()].items,
+            ...state[payload.categoryName].items,
             { title: payload.title, body: payload.body }
           ]
         }
@@ -117,20 +117,18 @@ const reducer = (state, action) => {
     case 'remove category':
       return toList(state).reduce((obj, category) => {
         const { name } = category
-        const categoryKey = name.toLowerCase()
+        const categoryKey = name
 
-        if (categoryKey !== payload.name.toLowerCase()) {
-          obj[categoryKey] = state[categoryKey]
-        }
+        if (categoryKey !== payload.name) obj[categoryKey] = state[categoryKey]
 
         return obj
       }, {})
     case 'remove note':
       return {
         ...state,
-        [payload.categoryName.toLowerCase()]: {
-          ...state[payload.categoryName.toLowerCase()],
-          items: state[payload.categoryName.toLowerCase()].items
+        [payload.categoryName]: {
+          ...state[payload.categoryName],
+          items: state[payload.categoryName].items
             .filter(note => note.title !== payload.title)
         }
       }
