@@ -1,11 +1,12 @@
+import { toList } from '@/utilities'
 import { createContext, useReducer } from 'react'
 
 const notesContext = createContext()
 
 // Initial state for notes
-const initialState = [
-  {
-    category: 'TODO',
+const initialState = {
+  todo: {
+    name: 'TODO',
     items: [
       {
         title: 'Item 1',
@@ -21,8 +22,8 @@ const initialState = [
       }
     ]
   },
-  {
-    category: 'In Process',
+  'in process': {
+    name: 'In Process',
     items: [
       {
         title: 'Item 1',
@@ -62,8 +63,8 @@ const initialState = [
       }
     ]
   },
-  {
-    category: 'Stoped',
+  stoped: {
+    name: 'Stoped',
     items: [
       {
         title: 'Item 1',
@@ -87,17 +88,54 @@ const initialState = [
       }
     ]
   }
-]
+}
 
 // Reducer
 const reducer = (state, action) => {
   const payload = action?.payload
 
   switch (action.type) {
-    case 'addCategory':
-      return [...state, { category: payload.category, items: [] }]
-    case 'resetCategories':
-      return []
+    case 'add category':
+      return {
+        ...state,
+        [payload.name.toLowerCase()]: {
+          name: payload.name,
+          items: []
+        }
+      }
+    case 'add note':
+      return {
+        ...state,
+        [payload.categoryName.toLowerCase()]: {
+          ...state[payload.categoryName.toLowerCase()],
+          items: [
+            ...state[payload.categoryName.toLowerCase()].items,
+            { title: payload.title, body: payload.body }
+          ]
+        }
+      }
+    case 'remove category':
+      return toList(state).reduce((obj, category) => {
+        const { name } = category
+        const categoryKey = name.toLowerCase()
+
+        if (categoryKey !== payload.name.toLowerCase()) {
+          obj[categoryKey] = state[categoryKey]
+        }
+
+        return obj
+      }, {})
+    case 'remove note':
+      return {
+        ...state,
+        [payload.categoryName.toLowerCase()]: {
+          ...state[payload.categoryName.toLowerCase()],
+          items: state[payload.categoryName.toLowerCase()].items
+            .filter(note => note.title !== payload.title)
+        }
+      }
+    case 'reset categories':
+      return initialState
     default:
       throw new Error()
   }
