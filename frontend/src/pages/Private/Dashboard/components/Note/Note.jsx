@@ -33,7 +33,7 @@ export default function Note ({ note }) {
       >
         {note.title}
       </Typography>
-      <Typography sx={{ overflow: 'hidden' }}>{note.body}</Typography>
+      <Typography sx={{ flex: 1, overflow: 'hidden' }}>{note.body}</Typography>
       <Box
         display='flex'
         justifyContent='flex-end'

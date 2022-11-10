@@ -11,7 +11,8 @@ const Item = forwardRef((props, ref) => (
       overflow: 'hidden',
       px: 1,
       display: 'flex',
-      flexDirection: 'column'
+      flexDirection: 'column',
+      justifyContent: 'space-between'
     }}
     elevation={2}
   >

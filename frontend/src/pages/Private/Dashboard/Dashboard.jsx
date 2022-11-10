@@ -9,7 +9,7 @@ export default function Dashboard () {
     <Box sx={DashboardStyles}>
       {notes.map(categoryNote => (
         <Category
-          key={categoryNote.category}
+          key={categoryNote.name}
           name={categoryNote.name}
           notes={categoryNote.items}
         />

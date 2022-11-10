@@ -15,7 +15,7 @@ export default function Category ({ name, notes }) {
       <List>
         {notes.map((note, index) => <Note key={index} note={note} />)}
       </List>
-      <Footer/>
+      <Footer category={name}/>
     </Box>
   )
 }
