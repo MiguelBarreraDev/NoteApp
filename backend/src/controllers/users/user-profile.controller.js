@@ -3,7 +3,10 @@ import UserService from "#services/user.services.js"
 const userService = new UserService()
 
 const userPrfofileController = async (req, res) => {
-  const { id } = req
+  const { id, cookies } = req
+  
+  // log cookie
+  console.log({ cookies })
 
   const existingUser = await userService.findById(id)
   if (!existingUser)

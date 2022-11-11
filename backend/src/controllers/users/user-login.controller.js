@@ -25,6 +25,12 @@ const userLoginController = async (req, res) => {
   // Generate a JWT for the user who logs in to the application
   const payload = { id: existingUser.id }
   const jwt = signJWT({ payload })
+  
+  // cookies
+  res.cookie('jwt_access', jwt, {
+    httpOnly: true,
+    expires: new Date(Date.now() + 1000)
+  })
 
   return res.json({
     id: existingUser.id,
