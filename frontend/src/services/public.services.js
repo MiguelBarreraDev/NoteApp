@@ -26,7 +26,8 @@ export const loginService = ({ username, password }) => {
 
   return {
     call: axios.post(getURL('users/login'), data, {
-      signal: controller.signal
+      signal: controller.signal,
+      withCredentials: true
     }),
     controller
   }
@@ -59,7 +60,8 @@ export const profileService = () => {
 
   return {
     call: apiInstance.get('users/profile', {
-      signal: controller.signal
+      signal: controller.signal,
+      withCredentials: true
     }),
     controller
   }
