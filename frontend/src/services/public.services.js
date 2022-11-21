@@ -11,7 +11,7 @@ export const loginService = ({ username, password }) => {
   }
 
   return {
-    call: axiosPublic('users/login', data, {
+    call: axiosPublic.post('users/login', data, {
       signal: controller.signal
     }),
     controller
@@ -32,7 +32,7 @@ export const signupService = ({ name, surname, username, email, password }) => {
   }
 
   return {
-    call: axiosPublic('users/signup', data, { signal: controller.signal }),
+    call: axiosPublic.post('users/signup', data, { signal: controller.signal }),
     controller
   }
 }
