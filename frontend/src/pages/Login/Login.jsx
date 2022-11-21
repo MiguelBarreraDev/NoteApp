@@ -47,7 +47,7 @@ export default function Login () {
   return (
     <AuthenticateFormContainer>
       <FormGridContainer
-        {...submit(handleSubmit)}
+        onSubmit={submit(handleSubmit)}
       >
         <FormGridItem>
           <Typography variant='h5' sx={{ color: 'Text.light', fontWeight: 'bold' }}>
