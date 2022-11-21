@@ -1,22 +1,39 @@
 import Button from '@mui/material/Button'
 import { useNotes } from '../../hooks'
 
-export default function Actions ({ close, values, categoryName }) {
+export default function Actions ({ close, values, categoryName, reset }) {
   const { addNote } = useNotes()
   const handleCancel = () => {
     close()
+    reset()
   }
 
   const handleAdd = () => {
-    console.log(categoryName, values)
     addNote({ categoryName, ...values })
     close()
+    reset()
   }
 
   return (
     <>
-      <Button onClick={handleCancel}>Cancel</Button>
-      <Button onClick={handleAdd}>Add</Button>
+      <Button
+        sx={buttonStyles}
+        variant='outlined'
+        onClick={handleCancel}
+      >
+        Cancel
+      </Button>
+      <Button
+        sx={buttonStyles}
+        variant='contained'
+        onClick={handleAdd}
+      >
+        Add
+      </Button>
     </>
   )
+}
+
+const buttonStyles = {
+  minWidth: '100px'
 }

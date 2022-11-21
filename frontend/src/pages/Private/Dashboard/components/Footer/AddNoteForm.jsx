@@ -4,18 +4,23 @@ export default function AddNoteForm ({ getAttributes }) {
   return (
     <>
       <TextField
+        required
         autoFocus
         margin="dense"
         label="Title"
         fullWidth
-        variant="outlined"
+        variant="standard"
         {...getAttributes('title')}
       />
       <TextField
+        required
+        type='textarea'
         margin="dense"
         label="Write your note"
         fullWidth
-        variant="outlined"
+        variant="standard"
+        multiline
+        rows={4}
         {...getAttributes('body')}
       />
     </>

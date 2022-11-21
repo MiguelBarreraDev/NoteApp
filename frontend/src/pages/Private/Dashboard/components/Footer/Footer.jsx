@@ -4,12 +4,12 @@ import AddNoteForm from './AddNoteForm'
 import OpenDialog from './OpenDialog'
 import Actions from './Actions'
 
-export default function Footer ({ category }) {
-  const initialForm = {
-    title: { content: '' },
-    body: { content: '' }
-  }
+const initialForm = {
+  title: { content: '' },
+  body: { content: '' }
+}
 
+export default function Footer ({ category }) {
   return (
     <Box
       display='flex'
@@ -17,7 +17,7 @@ export default function Footer ({ category }) {
       sx={{ py: 1 }}
     >
       <FormDialog
-        title='New Note'
+        title='Add New Note'
         RenderButton={OpenDialog}
         RenderActions={Actions}
         RenderContent={AddNoteForm}

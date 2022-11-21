@@ -13,7 +13,7 @@ export default function FormDialog ({
   initialForm,
   categoryName
 }) {
-  const { values, getAttributes } = useMyForm(initialForm)
+  const { values, getAttributes, reset } = useMyForm(initialForm)
   const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
@@ -22,19 +22,27 @@ export default function FormDialog ({
 
   const handleClose = () => {
     setOpen(false)
+    reset()
   }
 
   return (
     <div>
       <RenderButton handleClick={handleClickOpen} />
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm'>
-        <DialogTitle>{title}</DialogTitle>
-        <DialogContent>
-          <RenderContent getAttributes={getAttributes} />
-        </DialogContent>
-        <DialogActions>
-          <RenderActions categoryName={categoryName} close={handleClose} values={values}/>
-        </DialogActions>
+        <form onSubmit={() => console.log('hello world')}>
+          <DialogTitle align='center'>{title}</DialogTitle>
+          <DialogContent>
+            <RenderContent getAttributes={getAttributes} />
+          </DialogContent>
+          <DialogActions>
+            <RenderActions
+              categoryName={categoryName}
+              close={handleClose}
+              values={values}
+              reset={reset}
+            />
+          </DialogActions>
+        </form>
       </Dialog>
     </div>
   )
