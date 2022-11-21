@@ -3,8 +3,9 @@ import Box from '@mui/material/Box'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/DriveFileRenameOutline'
 import { Item } from '../Item'
+import { useNotes } from '../../hooks'
 
-function IconButton ({ children }) {
+function IconButton ({ children, handleClick }) {
   return (
     <Box
       sx={{
@@ -15,13 +16,23 @@ function IconButton ({ children }) {
         },
         cursor: 'pointer'
       }}
+      onClick={handleClick}
     >
       {children}
     </Box>
   )
 }
 
-export default function Note ({ note }) {
+export default function Note ({ note, categoryName }) {
+  const { removeNote } = useNotes()
+
+  const handleRemoveNote = () => {
+    removeNote({
+      categoryName,
+      title: note.title
+    })
+  }
+
   return (
     <Item>
       <Typography
@@ -40,7 +51,7 @@ export default function Note ({ note }) {
         gap={1}
       >
         <IconButton><EditIcon /></IconButton>
-        <IconButton><DeleteIcon /></IconButton>
+        <IconButton handleClick={handleRemoveNote}><DeleteIcon /></IconButton>
       </Box>
     </Item>
   )

@@ -13,7 +13,11 @@ export default function Category ({ name, notes }) {
     >
       <Header title={name}/>
       <List>
-        {notes.map((note, index) => <Note key={index} note={note} />)}
+        {notes.map((note, index) => <Note
+          key={index}
+          note={note}
+          categoryName={name}
+        />)}
       </List>
       <Footer category={name}/>
     </Box>

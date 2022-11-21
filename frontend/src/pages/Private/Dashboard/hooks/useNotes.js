@@ -38,6 +38,7 @@ export default function useNotes () {
       payload: { name }
     })
   }
+
   const removeNote = ({ categoryName, title }) => {
     removeNoteService({ title })
     notesDispatch({
