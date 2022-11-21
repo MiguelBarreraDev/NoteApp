@@ -5,7 +5,7 @@ const notesContext = createContext()
 
 // Initial state for notes
 const initialState = {
-  'TODO': {
+  TODO: {
     name: 'TODO',
     items: [
       {
