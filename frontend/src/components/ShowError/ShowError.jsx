@@ -4,9 +4,11 @@ import Snackbar from '@mui/material/Snackbar'
 import { forwardRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-const Alert = forwardRef(function Alert (props, ref) {
+const Alert = forwardRef((props, ref) => {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 })
+
+Alert.displayName = 'Alert'
 
 export default function ShowError () {
   const errorState = useSelector(state => state.error)
@@ -18,7 +20,12 @@ export default function ShowError () {
 
   return (
     <Snackbar open={errorState.active} autoHideDuration={6000} onClose={handleClose}>
-      <Alert variant='filled' onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+      <Alert
+        variant='filled'
+        onClose={handleClose}
+        severity={errorState.type}
+        sx={{ width: '100%' }}
+      >
         {errorState.message}
       </Alert>
     </Snackbar>
