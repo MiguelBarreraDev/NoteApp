@@ -32,6 +32,10 @@ export default function useMyform (initialValues) {
     }
   }
 
+  const reset = () => {
+    setValues(onlyContent)
+  }
+
   const useValidate = (cb) => {
     useEffect(() => {
       setValidate({ run: cb })
@@ -83,6 +87,7 @@ export default function useMyform (initialValues) {
     errors,
     useValidate,
     submit,
-    updateValidate
+    updateValidate,
+    reset
   }
 }
