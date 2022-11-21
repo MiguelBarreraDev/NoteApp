@@ -9,7 +9,7 @@ export default function AddNoteForm ({ getAttributes }) {
         margin="dense"
         label="Title"
         fullWidth
-        variant="standard"
+        variant="outlined"
         {...getAttributes('title')}
       />
       <TextField
@@ -18,7 +18,7 @@ export default function AddNoteForm ({ getAttributes }) {
         margin="dense"
         label="Write your note"
         fullWidth
-        variant="standard"
+        variant="outlined"
         multiline
         rows={4}
         {...getAttributes('body')}

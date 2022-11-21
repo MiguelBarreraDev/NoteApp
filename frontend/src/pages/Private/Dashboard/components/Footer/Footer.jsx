@@ -10,6 +10,11 @@ const initialForm = {
 }
 
 export default function Footer ({ category }) {
+  const onSubmit = async (values, close) => {
+    console.log({ values })
+    values && close()
+  }
+
   return (
     <Box
       display='flex'
@@ -23,6 +28,7 @@ export default function Footer ({ category }) {
         RenderContent={AddNoteForm}
         initialForm={initialForm}
         categoryName={category}
+        onSubmit={onSubmit}
       />
     </Box>
   )

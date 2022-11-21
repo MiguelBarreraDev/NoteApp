@@ -26,7 +26,7 @@ export default function Actions ({ close, values, categoryName, reset }) {
       <Button
         sx={buttonStyles}
         variant='contained'
-        onClick={handleAdd}
+        type='submit'
       >
         Add
       </Button>

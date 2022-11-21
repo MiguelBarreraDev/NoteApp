@@ -11,30 +11,33 @@ export default function FormDialog ({
   RenderActions,
   RenderContent,
   initialForm,
-  categoryName
+  categoryName,
+  onSubmit
 }) {
-  const { values, getAttributes, reset } = useMyForm(initialForm)
+  const { values, getAttributes, reset, submit } = useMyForm(initialForm)
   const [open, setOpen] = useState(false)
 
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
+  const handleClickOpen = () => setOpen(true)
 
   const handleClose = () => {
     setOpen(false)
     reset()
   }
 
+  const handleSubmit = (values) => {
+    onSubmit(values, handleClose)
+  }
+
   return (
     <div>
       <RenderButton handleClick={handleClickOpen} />
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm'>
-        <form onSubmit={() => console.log('hello world')}>
+        <form onSubmit={submit(handleSubmit)}>
           <DialogTitle align='center'>{title}</DialogTitle>
           <DialogContent>
             <RenderContent getAttributes={getAttributes} />
           </DialogContent>
-          <DialogActions>
+          <DialogActions sx={{ px: 3 }}>
             <RenderActions
               categoryName={categoryName}
               close={handleClose}
