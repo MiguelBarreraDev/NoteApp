@@ -11,7 +11,6 @@ export default function FormDialog ({
   RenderActions,
   RenderContent,
   initialForm,
-  categoryName,
   onSubmit
 }) {
   const { values, getAttributes, reset, submit } = useMyForm(initialForm)
@@ -39,7 +38,6 @@ export default function FormDialog ({
           </DialogContent>
           <DialogActions sx={{ px: 3 }}>
             <RenderActions
-              categoryName={categoryName}
               close={handleClose}
               values={values}
               reset={reset}

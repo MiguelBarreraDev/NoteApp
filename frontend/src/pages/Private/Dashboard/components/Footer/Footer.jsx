@@ -3,15 +3,18 @@ import FormDialog from './FormDialog'
 import AddNoteForm from './AddNoteForm'
 import OpenDialog from './OpenDialog'
 import Actions from './Actions'
+import { useNotes } from '../../hooks'
 
 const initialForm = {
   title: { content: '' },
   body: { content: '' }
 }
 
-export default function Footer ({ category }) {
+export default function Footer ({ categoryName }) {
+  const { addNote } = useNotes()
+
   const onSubmit = async (values, close) => {
-    console.log({ values })
+    addNote({ categoryName, ...values })
     values && close()
   }
 
@@ -27,7 +30,6 @@ export default function Footer ({ category }) {
         RenderActions={Actions}
         RenderContent={AddNoteForm}
         initialForm={initialForm}
-        categoryName={category}
         onSubmit={onSubmit}
       />
     </Box>
