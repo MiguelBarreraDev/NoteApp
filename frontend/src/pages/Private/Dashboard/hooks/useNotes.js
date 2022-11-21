@@ -11,7 +11,16 @@ import {
 export default function useNotes () {
   const { notesState, notesDispatch } = useContext(notesContext)
 
+  const searchCategory = (name) => {
+    return notesState[name] ?? null
+  }
+
+  const searchNote = (categoryName, title) => {
+    return notesState[categoryName].items.find(note => note.title === title)
+  }
+
   const addCategory = ({ name }) => {
+    searchCategory(name)
     addCategoryService({ name })
     notesDispatch({
       type: 'add category',
@@ -20,6 +29,7 @@ export default function useNotes () {
   }
 
   const addNote = ({ categoryName, title, body }) => {
+    if (searchNote(categoryName, title)) throw new Error('Note title must be unique')
     addNoteService({ title, body })
     notesDispatch({
       type: 'add note',

@@ -13,7 +13,7 @@ export default function Category ({ name, notes }) {
     >
       <Header title={name}/>
       <List>
-        {notes?.reverse().map((note, index) => <Note
+        {notes?.slice().reverse().map((note, index) => <Note
           key={index}
           note={note}
           categoryName={name}

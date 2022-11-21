@@ -22,6 +22,7 @@ const DashboardStyles = {
   width: '100%',
   height: theme => `calc(100vh - ${theme.components.Header.height})`,
   overflowX: 'auto',
+  overflowY: 'hidden',
   display: 'flex',
   justifyContent: 'flex-start',
   gap: 2,

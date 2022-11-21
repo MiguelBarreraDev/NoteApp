@@ -4,6 +4,8 @@ import AddNoteForm from './AddNoteForm'
 import OpenDialog from './OpenDialog'
 import Actions from './Actions'
 import { useNotes } from '../../hooks'
+import { useDispatch } from 'react-redux'
+import { updateError } from '@/redux/states'
 
 const initialForm = {
   title: { content: '' },
@@ -12,10 +14,19 @@ const initialForm = {
 
 export default function Footer ({ categoryName }) {
   const { addNote } = useNotes()
+  const dispatch = useDispatch()
 
   const onSubmit = async (values, close) => {
-    addNote({ categoryName, ...values })
-    values && close()
+    try {
+      addNote({ categoryName, ...values })
+      values && close()
+    } catch (error) {
+      dispatch(updateError({
+        active: true,
+        message: error.message,
+        type: 'error'
+      }))
+    }
   }
 
   return (
