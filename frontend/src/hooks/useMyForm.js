@@ -65,17 +65,15 @@ export default function useMyform (initialValues) {
     setErrors(cs => ({ ...cs, [name]: newErrors[name] }))
   }
 
-  const submit = (cb) => ({
-    onSubmit: (e) => {
-      e.preventDefault()
+  const submit = (cb) => e => {
+    e.preventDefault()
 
-      const { send, newErrors } = validateAllFields()
+    const { send, newErrors } = validateAllFields()
 
-      if (!check || !send) return setErrors(newErrors)
+    if (!check || !send) return setErrors(newErrors)
 
-      cb(values)
-    }
-  })
+    cb(values)
+  }
 
   const updateValidate = (name, value) => {
     setValidate(cs => ({ ...cs, [name]: value }))
