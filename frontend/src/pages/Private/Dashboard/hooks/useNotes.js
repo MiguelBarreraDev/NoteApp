@@ -5,22 +5,23 @@ import {
   addCategoryService,
   addNoteService,
   removeCategoryService,
-  removeNoteService
+  removeNoteService,
+  updateNoteService
 } from '../services'
 
 export default function useNotes () {
   const { notesState, notesDispatch } = useContext(notesContext)
 
-  const searchCategory = (name) => {
+  const searchCategory = ({ name }) => {
     return notesState[name] ?? null
   }
 
-  const searchNote = (categoryName, title) => {
+  const searchNote = ({ categoryName, title }) => {
     return notesState[categoryName].items.find(note => note.title === title)
   }
 
   const addCategory = ({ name }) => {
-    if (searchCategory(name)) throw new Error('Category title must be unique')
+    if (searchCategory({ name })) throw new Error('Category title must be unique')
     addCategoryService({ name })
     notesDispatch({
       type: 'add category',
@@ -29,10 +30,22 @@ export default function useNotes () {
   }
 
   const addNote = ({ categoryName, title, body }) => {
-    if (searchNote(categoryName, title)) throw new Error('Note title must be unique')
+    if (searchNote({ categoryName, title })) throw new Error('Note title must be unique')
     addNoteService({ title, body })
     notesDispatch({
       type: 'add note',
+      payload: {
+        categoryName,
+        title,
+        body
+      }
+    })
+  }
+
+  const updateNote = ({ categoryName, title, body }) => {
+    updateNoteService({ title, body })
+    notesDispatch({
+      type: 'update note',
       payload: {
         categoryName,
         title,
@@ -66,9 +79,12 @@ export default function useNotes () {
   return {
     notes: toList(notesState),
     addNote,
+    updateNote,
     addCategory,
     removeNote,
     removeCategory,
-    resetCategories
+    resetCategories,
+    searchNote,
+    searchCategory
   }
 }

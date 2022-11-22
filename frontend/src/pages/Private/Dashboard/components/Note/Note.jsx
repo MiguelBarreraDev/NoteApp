@@ -1,11 +1,11 @@
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import DeleteIcon from '@mui/icons-material/Delete'
-import EditIcon from '@mui/icons-material/DriveFileRenameOutline'
 import { Item } from '../Item'
 import { useNotes } from '../../hooks'
 import { useDispatch } from 'react-redux'
 import { updateError } from '@/redux/states'
+import { EditNoteDialog } from './EditNoteDialog'
 
 function IconButton ({ children, handleClick }) {
   return (
@@ -52,14 +52,18 @@ export default function Note ({ note, categoryName }) {
       >
         {note.title}
       </Typography>
-      <Typography sx={{ flex: 1, overflow: 'hidden' }}>{note.body}</Typography>
+      <Typography sx={{ flex: 1, overflow: 'hidden' }}>
+        {note.body}
+      </Typography>
       <Box
         display='flex'
         justifyContent='flex-end'
         gap={1}
       >
-        <IconButton><EditIcon /></IconButton>
-        <IconButton handleClick={handleRemoveNote}><DeleteIcon /></IconButton>
+        <EditNoteDialog title={note?.title} body={note?.body} categoryName={categoryName} />
+        <IconButton handleClick={handleRemoveNote}>
+          <DeleteIcon />
+        </IconButton>
       </Box>
     </Item>
   )
