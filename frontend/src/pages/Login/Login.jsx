@@ -10,6 +10,8 @@ import {
 } from '@/styledComponents'
 import CircularProgress from '@mui/material/CircularProgress'
 import useMyform from '@/hooks/useMyForm'
+import { useDispatch } from 'react-redux'
+import { updateError } from '@/redux/states'
 
 const customErrors = (values) => {
   const newErrors = {}
@@ -26,7 +28,8 @@ const customErrors = (values) => {
 }
 
 export default function Login () {
-  const [error, setError] = useState('')
+  const dispatch = useDispatch()
+  const [error, setError] = useState(false)
   const { login, isLogged, logout, loading } = useAuth()
   const { getAttributes, submit, useValidate } = useMyform({
     username: { content: '' },
@@ -41,7 +44,12 @@ export default function Login () {
 
   const handleSubmit = async (values) => {
     const loginResponse = await login(values)
-    if (loginResponse?.error) setError(loginResponse.error)
+    const { error, code } = loginResponse
+    if (error) {
+      code === 0
+        ? dispatch(updateError({ active: true, type: 'error', message: error }))
+        : setError(true)
+    }
   }
 
   return (
@@ -78,7 +86,7 @@ export default function Login () {
               : 'Log in'}
           </SubmitButton>
         </FormGridItem>
-        {Boolean(error) && <FormGridItem>
+        {error && <FormGridItem>
           <Typography color='error'>
             Username or password incorrects
           </Typography>
