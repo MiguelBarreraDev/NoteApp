@@ -9,6 +9,7 @@ import {
   CustomTextField
 } from '@/styledComponents'
 import { useAuth, useMyForm } from '@/hooks'
+import { Header } from '@/components/Common/Header'
 
 const customErrors = (values) => {
   const newErrors = {}
@@ -64,74 +65,77 @@ export default function SignUp () {
   }
 
   return (
-    <AuthenticateFormContainer>
-      <FormGridContainer
-        sx={{ maxWidth: '500px' }}
-        {...submit(handleSubmit)}>
-        <Typography
-          align='center'
-          variant='h5'
-          sx={{ width: '100%', color: 'Text.light', fontWeight: 'bold' }}
-        >
-          Welcome
-        </Typography>
-        <FormGridItem sm={5.8}>
-          <CustomTextField
-            required
-            color='secondary'
-            label='Name'
-            {...getAttributes('name')}
-          />
-        </FormGridItem>
-        <FormGridItem sm={5.8}>
-          <CustomTextField
-            required
-            color='secondary'
-            label='Lastname'
-            {...getAttributes('surname')}
-          />
-        </FormGridItem>
-        <FormGridItem>
-          <CustomTextField
-            required
-            color='secondary'
-            label='Username'
-            {...getAttributes('username')}
-          />
-        </FormGridItem>
-        <FormGridItem>
-          <CustomTextField
-            required
-            color='secondary'
-            label='E-mail'
-            {...getAttributes('email')}
-          />
-        </FormGridItem>
-        <FormGridItem>
-          <CustomTextField
-            required
-            color='secondary'
-            label='Password'
-            {...getAttributes('password')}
-          />
-        </FormGridItem>
-        <FormGridItem>
-          <SubmitButton
-            color='secondary'
-            variant='contained'
-            disabled={loading}
+    <>
+      <Header />
+      <AuthenticateFormContainer>
+        <FormGridContainer
+          sx={{ maxWidth: '500px' }}
+          {...submit(handleSubmit)}>
+          <Typography
+            align='center'
+            variant='h5'
+            sx={{ width: '100%', color: 'Text.light', fontWeight: 'bold' }}
           >
-            {loading
-              ? <CircularProgress color='secondary'/>
-              : 'Sign up'}
-          </SubmitButton>
-        </FormGridItem>
-        {Boolean(error) && <FormGridItem>
-          <Typography color='error'>
-            Username or password incorrects
+            Welcome
           </Typography>
-        </FormGridItem>}
-      </FormGridContainer>
-    </AuthenticateFormContainer>
+          <FormGridItem sm={5.8}>
+            <CustomTextField
+              required
+              color='secondary'
+              label='Name'
+              {...getAttributes('name')}
+            />
+          </FormGridItem>
+          <FormGridItem sm={5.8}>
+            <CustomTextField
+              required
+              color='secondary'
+              label='Lastname'
+              {...getAttributes('surname')}
+            />
+          </FormGridItem>
+          <FormGridItem>
+            <CustomTextField
+              required
+              color='secondary'
+              label='Username'
+              {...getAttributes('username')}
+            />
+          </FormGridItem>
+          <FormGridItem>
+            <CustomTextField
+              required
+              color='secondary'
+              label='E-mail'
+              {...getAttributes('email')}
+            />
+          </FormGridItem>
+          <FormGridItem>
+            <CustomTextField
+              required
+              color='secondary'
+              label='Password'
+              {...getAttributes('password')}
+            />
+          </FormGridItem>
+          <FormGridItem>
+            <SubmitButton
+              color='secondary'
+              variant='contained'
+              disabled={loading}
+            >
+              {loading
+                ? <CircularProgress color='secondary'/>
+                : 'Sign up'}
+            </SubmitButton>
+          </FormGridItem>
+          {Boolean(error) && <FormGridItem>
+            <Typography color='error'>
+              Username or password incorrects
+            </Typography>
+          </FormGridItem>}
+        </FormGridContainer>
+      </AuthenticateFormContainer>
+    </>
   )
 }
