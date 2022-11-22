@@ -4,11 +4,13 @@ import { useEffect, useMemo, useState } from 'react'
 export default function useMyform (initialValues) {
   const onlyContent = useMemo(() => Object
     .keys(initialValues)
-    .reduce((obj, key) => ({ ...obj, [key]: initialValues[key].content }), {}), [])
+    .reduce((obj, key) => ({ ...obj, [key]: initialValues[key].content }), {}),
+  [initialValues])
 
   const onlyKeys = useMemo(() => Object
     .keys(initialValues)
-    .reduce((obj, key) => ({ ...obj, [key]: '' }), {}), [])
+    .reduce((obj, key) => ({ ...obj, [key]: '' }), {}),
+  [initialValues])
 
   const [values, setValues] = useState(onlyContent)
   const [errors, setErrors] = useState(onlyKeys)
