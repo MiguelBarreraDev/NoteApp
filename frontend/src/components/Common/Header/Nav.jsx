@@ -4,12 +4,14 @@ import { toList } from '@/utilities'
 import { ActiveLink } from '@/components/ActiveLink'
 import { useAuth } from '@/hooks'
 
-function ShowLinks ({ type, ignore }) {
+function ShowLinks ({ type, ignore = [] }) {
   const ignoreRoutes = [PrivateRoutes.PRIVATE.key, ...ignore]
 
   const routeObjecstList = toList(
     type === 'public' ? PublicRoutes : PrivateRoutes
   )
+
+  routeObjecstList.unshift(PublicRoutes.HOME)
 
   const filteredRoutes = routeObjecstList
     .filter(routeObject => !ignoreRoutes.includes(routeObject.key))
@@ -38,7 +40,7 @@ export default function Nav ({ actions, routes }) {
             <Box display='flex'>
               <ShowLinks
                 type='private'
-                ignore={routes.ignore}
+                ignore={routes?.ignore}
               />
             </Box>
             <Box display='flex'>

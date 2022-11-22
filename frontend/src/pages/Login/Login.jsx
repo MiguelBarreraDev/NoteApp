@@ -12,6 +12,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import useMyform from '@/hooks/useMyForm'
 import { useDispatch } from 'react-redux'
 import { updateError } from '@/redux/states'
+import { Header } from '@/components/Common/Header'
 
 const customErrors = (values) => {
   const newErrors = {}
@@ -53,45 +54,48 @@ export default function Login () {
   }
 
   return (
-    <AuthenticateFormContainer>
-      <FormGridContainer
-        onSubmit={submit(handleSubmit)}
-      >
-        <FormGridItem>
-          <Typography variant='h5' sx={{ color: 'Text.light', fontWeight: 'bold' }}>
-            Welcome
-          </Typography>
-        </FormGridItem>
-        <FormGridItem>
-          <CustomTextField
-            required
-            label='Username'
-            {...getAttributes('username')}
-          />
-        </FormGridItem>
-        <FormGridItem>
-          <CustomTextField
-            required
-            label='Password'
-            {...getAttributes('password')}
-          />
-        </FormGridItem>
-        <FormGridItem>
-          <SubmitButton
-            variant='contained'
-            disabled={loading}
-          >
-            {loading
-              ? <CircularProgress color='primary' />
-              : 'Log in'}
-          </SubmitButton>
-        </FormGridItem>
-        {error && <FormGridItem>
-          <Typography color='error'>
-            Username or password incorrects
-          </Typography>
-        </FormGridItem>}
-      </FormGridContainer>
-    </AuthenticateFormContainer>
+    <>
+      <Header />
+      <AuthenticateFormContainer>
+        <FormGridContainer
+          onSubmit={submit(handleSubmit)}
+        >
+          <FormGridItem>
+            <Typography variant='h5' sx={{ color: 'Text.light', fontWeight: 'bold' }}>
+              Welcome
+            </Typography>
+          </FormGridItem>
+          <FormGridItem>
+            <CustomTextField
+              required
+              label='Username'
+              {...getAttributes('username')}
+            />
+          </FormGridItem>
+          <FormGridItem>
+            <CustomTextField
+              required
+              label='Password'
+              {...getAttributes('password')}
+            />
+          </FormGridItem>
+          <FormGridItem>
+            <SubmitButton
+              variant='contained'
+              disabled={loading}
+            >
+              {loading
+                ? <CircularProgress color='primary' />
+                : 'Log in'}
+            </SubmitButton>
+          </FormGridItem>
+          {error && <FormGridItem>
+            <Typography color='error'>
+              Username or password incorrects
+            </Typography>
+          </FormGridItem>}
+        </FormGridContainer>
+      </AuthenticateFormContainer>
+    </>
   )
 }
