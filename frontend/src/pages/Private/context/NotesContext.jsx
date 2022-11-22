@@ -114,6 +114,16 @@ const reducer = (state, action) => {
           ]
         }
       }
+    case 'update note':
+      return {
+        ...state,
+        [payload.categoryName]: {
+          ...state[payload.categoryName],
+          items: state[payload.categoryName].items.map(item => (
+            item.title === payload.title ? { ...item, body: payload.body } : item
+          ))
+        }
+      }
     case 'remove category':
       return toList(state).reduce((obj, category) => {
         const { name } = category
@@ -129,7 +139,7 @@ const reducer = (state, action) => {
         [payload.categoryName]: {
           ...state[payload.categoryName],
           items: state[payload.categoryName].items
-            .filter(note => note.title !== payload.title)
+          .filter(note => note.title !== payload.title)
         }
       }
     case 'reset categories':
