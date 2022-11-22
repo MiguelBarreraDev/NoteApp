@@ -16,7 +16,11 @@ export default function FormDialog ({
   const { values, getAttributes, reset, submit } = useMyForm(initialForm)
   const [open, setOpen] = useState(false)
 
-  const handleClickOpen = () => setOpen(true)
+  const handleClickOpen = () => {
+    // TODO: Check the renders and states values
+    reset()
+    setOpen(true)
+  }
 
   const handleClose = () => {
     setOpen(false)
@@ -25,6 +29,7 @@ export default function FormDialog ({
 
   const handleSubmit = (values) => {
     onSubmit(values, handleClose)
+    reset()
   }
 
   return (
