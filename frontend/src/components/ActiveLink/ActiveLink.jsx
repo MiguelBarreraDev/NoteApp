@@ -12,15 +12,16 @@ const NavLinkStyle = {
   padding: '5px 15px'
 }
 
-export default function ActiveLink ({ ...props }) {
+export default function ActiveLink ({ to, children }) {
   const { isLogged } = useAuth()
-  const { to, ...otherProps } = props
 
   return (
     <NavLink
-      to={isLogged ? `auth/${to}` : to}
-      {...otherProps}
+      to={isLogged ? `/auth/${to}` : to}
       style={NavLinkStyle}
-    />
+      replace
+    >
+      {children}
+    </NavLink>
   )
 }

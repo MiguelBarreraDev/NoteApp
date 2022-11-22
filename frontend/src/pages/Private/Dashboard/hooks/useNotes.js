@@ -20,7 +20,7 @@ export default function useNotes () {
   }
 
   const addCategory = ({ name }) => {
-    searchCategory(name)
+    if (searchCategory(name)) throw new Error('Category title must be unique')
     addCategoryService({ name })
     notesDispatch({
       type: 'add category',

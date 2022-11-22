@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom'
 import { useAuth } from '@/hooks'
 import AccountMenu from './AccountMenu'
 
-export default function Header () {
+export default function Header ({ navRoutes, navActions }) {
   const { isLogged } = useAuth()
   const { pathname } = useLocation()
 
@@ -15,7 +15,7 @@ export default function Header () {
     <AppBar position='sticky' sx={AppBarStyle({ pathname })}>
       <Box sx={ContainerStyle}>
         <Title />
-        <Nav />
+        <Nav actions={navActions} routes={navRoutes}/>
         {isLogged ? <AccountMenu /> : <CallActions />}
       </Box>
     </AppBar>

@@ -1,20 +1,29 @@
+import { Header } from '@/components/Common/Header'
+import { PrivateRoutes } from '@/config'
 import Box from '@mui/material/Box'
 import { Category } from './components'
+import { AddCategoryDialog } from './components/AddCategoryDialog'
 import { useNotes } from './hooks'
 
 export default function Dashboard () {
   const { notes } = useNotes()
 
   return (
-    <Box sx={DashboardStyles}>
-      {notes.map(categoryNote => (
-        <Category
-          key={categoryNote.name}
-          name={categoryNote.name}
-          notes={categoryNote.items}
-        />
-      ))}
-    </Box>
+    <>
+      <Header
+        navRoutes={{ ignore: [PrivateRoutes.DASHBOARD.key] }}
+        navActions={<AddCategoryDialog />}
+      />
+      <Box sx={DashboardStyles}>
+        {notes.map(categoryNote => (
+          <Category
+            key={categoryNote.name}
+            name={categoryNote.name}
+            notes={categoryNote.items}
+          />
+        ))}
+      </Box>
+    </>
   )
 }
 

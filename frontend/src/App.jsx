@@ -4,7 +4,6 @@ import { PrivateRoutes, PublicRoutes } from './config/routes'
 import { RoutesWithNotFound, toList } from './utilities'
 import { AuthGuard } from './guards'
 import CssBaseline from '@mui/material/CssBaseline'
-import { Header } from './components/Common/Header'
 import { lazy, Suspense } from 'react'
 import { useRecoverUser } from './hooks'
 import { ShowError } from './components/ShowError'
@@ -24,7 +23,6 @@ function App () {
     <>
       {!loading && <Suspense fallback={<>Loading...</>}>
         <CssBaseline />
-        <Header />
         <RoutesWithNotFound>
           {toList(PublicRoutes).map(setPublicRoute)}
           <Route element={<AuthGuard />}>

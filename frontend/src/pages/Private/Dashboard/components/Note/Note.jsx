@@ -4,6 +4,8 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/DriveFileRenameOutline'
 import { Item } from '../Item'
 import { useNotes } from '../../hooks'
+import { useDispatch } from 'react-redux'
+import { updateError } from '@/redux/states'
 
 function IconButton ({ children, handleClick }) {
   return (
@@ -25,12 +27,18 @@ function IconButton ({ children, handleClick }) {
 
 export default function Note ({ note, categoryName }) {
   const { removeNote } = useNotes()
+  const dispatch = useDispatch()
 
   const handleRemoveNote = () => {
     removeNote({
       categoryName,
       title: note.title
     })
+    dispatch(updateError({
+      active: true,
+      message: `The ${note.title} note successfully removed`,
+      type: 'success'
+    }))
   }
 
   return (

@@ -1,11 +1,11 @@
 import Box from '@mui/material/Box'
-import FormDialog from './FormDialog'
 import AddNoteForm from './AddNoteForm'
 import OpenDialog from './OpenDialog'
 import Actions from './Actions'
 import { useNotes } from '../../hooks'
 import { useDispatch } from 'react-redux'
 import { updateError } from '@/redux/states'
+import { FormDialog } from '@/components'
 
 const initialForm = {
   title: { content: '' },
