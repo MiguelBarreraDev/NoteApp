@@ -14,10 +14,14 @@ const NavLinkStyle = {
 
 export default function ActiveLink ({ to, children }) {
   const { isLogged } = useAuth()
+  let target = ''
+
+  if (to === '/') target = to
+  else target = isLogged ? `/auth/${to}` : to
 
   return (
     <NavLink
-      to={isLogged ? `/auth/${to}` : to}
+      to={target}
       style={NavLinkStyle}
       replace
     >
