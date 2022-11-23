@@ -6,10 +6,6 @@ import Actions from './Actions'
 import Form from './Form'
 import OpendDialog from './OpenDialog'
 
-const initialValues = {
-  name: { content: '' }
-}
-
 export default function AddCategoryDialog () {
   const { addCategory } = useNotes()
   const dispatch = useDispatch()
@@ -30,7 +26,6 @@ export default function AddCategoryDialog () {
   return (
     <FormDialog
       title='Add New Category'
-      initialForm={initialValues}
       RenderButton={OpendDialog}
       RenderContent={Form}
       RenderActions={Actions}

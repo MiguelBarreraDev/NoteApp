@@ -10,7 +10,7 @@ export default function FormDialog ({
   RenderButton,
   RenderActions,
   RenderContent,
-  initialForm,
+  initialForm = {},
   onSubmit
 }) {
   const { values, getAttributes, reset, submit } = useMyForm(initialForm)

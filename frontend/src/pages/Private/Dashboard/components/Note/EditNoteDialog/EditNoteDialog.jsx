@@ -10,10 +10,7 @@ export default function EditNoteDialog ({ title, categoryName, body }) {
   const { updateNote } = useNotes()
   const dispatch = useDispatch()
 
-  const initialValues = {
-    title: { content: title },
-    body: { content: body }
-  }
+  const initialValues = { title, body }
 
   const onSubmit = async (values, close) => {
     try {
