@@ -45,13 +45,7 @@ const customErrors = (values) => {
 export default function SignUp () {
   const [error, setError] = useState('')
   const { signup, logout, isLogged, loading } = useAuth()
-  const { getAttributes, useValidate, submit } = useMyForm({
-    name: { content: '' },
-    surname: { content: '' },
-    username: { content: '' },
-    email: { content: '', type: 'email' },
-    password: { content: '', type: 'password' }
-  })
+  const { getAttributes, useValidate, submit } = useMyForm()
 
   useEffect(() => {
     isLogged && logout({ redirect: false })
@@ -107,6 +101,7 @@ export default function SignUp () {
               required
               color='secondary'
               label='E-mail'
+              type='email'
               {...getAttributes('email')}
             />
           </FormGridItem>
@@ -115,6 +110,7 @@ export default function SignUp () {
               required
               color='secondary'
               label='Password'
+              type='password'
               {...getAttributes('password')}
             />
           </FormGridItem>
