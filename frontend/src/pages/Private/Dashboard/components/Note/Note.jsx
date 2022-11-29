@@ -52,7 +52,7 @@ export default function Note ({ note, categoryName }) {
       >
         {note.title}
       </Typography>
-      <Typography sx={{ flex: 1, overflow: 'hidden' }}>
+      <Typography sx={{ color: '#404040', fontSize: '1em', flex: 1, overflow: 'hidden' }}>
         {note.body}
       </Typography>
       <Box

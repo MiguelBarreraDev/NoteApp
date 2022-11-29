@@ -28,7 +28,7 @@ export default function Nav ({ actions, routes }) {
   const { isLogged } = useAuth()
 
   return (
-    <Box display='flex' sx={{ flex: 1, justifyContent: 'flex-end' }}>
+    <Box display='flex' sx={{ flex: 1, pl: 3 }}>
       {isLogged
         ? (
           <Box
@@ -37,7 +37,7 @@ export default function Nav ({ actions, routes }) {
             justifyContent='space-between'
             alignItems='center'
           >
-            <Box display='flex'>
+            <Box display='flex' gap={2}>
               <ShowLinks
                 type='private'
                 ignore={routes?.ignore}

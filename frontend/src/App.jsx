@@ -7,6 +7,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { lazy, Suspense } from 'react'
 import { useRecoverUser } from './hooks'
 import { ShowError } from './components/ShowError'
+import { Loading } from './components/Loading'
 
 const Private = lazy(() => import('@/pages/Private/Private'))
 
@@ -21,7 +22,7 @@ function App () {
 
   return (
     <>
-      {!loading && <Suspense fallback={<>Loading...</>}>
+      {!loading && <Suspense fallback={<Loading />}>
         <CssBaseline />
         <RoutesWithNotFound>
           {toList(PublicRoutes).map(setPublicRoute)}

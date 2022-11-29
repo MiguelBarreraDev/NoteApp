@@ -8,12 +8,13 @@ export default function Header ({ title }) {
     <Box
       display='flex'
       alignItems='center'
-      sx={{ py: 1, whiteSpace: 'no-wrap' }}
+      sx={{ py: 0.5, whiteSpace: 'no-wrap' }}
       justifyContent='space-between'
     >
       <Typography
         variant='h6'
         sx={{
+          fontSize: '1.2em',
           fontWeight: 'bold',
           color: 'Text.light'
         }}

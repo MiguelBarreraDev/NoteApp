@@ -15,8 +15,12 @@ export default function OpendDialog ({ handleClick }) {
 const ButtonStyle = {
   whiteSpace: 'nowrap',
   width: { xs: 'clamp(80px, 30vw, 130px)', sm: 'clamp(130px, 20vw, 150px)' },
-  border: '1px solid #8360c3',
+  border: '1px solid',
+  borderColor: 'primary.light',
+  color: 'primary.light',
   '&.MuiButtonBase-root.MuiButton-root:hover': {
-    border: '1px solid #8360c3'
+    borderColor: 'primary.light',
+    backgroundColor: 'primary.light',
+    color: 'Text.contrast'
   }
 }

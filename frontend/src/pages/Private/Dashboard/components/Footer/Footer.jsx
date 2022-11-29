@@ -7,6 +7,10 @@ import { useDispatch } from 'react-redux'
 import { updateError } from '@/redux/states'
 import { FormDialog } from '@/components'
 
+const initialState = {
+  title: '', body: ''
+}
+
 export default function Footer ({ categoryName }) {
   const { addNote } = useNotes()
   const dispatch = useDispatch()
@@ -36,6 +40,7 @@ export default function Footer ({ categoryName }) {
         RenderActions={Actions}
         RenderContent={AddNoteForm}
         onSubmit={onSubmit}
+        initialForm={initialState}
       />
     </Box>
   )

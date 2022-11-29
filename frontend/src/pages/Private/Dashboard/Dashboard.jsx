@@ -14,7 +14,10 @@ export default function Dashboard () {
         navRoutes={{ ignore: [PrivateRoutes.DASHBOARD.key] }}
         navActions={<AddCategoryDialog />}
       />
-      <Box sx={DashboardStyles}>
+      <Box
+        sx={DashboardStyles}
+        className='page_dashboard'
+      >
         {notes.map(categoryNote => (
           <Category
             key={categoryNote.name}

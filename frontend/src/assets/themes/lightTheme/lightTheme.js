@@ -8,7 +8,8 @@ export default createTheme({
       default: '#ECEFF4'
     },
     primary: {
-      main: '#3E54D3'
+      main: '#3E54D3',
+      lightHard: '#CAD3FF'
     },
     secondary: {
       main: '#15CDCA'
