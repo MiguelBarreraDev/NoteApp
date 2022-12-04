@@ -17,7 +17,7 @@ export default function Footer ({ categoryName }) {
 
   const onSubmit = async (values, close) => {
     try {
-      addNote({ categoryName, ...values })
+      await addNote({ categoryName, ...values })
       close()
     } catch (error) {
       dispatch(updateError({

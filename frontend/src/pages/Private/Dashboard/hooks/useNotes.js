@@ -20,18 +20,20 @@ export default function useNotes () {
     return notesState[categoryName].items.find(note => note.title === title)
   }
 
-  const addCategory = ({ name }) => {
+  const addCategory = async ({ name }) => {
     if (searchCategory({ name })) throw new Error('Category title must be unique')
-    addCategoryService({ name })
+    const serviceResponse = await addCategoryService({ name })
+    console.log(serviceResponse)
     notesDispatch({
       type: 'add category',
       payload: { name }
     })
   }
 
-  const addNote = ({ categoryName, title, body }) => {
+  const addNote = async ({ categoryName, title, body }) => {
     if (searchNote({ categoryName, title })) throw new Error('Note title must be unique')
-    addNoteService({ title, body })
+    const serviceResponse = await addNoteService({ categoryName, title, body })
+    console.log(serviceResponse)
     notesDispatch({
       type: 'add note',
       payload: {

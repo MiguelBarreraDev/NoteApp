@@ -11,7 +11,6 @@ export default function useMyform (initialValues = {}) {
     .reduce((obj, key) => ({ ...obj, [key]: '' }), {}),
   [initialValues])
 
-  // const ref = useRef()
   const [values, setValues] = useState(initialValues)
   const [errors, setErrors] = useState(onlyKeys)
   const [validate, setValidate] = useState({ run: null })
@@ -28,8 +27,6 @@ export default function useMyform (initialValues = {}) {
    * params {String} name - Key to register a input element
    */
   const getAttributes = name => {
-    if (values[name] === undefined) setValues(cs => ({ ...cs, [name]: '' }))
-
     const attributes = {
       onChange: e => handleChange(name, e),
       name,

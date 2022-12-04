@@ -1,94 +1,94 @@
-import { toList } from '@/utilities'
+import { ls, toList } from '@/utilities'
 import { createContext, useReducer } from 'react'
 
 const notesContext = createContext()
 
 // Initial state for notes
-const initialState = {
-  TODO: {
-    name: 'TODO',
-    items: [
-      {
-        title: 'Item 1',
-        body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
-      },
-      {
-        title: 'Item 2',
-        body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
-      },
-      {
-        title: 'Item 3',
-        body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
-      }
-    ]
-  },
-  'In Process': {
-    name: 'In Process',
-    items: [
-      {
-        title: 'Item 1',
-        body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
-      },
-      {
-        title: 'Item 2',
-        body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
-      },
-      {
-        title: 'Item 3',
-        body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
-      },
-      {
-        title: 'Item 2',
-        body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
-      },
-      {
-        title: 'Item 3',
-        body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
-      },
-      {
-        title: 'Item 2',
-        body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
-      },
-      {
-        title: 'Item 3',
-        body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
-      },
-      {
-        title: 'Item 2',
-        body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
-      },
-      {
-        title: 'Item 3',
-        body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
-      }
-    ]
-  },
-  Stoped: {
-    name: 'Stoped',
-    items: [
-      {
-        title: 'Item 1',
-        body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
-      },
-      {
-        title: 'Item 2',
-        body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
-      },
-      {
-        title: 'Item 3',
-        body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
-      },
-      {
-        title: 'Item 2',
-        body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
-      },
-      {
-        title: 'Item 3',
-        body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
-      }
-    ]
-  }
-}
+// const initialState = {
+//   TODO: {
+//     name: 'TODO',
+//     items: [
+//       {
+//         title: 'Item 1',
+//         body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
+//       },
+//       {
+//         title: 'Item 2',
+//         body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
+//       },
+//       {
+//         title: 'Item 3',
+//         body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
+//       }
+//     ]
+//   },
+//   'In Process': {
+//     name: 'In Process',
+//     items: [
+//       {
+//         title: 'Item 1',
+//         body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
+//       },
+//       {
+//         title: 'Item 2',
+//         body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
+//       },
+//       {
+//         title: 'Item 3',
+//         body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
+//       },
+//       {
+//         title: 'Item 2',
+//         body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
+//       },
+//       {
+//         title: 'Item 3',
+//         body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
+//       },
+//       {
+//         title: 'Item 2',
+//         body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
+//       },
+//       {
+//         title: 'Item 3',
+//         body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
+//       },
+//       {
+//         title: 'Item 2',
+//         body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
+//       },
+//       {
+//         title: 'Item 3',
+//         body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
+//       }
+//     ]
+//   },
+//   Stoped: {
+//     name: 'Stoped',
+//     items: [
+//       {
+//         title: 'Item 1',
+//         body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
+//       },
+//       {
+//         title: 'Item 2',
+//         body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
+//       },
+//       {
+//         title: 'Item 3',
+//         body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
+//       },
+//       {
+//         title: 'Item 2',
+//         body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
+//       },
+//       {
+//         title: 'Item 3',
+//         body: 'Lorem repellat ducimus ab molestiae earum Exercitationem pariatur laborum in voluptatibus distinctio iste pariatur.'
+//       }
+//     ]
+//   }
+// }
 
 // Reducer
 const reducer = (state, action) => {
@@ -139,7 +139,7 @@ const reducer = (state, action) => {
         [payload.categoryName]: {
           ...state[payload.categoryName],
           items: state[payload.categoryName].items
-            .filter(note => note.title !== payload.title)
+          .filter(note => note.title !== payload.title)
         }
       }
     case 'reset categories':
@@ -149,8 +149,12 @@ const reducer = (state, action) => {
   }
 }
 
+const init = (initialState) => {
+  return JSON.parse(ls.getItem('notes')) ?? initialState
+}
+
 export function NotesContextProvider ({ children }) {
-  const [notesState, notesDispatch] = useReducer(reducer, initialState)
+  const [notesState, notesDispatch] = useReducer(reducer, {}, init)
 
   return (
     <notesContext.Provider value={{ notesState, notesDispatch }}>
