@@ -20,7 +20,7 @@ export default function useAuth () {
     if (response?.error) return response
 
     // Set auth token
-    ls.setItem('jwt', response.jwt)
+    ls.setItem('jwt', response?.jwt)
 
     // Create new user in memory
     dispatch(createUser(userAdapter(response)))

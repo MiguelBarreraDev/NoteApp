@@ -45,7 +45,13 @@ const customErrors = (values) => {
 export default function SignUp () {
   const [error, setError] = useState('')
   const { signup, logout, isLogged, loading } = useAuth()
-  const { getAttributes, useValidate, submit } = useMyForm()
+  const { getAttributes, useValidate, submit } = useMyForm({
+    name: '',
+    surname: '',
+    username: '',
+    email: '',
+    password: ''
+  })
 
   useEffect(() => {
     isLogged && logout({ redirect: false })
@@ -64,7 +70,8 @@ export default function SignUp () {
       <AuthenticateFormContainer>
         <FormGridContainer
           sx={{ maxWidth: '500px' }}
-          {...submit(handleSubmit)}>
+          onSubmit={submit(handleSubmit)}
+        >
           <Typography
             align='center'
             variant='h5'

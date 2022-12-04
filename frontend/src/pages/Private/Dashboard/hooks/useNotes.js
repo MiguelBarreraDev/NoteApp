@@ -23,7 +23,6 @@ export default function useNotes () {
   const addCategory = async ({ name }) => {
     if (searchCategory({ name })) throw new Error('Category title must be unique')
     const serviceResponse = await addCategoryService({ name })
-    console.log(serviceResponse)
     notesDispatch({
       type: 'add category',
       payload: { name }
@@ -33,7 +32,6 @@ export default function useNotes () {
   const addNote = async ({ categoryName, title, body }) => {
     if (searchNote({ categoryName, title })) throw new Error('Note title must be unique')
     const serviceResponse = await addNoteService({ categoryName, title, body })
-    console.log(serviceResponse)
     notesDispatch({
       type: 'add note',
       payload: {
