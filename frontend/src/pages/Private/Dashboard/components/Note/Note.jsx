@@ -36,6 +36,7 @@ export default function Note ({ note, categoryName }) {
     })
     dispatch(updateError({
       active: true,
+      id: `${categoryName}.${note.title}`,
       message: `The ${note.title} note successfully removed`,
       type: 'success'
     }))

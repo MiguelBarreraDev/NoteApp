@@ -1,21 +1,27 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
-const initialErrorState = {
-  message: '',
-  code: '',
-  type: '',
-  active: false
-}
+// error = {
+//   id: ''
+//   message: '',
+//   code: '',
+//   type: '',
+//   active: false
+// }
+
+const initialErrorState = [];
 
 export const errorSlice = createSlice({
-  name: 'error',
+  name: "error",
   initialState: initialErrorState,
   reducers: {
-    updateError: (state, action) => ({ ...state, ...action.payload }),
-    resetError: () => initialErrorState
-  }
-})
+    // addError: (state, action) => ({ ...state, ... })
+    updateError: (state, action) => [...state, action.payload],
+    removeError: (state, action) =>
+      state.filter((error) => error.id !== action.payload.errorId),
+    resetError: () => initialErrorState,
+  },
+});
 
-export const { updateError, resetError } = errorSlice.actions
+export const { updateError, resetError, removeError } = errorSlice.actions;
 
-export default errorSlice.reducer
+export default errorSlice.reducer;

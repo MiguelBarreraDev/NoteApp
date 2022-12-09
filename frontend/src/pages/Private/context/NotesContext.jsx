@@ -139,7 +139,7 @@ const reducer = (state, action) => {
         [payload.categoryName]: {
           ...state[payload.categoryName],
           items: state[payload.categoryName].items
-          .filter(note => note.title !== payload.title)
+            .filter(note => note.title !== payload.title)
         }
       }
     case 'reset categories':
