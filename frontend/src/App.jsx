@@ -22,16 +22,21 @@ function App () {
 
   return (
     <>
-      {!loading && <Suspense fallback={<Loading />}>
-        <CssBaseline />
-        <RoutesWithNotFound>
-          {toList(PublicRoutes).map(setPublicRoute)}
-          <Route element={<AuthGuard />}>
-            <Route path={`${PrivateRoutes.PRIVATE.route}/*`} element={<Private />} />
-          </Route>
-        </RoutesWithNotFound>
-        <ShowError />
-      </Suspense>}
+      {!loading && (
+        <Suspense fallback={<Loading />}>
+          <CssBaseline />
+          <RoutesWithNotFound>
+            {toList(PublicRoutes).map(setPublicRoute)}
+            <Route element={<AuthGuard />}>
+              <Route
+                path={`${PrivateRoutes.PRIVATE.route}/*`}
+                element={<Private />}
+              />
+            </Route>
+          </RoutesWithNotFound>
+          <ShowError />
+        </Suspense>
+      )}
     </>
   )
 }
