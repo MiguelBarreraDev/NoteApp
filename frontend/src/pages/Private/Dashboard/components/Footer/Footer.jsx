@@ -22,6 +22,7 @@ export default function Footer ({ categoryName }) {
     } catch (error) {
       dispatch(updateError({
         active: true,
+        id: `${categoryName}.${values.title}`,
         message: error.message,
         type: 'error'
       }))
