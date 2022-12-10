@@ -3,17 +3,16 @@ import { useEffect, useMemo, useState } from 'react'
 
 /**
  * Custom hooks that allows you to easily control forms
- * params {Object} initialValues - default values for the inputs
+ * params {Object} defaultValues - default values for the inputs
  */
-export default function useMyform (initialValues = {}) {
+export default function useMyform ({ defaultValues, defaultErrors }) {
   const onlyKeys = useMemo(() => Object
-    .keys(initialValues)
+    .keys(defaultValues)
     .reduce((obj, key) => ({ ...obj, [key]: '' }), {}),
-  [initialValues])
-
-  const [values, setValues] = useState(initialValues)
+  [defaultValues])
+  const [values, setValues] = useState(defaultValues)
   const [errors, setErrors] = useState(onlyKeys)
-  const [validate, setValidate] = useState({ run: null })
+  const [validate, setValidate] = useState({ run: defaultErrors })
   const [check, setCheck] = useState(false)
 
   // Error validation on each update of 'errors' state
@@ -43,7 +42,8 @@ export default function useMyform (initialValues = {}) {
    * Reset value inputs to initial values or empty object
    */
   const reset = () => {
-    setValues(initialValues || {})
+    setErrors(onlyKeys)
+    setValues(defaultValues || {})
   }
 
   /**

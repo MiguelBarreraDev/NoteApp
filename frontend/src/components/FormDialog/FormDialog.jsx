@@ -11,9 +11,13 @@ export default function FormDialog ({
   RenderActions,
   RenderContent,
   initialForm = {},
+  initialErrors,
   onSubmit
 }) {
-  const { values, getAttributes, reset, submit } = useMyForm(initialForm)
+  const { values, getAttributes, reset, submit } = useMyForm({
+    defaultValues: initialForm,
+    defaultErrors: initialErrors
+  })
   const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
@@ -35,7 +39,7 @@ export default function FormDialog ({
     <div>
       <RenderButton handleClick={handleClickOpen} />
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm'>
-        <form onSubmit={submit(handleSubmit)}>
+        <form onSubmit={submit(handleSubmit)} noValidate>
           <DialogTitle align='center'>{title}</DialogTitle>
           <DialogContent>
             <RenderContent getAttributes={getAttributes} />

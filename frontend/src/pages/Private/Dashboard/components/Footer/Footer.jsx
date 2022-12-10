@@ -11,7 +11,21 @@ const initialState = {
   title: '', body: ''
 }
 
-export default function Footer ({ categoryName }) {
+const customErrors = (values) => {
+  const newErrors = {}
+
+  // Title errors
+  if (values.title === '') newErrors.title = 'Please complete this field'
+  else newErrors.title = ''
+
+  // Bidy errors
+  if (values.body === '') newErrors.body = 'Please complete this field'
+  else newErrors.body = ''
+
+  return newErrors
+}
+
+export default function Footer({ categoryName }) {
   const { addNote } = useNotes()
   const dispatch = useDispatch()
 
@@ -42,6 +56,7 @@ export default function Footer ({ categoryName }) {
         RenderContent={AddNoteForm}
         onSubmit={onSubmit}
         initialForm={initialState}
+        initialErrors={customErrors}
       />
     </Box>
   )
