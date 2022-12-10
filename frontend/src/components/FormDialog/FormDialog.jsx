@@ -29,7 +29,6 @@ export default function FormDialog ({
 
   const handleSubmit = (values) => {
     onSubmit(values, handleClose)
-    reset()
   }
 
   return (
