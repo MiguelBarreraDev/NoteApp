@@ -82,7 +82,6 @@ export default function useMyform ({ defaultValues = {}, defaultErrors } = {}) {
    */
   const validateAllFields = () => {
     if (!functionToValidate) return { send: true }
-
     const newErrors = functionToValidate(values)
     const existingErrors = Object.keys(errors).some(
       (key) => errors[key] !== newErrors[key]
@@ -110,9 +109,7 @@ export default function useMyform ({ defaultValues = {}, defaultErrors } = {}) {
    */
   const submit = (cb) => (e) => {
     e.preventDefault()
-
     const { send, newErrors } = validateAllFields()
-
     if (!check || !send) return setErrors(newErrors)
 
     cb(values)
