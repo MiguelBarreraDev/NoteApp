@@ -32,13 +32,13 @@ export default function Login () {
   const dispatch = useDispatch()
   const [error, setError] = useState(false)
   const { login, isLogged, logout, loading } = useAuth()
-  const { getAttributes, submit, useValidate } = useMyform()
+  const { getAttributes, submit, validate } = useMyform()
 
   useEffect(() => {
     isLogged && logout({ redirect: false })
   }, [])
 
-  useValidate(customErrors)
+  validate(customErrors)
 
   const handleSubmit = async (values) => {
     const loginResponse = await login(values)
