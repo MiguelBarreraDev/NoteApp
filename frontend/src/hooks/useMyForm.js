@@ -17,7 +17,7 @@ export default function useMyform ({ defaultValues = {}, defaultErrors } = {}) {
   const [values, setValues] = useState(defaultValues)
   const [errors, setErrors] = useState(onlyKeys)
   const [check, setCheck] = useState(false)
-  let functionToValidate = null
+  let functionToValidate = defaultErrors ?? null
 
   // Error validation on each update of 'errors' state
   useEffect(() => {
