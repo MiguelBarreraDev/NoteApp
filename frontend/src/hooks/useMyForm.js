@@ -5,11 +5,15 @@ import { useEffect, useMemo, useState } from 'react'
  * Custom hooks that allows you to easily control forms
  * params {Object} defaultValues - default values for the inputs
  */
-export default function useMyform ({ defaultValues, defaultErrors }) {
-  const onlyKeys = useMemo(() => Object
-    .keys(defaultValues)
-    .reduce((obj, key) => ({ ...obj, [key]: '' }), {}),
-  [defaultValues])
+export default function useMyform ({ defaultValues = {}, defaultErrors } = {}) {
+  const onlyKeys = useMemo(
+    () =>
+      Object.keys(defaultValues).reduce(
+        (obj, key) => ({ ...obj, [key]: '' }),
+        {}
+      ),
+    [defaultValues]
+  )
   const [values, setValues] = useState(defaultValues)
   const [errors, setErrors] = useState(onlyKeys)
   const [validate, setValidate] = useState({ run: defaultErrors })
@@ -17,7 +21,7 @@ export default function useMyform ({ defaultValues, defaultErrors }) {
 
   // Error validation on each update of 'errors' state
   useEffect(() => {
-    const existingErrors = toList(errors).some(error => error !== '')
+    const existingErrors = toList(errors).some((error) => error !== '')
     existingErrors ? setCheck(false) : setCheck(true)
   }, [errors])
 
@@ -25,13 +29,18 @@ export default function useMyform ({ defaultValues, defaultErrors }) {
    * Sets attributes for an input element
    * params {String} name - Key to register a input element
    */
-  const getAttributes = name => {
+  const getAttributes = (name) => {
+    console.log({ errors })
+    if (!errors[name] && errors[name] !== '') {
+      setErrors((cs) => ({ ...cs, [name]: '' }))
+    }
+
     const attributes = {
-      onChange: e => handleChange(name, e),
+      onChange: (e) => handleChange(name, e),
       name,
       value: values[name] ?? '',
       error: Boolean(errors[name]),
-      helperText: errors[name],
+      helperText: errors[name] ?? '',
       onBlur: handleErrors
     }
 
@@ -64,7 +73,7 @@ export default function useMyform ({ defaultValues, defaultErrors }) {
   const handleChange = (name, e) => {
     const { value } = e.target
 
-    setValues(cs => ({ ...cs, [name]: value }))
+    setValues((cs) => ({ ...cs, [name]: value }))
   }
 
   /**
@@ -74,9 +83,9 @@ export default function useMyform ({ defaultValues, defaultErrors }) {
     if (!validate.run) return { send: true }
 
     const newErrors = validate.run(values)
-    const existingErrors = Object
-      .keys(errors)
-      .some(key => errors[key] !== newErrors[key])
+    const existingErrors = Object.keys(errors).some(
+      (key) => errors[key] !== newErrors[key]
+    )
 
     return { send: !existingErrors, newErrors }
   }
@@ -85,20 +94,20 @@ export default function useMyform ({ defaultValues, defaultErrors }) {
    * Update errors in the onBlur event
    * params {object} e - onBlur event
    */
-  const handleErrors = e => {
+  const handleErrors = (e) => {
     if (!validate.run) return
 
     const { name } = e.target
     const newErrors = validate.run(values)
 
-    setErrors(cs => ({ ...cs, [name]: newErrors[name] }))
+    setErrors((cs) => ({ ...cs, [name]: newErrors[name] }))
   }
 
   /**
    * HOF for handle onSubmit event
    * params {Function} cb - Function to be executed with the inputs values
    */
-  const submit = (cb) => e => {
+  const submit = (cb) => (e) => {
     e.preventDefault()
 
     const { send, newErrors } = validateAllFields()

@@ -37,7 +37,7 @@ const BuiltSnackbar = ({ error, index }) => {
   </Snackbar>
 }
 
-export default function ShowError() {
+export default function ShowError () {
   const errorState = useSelector(state => state.error)
 
   return (

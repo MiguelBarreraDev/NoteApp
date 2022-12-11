@@ -25,7 +25,7 @@ const customErrors = (values) => {
   return newErrors
 }
 
-export default function Footer({ categoryName }) {
+export default function Footer ({ categoryName }) {
   const { addNote } = useNotes()
   const dispatch = useDispatch()
 

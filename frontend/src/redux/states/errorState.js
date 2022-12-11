@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
 
 // error = {
 //   id: ''
@@ -8,20 +8,20 @@ import { createSlice } from "@reduxjs/toolkit";
 //   active: false
 // }
 
-const initialErrorState = [];
+const initialErrorState = []
 
 export const errorSlice = createSlice({
-  name: "error",
+  name: 'error',
   initialState: initialErrorState,
   reducers: {
     // addError: (state, action) => ({ ...state, ... })
     updateError: (state, action) => [...state, action.payload],
     removeError: (state, action) =>
       state.filter((error) => error.id !== action.payload.errorId),
-    resetError: () => initialErrorState,
-  },
-});
+    resetError: () => initialErrorState
+  }
+})
 
-export const { updateError, resetError, removeError } = errorSlice.actions;
+export const { updateError, resetError, removeError } = errorSlice.actions
 
-export default errorSlice.reducer;
+export default errorSlice.reducer
