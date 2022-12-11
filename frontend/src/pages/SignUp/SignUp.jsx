@@ -45,7 +45,7 @@ const customErrors = (values) => {
 export default function SignUp () {
   const [error, setError] = useState('')
   const { signup, logout, isLogged, loading } = useAuth()
-  const { getAttributes, useValidate, submit } = useMyForm({
+  const { getAttributes, submit, validate } = useMyForm({
     name: '',
     surname: '',
     username: '',
@@ -57,7 +57,8 @@ export default function SignUp () {
     isLogged && logout({ redirect: false })
   }, [])
 
-  useValidate(customErrors)
+  // useValidate(customErrors)
+  validate(customErrors)
 
   const handleSubmit = async (values) => {
     const response = await signup(values)

@@ -16,8 +16,8 @@ export default function useMyform ({ defaultValues = {}, defaultErrors } = {}) {
   )
   const [values, setValues] = useState(defaultValues)
   const [errors, setErrors] = useState(onlyKeys)
-  const [validate, setValidate] = useState({ run: defaultErrors })
   const [check, setCheck] = useState(false)
+  let functionToValidate = null
 
   // Error validation on each update of 'errors' state
   useEffect(() => {
@@ -30,9 +30,12 @@ export default function useMyform ({ defaultValues = {}, defaultErrors } = {}) {
    * params {String} name - Key to register a input element
    */
   const getAttributes = (name) => {
-    console.log({ errors })
     if (!errors[name] && errors[name] !== '') {
       setErrors((cs) => ({ ...cs, [name]: '' }))
+    }
+
+    if (!values[name] && values[name] !== '') {
+      setValues((cs) => ({ ...cs, [name]: '' }))
     }
 
     const attributes = {
@@ -59,10 +62,8 @@ export default function useMyform ({ defaultValues = {}, defaultErrors } = {}) {
    * Allowed set function to validate values inputs
    * params {Function} cb - Validate function
    */
-  const useValidate = (cb) => {
-    useEffect(() => {
-      setValidate({ run: cb })
-    }, [cb])
+  const validate = (cb) => {
+    functionToValidate = cb
   }
 
   /**
@@ -80,9 +81,9 @@ export default function useMyform ({ defaultValues = {}, defaultErrors } = {}) {
    * Validate all inputs for the onSubmit event
    */
   const validateAllFields = () => {
-    if (!validate.run) return { send: true }
+    if (!functionToValidate) return { send: true }
 
-    const newErrors = validate.run(values)
+    const newErrors = functionToValidate(values)
     const existingErrors = Object.keys(errors).some(
       (key) => errors[key] !== newErrors[key]
     )
@@ -95,10 +96,10 @@ export default function useMyform ({ defaultValues = {}, defaultErrors } = {}) {
    * params {object} e - onBlur event
    */
   const handleErrors = (e) => {
-    if (!validate.run) return
+    if (!functionToValidate) return
 
     const { name } = e.target
-    const newErrors = validate.run(values)
+    const newErrors = functionToValidate(values)
 
     setErrors((cs) => ({ ...cs, [name]: newErrors[name] }))
   }
@@ -121,8 +122,8 @@ export default function useMyform ({ defaultValues = {}, defaultErrors } = {}) {
     getAttributes,
     values,
     errors,
-    useValidate,
     submit,
-    reset
+    reset,
+    validate
   }
 }
