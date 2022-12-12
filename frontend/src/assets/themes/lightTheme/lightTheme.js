@@ -26,7 +26,7 @@ export default createTheme({
       styleOverrides: {
         body: {
           overflowX: 'hidden',
-          minWidth: '360px',
+          minWidth: '500px',
           minHeight: '100vh'
         }
       }
