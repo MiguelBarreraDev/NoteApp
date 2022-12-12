@@ -11,7 +11,7 @@ export default function Category ({ name, notes }) {
       display='flex'
       flexDirection='column'
     >
-      <Header title={name}/>
+      <Header categoryName={name}/>
       <List>
         {notes?.slice().reverse().map((note, index) => <Note
           key={index}

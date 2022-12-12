@@ -40,7 +40,7 @@ export default function FormDialog ({
       <RenderButton handleClick={handleClickOpen} />
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm'>
         <form onSubmit={submit(handleSubmit)} noValidate>
-          <DialogTitle align='center'>{title}</DialogTitle>
+          <DialogTitle align='center' color='Text.light' sx={{ fontWeight: 'bold' }}>{title}</DialogTitle>
           <DialogContent>
             <RenderContent getAttributes={getAttributes} />
           </DialogContent>

@@ -1,4 +1,4 @@
-import { ls } from '@/utilities'
+import { ls, toList } from '@/utilities'
 
 export const addCategoryService = async ({ name }) => {
   try {
@@ -44,6 +44,7 @@ export const updateNoteService = ({ categoryName, title, body }) => {
         }
       })
     )
+    return Promise.resolve({ code: 200 })
   } catch (error) {
     return Promise.reject(new Error({ code: 400 }))
   }
@@ -63,10 +64,27 @@ export const removeNoteService = ({ categoryName, title }) => {
         }
       })
     )
+    return Promise.resolve({ code: 204 })
   } catch (error) {
-    return Promise.reject(new Error({ code: 400 }))
+    return Promise.reject(new Error({ code: 404 }))
   }
 }
 
 export const removeCategoryService = ({ name }) => {
+  try {
+    const notes = JSON.parse(ls.getItem('notes')) ?? {}
+    ls.setItem(
+      'notes',
+      JSON.stringify(toList(notes).reduce((obj, category) => {
+        const categoryKey = category?.name
+
+        if (categoryKey !== name) obj[categoryKey] = notes[categoryKey]
+
+        return obj
+      }, {}))
+    )
+    return Promise.resolve({ code: 204 })
+  } catch (error) {
+    return Promise.reject(new Error({ code: 404 }))
+  }
 }

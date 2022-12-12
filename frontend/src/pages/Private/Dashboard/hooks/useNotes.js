@@ -54,8 +54,8 @@ export default function useNotes () {
     })
   }
 
-  const removeCategory = ({ name }) => {
-    removeCategoryService({ name })
+  const removeCategory = async ({ name }) => {
+    const serviceResponse = await removeCategoryService({ name })
     notesDispatch({
       type: 'remove category',
       payload: { name }
