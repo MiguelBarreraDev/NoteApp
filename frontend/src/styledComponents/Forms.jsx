@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, forwardRef } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
@@ -110,7 +110,7 @@ const CustomTextFieldStyle = (props) => ({
     color: `${props.color}.main`
   }
 })
-export const CustomTextField = ({ color = 'primary', ...props }) => {
+export const CustomTextField = forwardRef(({ color = 'primary', ...props }, ref) => {
   const [showPassword, setShowPassword] = useState(false)
   const { type, ...otherProps } = props
 
@@ -132,5 +132,8 @@ export const CustomTextField = ({ color = 'primary', ...props }) => {
           )
         }
       : {} }
+      ref={ref}
   />
-}
+})
+
+CustomTextField.displayName = 'CustomTextField'
