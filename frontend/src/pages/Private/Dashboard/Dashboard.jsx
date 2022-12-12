@@ -1,5 +1,7 @@
+import { NoDataIlustration } from '@/assets/images/ilustration'
 import { Header } from '@/components/Common/Header'
 import { PrivateRoutes } from '@/config'
+import { Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import { Category } from './components'
 import { AddCategoryDialog } from './components/AddCategoryDialog'
@@ -18,13 +20,41 @@ export default function Dashboard () {
         sx={DashboardStyles}
         className='page_dashboard'
       >
-        {notes.map(categoryNote => (
+        {notes.length > 0
+          ? (notes.map(categoryNote => (
           <Category
             key={categoryNote.name}
             name={categoryNote.name}
             notes={categoryNote.items}
           />
-        ))}
+            )))
+          : (
+            <Box
+            flex={1}
+            flexDirection='column'
+            display='flex'
+            justifyContent='center'
+            alignItems='center'
+            gap={4}
+            >
+          <NoDataIlustration
+            styles={{
+              width: 'clamp(50px, 80%, 200px)',
+              height: 'fit-content'
+            }}
+              />
+              <Typography
+                align='center'
+                variant='h5'
+                sx={{
+                  fontWeight: 'bold',
+                  opacity: 0.5
+                }}
+              >
+                You have no registered categories
+              </Typography>
+            </Box>
+            )}
       </Box>
     </>
   )
