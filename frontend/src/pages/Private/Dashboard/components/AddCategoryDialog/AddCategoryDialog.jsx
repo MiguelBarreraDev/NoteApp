@@ -12,8 +12,8 @@ export default function AddCategoryDialog () {
 
   const onSubmit = async (values, close) => {
     try {
-      addCategory({ name: values?.name })
-      values && close()
+      await addCategory({ name: values?.name })
+      close()
     } catch (error) {
       dispatch(updateError({
         active: true,

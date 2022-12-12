@@ -42,8 +42,8 @@ export default function useNotes () {
     })
   }
 
-  const updateNote = ({ categoryName, title, body }) => {
-    updateNoteService({ title, body })
+  const updateNote = async ({ categoryName, title, body }) => {
+    const serviceResponse = await updateNoteService({ categoryName, title, body })
     notesDispatch({
       type: 'update note',
       payload: {
@@ -62,8 +62,8 @@ export default function useNotes () {
     })
   }
 
-  const removeNote = ({ categoryName, title }) => {
-    removeNoteService({ title })
+  const removeNote = async ({ categoryName, title }) => {
+    const serviceResponse = await removeNoteService({ categoryName, title })
     notesDispatch({
       type: 'remove note',
       payload: { categoryName, title }

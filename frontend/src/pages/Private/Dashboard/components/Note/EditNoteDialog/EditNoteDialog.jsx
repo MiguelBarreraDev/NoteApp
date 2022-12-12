@@ -28,7 +28,7 @@ export default function EditNoteDialog ({ title, categoryName, body }) {
 
   const onSubmit = async (values, close) => {
     try {
-      updateNote({ categoryName, ...values })
+      await updateNote({ categoryName, ...values })
       close()
     } catch (error) {
       dispatch(updateError({

@@ -143,7 +143,7 @@ const reducer = (state, action) => {
         }
       }
     case 'reset categories':
-      return initialState
+      return {}
     default:
       throw new Error()
   }
