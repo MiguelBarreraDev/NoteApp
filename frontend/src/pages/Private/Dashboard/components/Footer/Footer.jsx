@@ -18,7 +18,7 @@ const customErrors = (values) => {
   if (values.title === '') newErrors.title = 'Please complete this field'
   else newErrors.title = ''
 
-  // Bidy errors
+  // Body errors
   if (values.body === '') newErrors.body = 'Please complete this field'
   else newErrors.body = ''
 
