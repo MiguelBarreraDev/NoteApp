@@ -21,7 +21,7 @@ export default function Title () {
         noWrap
         sx={titleStyle}
       >
-        AppNote
+        NoteApp
       </Typography>
     </LinkTo>
   )
