@@ -13,10 +13,16 @@ export default function AddCategoryDialog () {
   const onSubmit = async (values, close) => {
     try {
       await addCategory({ name: values?.name })
+      dispatch(updateError({
+        id: values?.name,
+        message: 'Category added successfully',
+        type: 'success'
+      }))
       close()
     } catch (error) {
       dispatch(updateError({
         active: true,
+        id: values?.name,
         message: error.message,
         type: 'error'
       }))
