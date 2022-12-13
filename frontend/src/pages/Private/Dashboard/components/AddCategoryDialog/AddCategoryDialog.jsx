@@ -21,7 +21,6 @@ export default function AddCategoryDialog () {
       close()
     } catch (error) {
       dispatch(updateError({
-        active: true,
         id: values?.name,
         message: error.message,
         type: 'error'
