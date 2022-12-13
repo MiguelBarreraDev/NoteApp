@@ -1,7 +1,8 @@
 import { removeError } from '@/redux/states'
 import MuiAlert from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar'
-import { forwardRef } from 'react'
+import { useState, forwardRef } from 'react'
+
 import { useDispatch, useSelector } from 'react-redux'
 
 const Alert = forwardRef((props, ref) => {
@@ -11,19 +12,20 @@ const Alert = forwardRef((props, ref) => {
 Alert.displayName = 'Alert'
 
 const BuiltSnackbar = ({ error, index }) => {
+  const [active, setActive] = useState(true)
   const dispatch = useDispatch()
 
   const handleClose = (errorId) => {
     dispatch(removeError({ errorId }))
+    setActive(false)
   }
 
   return (
     <Snackbar
       sx={{
-        width: '100%',
-        transform: `translateY(-${120 * index}%)`
+        width: '100%'
       }}
-      open={error.active}
+      open={active}
       autoHideDuration={6000}
       onClose={() => handleClose(error.id)}
     >
