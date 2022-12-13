@@ -12,13 +12,13 @@ const userSignupController = async (req, res) => {
   if (existingUserByUsername)
     return res
       .status(409)
-      .json({ error: ['There is already a user with this username'] })
+      .json({ errors: ['There is already a user with this username'] })
 
   const existingUserByEmail = await userService.findBy({ email })
   if (existingUserByEmail)
     return res
       .status(409)
-      .json({ error: ['There is already a user with this email'] })
+      .json({ errors: ['There is already a user with this email'] })
 
   // Create new user
   const id = uuidv4()
