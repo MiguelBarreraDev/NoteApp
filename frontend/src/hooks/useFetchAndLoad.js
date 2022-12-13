@@ -2,6 +2,7 @@ import { ls } from '@/utilities'
 import { useState, useEffect } from 'react'
 
 const handleError = ({ error }) => {
+  console.log({ error })
   if (error.response.status === 401) {
     ls.removeItem('jwt')
     return { error: 'Credentials Incorrects', code: 401 }
@@ -10,7 +11,7 @@ const handleError = ({ error }) => {
     return { error: error.response.data.error[0], code: 401 }
   }
   if (error.response.status === 400) {
-    return { error: error.response.data.errors[0], code: 401 }
+    return { error: error.response.data.errors, code: 401 }
   }
   if (error.response.status === 0) {
     return { error: 'An internal problem arose', code: 0 }
