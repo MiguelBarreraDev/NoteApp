@@ -20,18 +20,18 @@ export default function useNotes () {
     return notesState[categoryName].items.find(note => note.title === title)
   }
 
-  const addCategory = ({ name }) => {
+  const addCategory = async ({ name }) => {
     if (searchCategory({ name })) throw new Error('Category title must be unique')
-    addCategoryService({ name })
+    const serviceResponse = await addCategoryService({ name })
     notesDispatch({
       type: 'add category',
       payload: { name }
     })
   }
 
-  const addNote = ({ categoryName, title, body }) => {
+  const addNote = async ({ categoryName, title, body }) => {
     if (searchNote({ categoryName, title })) throw new Error('Note title must be unique')
-    addNoteService({ title, body })
+    const serviceResponse = await addNoteService({ categoryName, title, body })
     notesDispatch({
       type: 'add note',
       payload: {
@@ -42,8 +42,8 @@ export default function useNotes () {
     })
   }
 
-  const updateNote = ({ categoryName, title, body }) => {
-    updateNoteService({ title, body })
+  const updateNote = async ({ categoryName, title, body }) => {
+    const serviceResponse = await updateNoteService({ categoryName, title, body })
     notesDispatch({
       type: 'update note',
       payload: {
@@ -54,16 +54,16 @@ export default function useNotes () {
     })
   }
 
-  const removeCategory = ({ name }) => {
-    removeCategoryService({ name })
+  const removeCategory = async ({ name }) => {
+    const serviceResponse = await removeCategoryService({ name })
     notesDispatch({
       type: 'remove category',
       payload: { name }
     })
   }
 
-  const removeNote = ({ categoryName, title }) => {
-    removeNoteService({ title })
+  const removeNote = async ({ categoryName, title }) => {
+    const serviceResponse = await removeNoteService({ categoryName, title })
     notesDispatch({
       type: 'remove note',
       payload: { categoryName, title }

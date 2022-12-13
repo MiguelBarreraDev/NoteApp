@@ -6,21 +6,22 @@ import Actions from './Actions'
 import Form from './Form'
 import OpendDialog from './OpenDialog'
 
-const initialValues = {
-  name: { content: '' }
-}
-
 export default function AddCategoryDialog () {
   const { addCategory } = useNotes()
   const dispatch = useDispatch()
 
   const onSubmit = async (values, close) => {
     try {
-      addCategory({ name: values?.name })
-      values && close()
+      await addCategory({ name: values?.name })
+      dispatch(updateError({
+        id: values?.name,
+        message: 'Category added successfully',
+        type: 'success'
+      }))
+      close()
     } catch (error) {
       dispatch(updateError({
-        active: true,
+        id: values?.name,
         message: error.message,
         type: 'error'
       }))
@@ -30,7 +31,6 @@ export default function AddCategoryDialog () {
   return (
     <FormDialog
       title='Add New Category'
-      initialForm={initialValues}
       RenderButton={OpendDialog}
       RenderContent={Form}
       RenderActions={Actions}

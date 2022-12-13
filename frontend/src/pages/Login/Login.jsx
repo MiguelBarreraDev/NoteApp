@@ -32,20 +32,17 @@ export default function Login () {
   const dispatch = useDispatch()
   const [error, setError] = useState(false)
   const { login, isLogged, logout, loading } = useAuth()
-  const { getAttributes, submit, useValidate } = useMyform({
-    username: { content: '' },
-    password: { content: '', type: 'password' }
-  })
+  const { getAttributes, submit, validate } = useMyform()
 
   useEffect(() => {
     isLogged && logout({ redirect: false })
   }, [])
 
-  useValidate(customErrors)
+  validate(customErrors)
 
   const handleSubmit = async (values) => {
     const loginResponse = await login(values)
-    const { error, code } = loginResponse
+    const { error, code } = loginResponse || {}
     if (error) {
       code === 0
         ? dispatch(updateError({ active: true, type: 'error', message: error }))
@@ -76,6 +73,7 @@ export default function Login () {
             <CustomTextField
               required
               label='Password'
+              type='password'
               {...getAttributes('password')}
             />
           </FormGridItem>

@@ -11,7 +11,7 @@ export default function Category ({ name, notes }) {
       display='flex'
       flexDirection='column'
     >
-      <Header title={name}/>
+      <Header categoryName={name}/>
       <List>
         {notes?.slice().reverse().map((note, index) => <Note
           key={index}
@@ -25,13 +25,13 @@ export default function Category ({ name, notes }) {
 }
 
 const CategoryStyles = {
-  bgcolor: '#B8C1EA',
+  bgcolor: 'primary.lightHard',
   maxHeight: theme => `calc(100vh - ${theme.components.Header.height} - 32px)`,
   overflowY: 'hidden',
   height: 'fit-content',
   my: 2,
   px: 1,
-  boxShadow: '0px 1px 4px #000a',
+  boxShadow: '0px 2px 4px #0005',
   minWidth: 300,
   maxWidth: 300,
   overflowX: 'hidden'

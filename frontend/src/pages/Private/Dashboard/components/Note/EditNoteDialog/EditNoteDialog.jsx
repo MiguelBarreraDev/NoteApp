@@ -6,18 +6,29 @@ import Actions from './Actions'
 import Form from './Form'
 import OpendDialog from './OpenDialog'
 
+const customErrors = (values) => {
+  const newErrors = {}
+
+  // Title errors
+  if (values.title === '') newErrors.title = 'Please complete this field'
+  else newErrors.title = ''
+
+  // Bidy errors
+  if (values.body === '') newErrors.body = 'Please complete this field'
+  else newErrors.body = ''
+
+  return newErrors
+}
+
 export default function EditNoteDialog ({ title, categoryName, body }) {
   const { updateNote } = useNotes()
   const dispatch = useDispatch()
 
-  const initialValues = {
-    title: { content: title },
-    body: { content: body }
-  }
+  const initialValues = { title, body }
 
   const onSubmit = async (values, close) => {
     try {
-      updateNote({ categoryName, ...values })
+      await updateNote({ categoryName, ...values })
       close()
     } catch (error) {
       dispatch(updateError({
@@ -36,6 +47,7 @@ export default function EditNoteDialog ({ title, categoryName, body }) {
       RenderContent={Form}
       RenderActions={Actions}
       onSubmit={onSubmit}
+      initialErrors={customErrors}
     />
   )
 }

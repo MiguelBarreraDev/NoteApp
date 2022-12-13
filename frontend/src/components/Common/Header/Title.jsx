@@ -9,7 +9,7 @@ const titleStyle = {
   webkitBackgroundClip: 'text',
   backgroundClip: 'text',
   color: 'transparent',
-  fontSize: '1.6em',
+  fontSize: '1.4em',
   fontWeight: 'bold'
 }
 

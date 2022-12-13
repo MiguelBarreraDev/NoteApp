@@ -8,17 +8,17 @@ const userService = new UserService()
 const userSignupController = async (req, res) => {
   const { name, surname, username, email, password } = req.body
 
-  const existingUserByUsername = await UserService.findBy({ username })
+  const existingUserByUsername = await userService.findBy({ username })
   if (existingUserByUsername)
     return res
       .status(409)
-      .json({ error: ['There is already a user with this username'] })
+      .json({ errors: ['There is already a user with this username'] })
 
-  const existingUserByEmail = await UserService.findBy({ email })
+  const existingUserByEmail = await userService.findBy({ email })
   if (existingUserByEmail)
     return res
       .status(409)
-      .json({ error: ['There is already a user with this email'] })
+      .json({ errors: ['There is already a user with this email'] })
 
   // Create new user
   const id = uuidv4()
@@ -33,7 +33,8 @@ const userSignupController = async (req, res) => {
   })
 
   // Generate a JWT for the user who logs in to the application
-  const jwt = signJWT({ id })
+  const payload = { id}
+  const jwt = signJWT({ payload })
 
   res.status(201).json({
     id: user.id,

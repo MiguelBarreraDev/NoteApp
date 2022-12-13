@@ -8,7 +8,8 @@ export default createTheme({
       default: '#ECEFF4'
     },
     primary: {
-      main: '#3E54D3'
+      main: '#3E54D3',
+      lightHard: '#CAD3FF'
     },
     secondary: {
       main: '#15CDCA'
@@ -25,7 +26,7 @@ export default createTheme({
       styleOverrides: {
         body: {
           overflowX: 'hidden',
-          minWidth: '360px',
+          minWidth: '500px',
           minHeight: '100vh'
         }
       }

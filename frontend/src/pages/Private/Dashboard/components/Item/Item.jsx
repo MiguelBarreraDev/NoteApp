@@ -5,7 +5,7 @@ const Item = forwardRef((props, ref) => (
   <Paper
     ref={ref}
     sx={{
-      borderRadius: 1,
+      borderRadius: 0,
       minHeight: 120,
       maxHeight: 120,
       overflow: 'hidden',
@@ -14,7 +14,7 @@ const Item = forwardRef((props, ref) => (
       flexDirection: 'column',
       justifyContent: 'space-between'
     }}
-    elevation={2}
+    elevation={1}
   >
     {props.children}
   </Paper>

@@ -7,9 +7,22 @@ import { useDispatch } from 'react-redux'
 import { updateError } from '@/redux/states'
 import { FormDialog } from '@/components'
 
-const initialForm = {
-  title: { content: '' },
-  body: { content: '' }
+const initialState = {
+  title: '', body: ''
+}
+
+const customErrors = (values) => {
+  const newErrors = {}
+
+  // Title errors
+  if (values.title === '') newErrors.title = 'Please complete this field'
+  else newErrors.title = ''
+
+  // Body errors
+  if (values.body === '') newErrors.body = 'Please complete this field'
+  else newErrors.body = ''
+
+  return newErrors
 }
 
 export default function Footer ({ categoryName }) {
@@ -18,11 +31,16 @@ export default function Footer ({ categoryName }) {
 
   const onSubmit = async (values, close) => {
     try {
-      addNote({ categoryName, ...values })
+      await addNote({ categoryName, ...values })
+      dispatch(updateError({
+        id: `${categoryName}.${values.title}`,
+        message: 'Note added successfully',
+        type: 'success'
+      }))
       close()
     } catch (error) {
       dispatch(updateError({
-        active: true,
+        id: `${categoryName}.${values.title}`,
         message: error.message,
         type: 'error'
       }))
@@ -40,8 +58,9 @@ export default function Footer ({ categoryName }) {
         RenderButton={OpenDialog}
         RenderActions={Actions}
         RenderContent={AddNoteForm}
-        initialForm={initialForm}
         onSubmit={onSubmit}
+        initialForm={initialState}
+        initialErrors={customErrors}
       />
     </Box>
   )
