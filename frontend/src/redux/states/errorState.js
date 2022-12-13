@@ -5,7 +5,6 @@ import { createSlice } from '@reduxjs/toolkit'
 //   message: '',
 //   code: '',
 //   type: '',
-//   active: false
 // }
 
 const initialErrorState = []

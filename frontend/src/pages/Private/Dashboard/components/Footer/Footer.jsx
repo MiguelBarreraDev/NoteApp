@@ -32,10 +32,14 @@ export default function Footer ({ categoryName }) {
   const onSubmit = async (values, close) => {
     try {
       await addNote({ categoryName, ...values })
+      dispatch(updateError({
+        id: `${categoryName}.${values.title}`,
+        message: 'Note added successfully',
+        type: 'success'
+      }))
       close()
     } catch (error) {
       dispatch(updateError({
-        active: true,
         id: `${categoryName}.${values.title}`,
         message: error.message,
         type: 'error'
